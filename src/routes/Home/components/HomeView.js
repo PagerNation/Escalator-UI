@@ -6,6 +6,6 @@ export const HomeView = () => (
     <div>
       <Header as='h1'>Dashboard</Header>
     </div>
-)
+);
 
-export default HomeView
+export default HomeView;
