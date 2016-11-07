@@ -1,9 +1,9 @@
 import React from 'react'
-import { Header } from 'components/Header/Header'
+import { Header } from 'components/Navigation/Navigation'
 import { IndexLink, Link } from 'react-router'
 import { shallow } from 'enzyme'
 
-describe('(Component) Header', () => {
+describe('(Component) Navigation', () => {
   let _wrapper
 
   beforeEach(() => {

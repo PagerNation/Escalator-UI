@@ -1,9 +1,9 @@
 import React from "react";
 import { Menu } from 'semantic-ui-react';
 import { withRouter } from 'react-router';
-import "./Header.scss";
+import "./Navigation.scss";
 
-class Header extends React.Component {
+class Navigation extends React.Component {
   render() {
     const pathname = this.props.location.pathname;
     return  (
@@ -22,9 +22,9 @@ class Header extends React.Component {
   }
 }
 
-Header.propTypes = {
+Navigation.propTypes = {
   router: React.PropTypes.object.isRequired,
   location: React.PropTypes.object.isRequired
 };
 
-export default withRouter(Header);
+export default withRouter(Navigation);
