@@ -7,7 +7,7 @@ class Header extends React.Component {
   render() {
     return  (
         <div>
-          <Menu>
+          <Menu inverted>
             <Menu.Item header>Escalator</Menu.Item>
             <Menu.Item name="home" onClick={() => this.props.router.push('/')} />
             <Menu.Item name="counter" onClick={() => this.props.router.push('/counter')} />
