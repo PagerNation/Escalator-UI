@@ -1,18 +1,19 @@
 import React from "react";
-import {IndexLink, Link} from "react-router";
+import { Menu } from 'semantic-ui-react';
+import { withRouter } from 'react-router';
 import "./Header.scss";
 
-export const Header = () => (
-  <div>
-    <h1>Escalator</h1>
-    <IndexLink to='/' activeClassName='route--active'>
-      Home
-    </IndexLink>
-    {' · '}
-    <Link to='/counter' activeClassName='route--active'>
-      Counter
-    </Link>
-  </div>
-);
-
-export default Header;
+class Header extends React.Component {
+  render() {
+    return  (
+        <div>
+          <Menu>
+            <Menu.Item header>Escalator</Menu.Item>
+            <Menu.Item name="home" onClick={() => this.props.router.push('/')} />
+            <Menu.Item name="counter" onClick={() => this.props.router.push('/counter')} />
+          </Menu>
+        </div>
+    );
+  }
+}
+export default withRouter(Header);
