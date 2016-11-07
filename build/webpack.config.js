@@ -55,7 +55,8 @@ webpackConfig.plugins = [
     inject   : 'body',
     minify   : {
       collapseWhitespace : true
-    }
+    },
+    config   : config
   })
 ]
 
