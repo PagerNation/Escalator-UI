@@ -4,15 +4,11 @@ import "./HomeView.scss";
 
 class HomeView extends React.Component {
 
-  componentWillMount() {
-    this.props.fetchUser();
-  }
-
   render() {
     console.log(this.props);
     return (
       <div>
-        <GroupsInfo />
+        {this.props.user && <GroupsInfo groups={this.props.user.groups} />}
       </div>
     );
   }
