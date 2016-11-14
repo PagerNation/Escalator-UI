@@ -1,5 +1,5 @@
 import {connect} from "react-redux";
-import {fetchUser} from "../../../modules/user";
+import {fetchUser} from "../../../store/user";
 import HomeView from "../components/HomeView";
 
 const mapDispatchToProps = {
