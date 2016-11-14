@@ -1,5 +1,5 @@
 import React from "react";
-import { Header, Card, Image, Feed } from 'semantic-ui-react'
+import { Header, Card, Feed } from 'semantic-ui-react'
 
 class GroupsInfo extends React.Component {
 

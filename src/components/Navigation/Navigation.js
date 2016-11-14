@@ -1,5 +1,5 @@
 import React from "react";
-import { Menu } from 'semantic-ui-react';
+import { Menu, Dropdown } from 'semantic-ui-react';
 import { withRouter } from 'react-router';
 import "./Navigation.scss";
 
@@ -13,8 +13,11 @@ class Navigation extends React.Component {
             <Menu.Item name="home" active={pathname === '/'} onClick={() => this.props.router.push('/')} />
             <Menu.Item name="counter" active={pathname === '/counter'} onClick={() => this.props.router.push('/counter')} />
 
-            <Menu.Item name="user" position="right">
-              Logout
+            <Menu.Item as={Dropdown} text="Kevin Moses" position="right" onBlur={() => {}}>
+              <Dropdown.Menu>
+                <Dropdown.Item onClick={() => this.props.router.push('/devices')}>Devices</Dropdown.Item>
+                <Dropdown.Item>Log Out</Dropdown.Item>
+              </Dropdown.Menu>
             </Menu.Item>
           </Menu>
         </div>
