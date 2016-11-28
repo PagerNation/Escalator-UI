@@ -69,7 +69,7 @@ export default class Device extends Component {
     const time = isLast && (
       <div style={{textAlign: 'center', paddingBottom: '15px'}}>
         <Input
-            label={{ basic: true, content: 'min' }}
+            label={{ basic: true, content: 'minutes' }}
             labelPosition='right'
             placeholder=''
         />
