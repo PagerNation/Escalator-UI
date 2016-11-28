@@ -3,14 +3,6 @@ import ItemTypes from './ItemTypes';
 import { DragSource, DropTarget } from 'react-dnd';
 import { Card, Icon, Input } from 'semantic-ui-react';
 
-const style = {
-  border: '1px dashed gray',
-  padding: '0.5rem 1rem',
-  marginBottom: '.5rem',
-  backgroundColor: 'white',
-  cursor: 'move'
-};
-
 const cardSource = {
   beginDrag(props) {
     return {
