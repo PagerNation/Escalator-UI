@@ -1,42 +1,39 @@
+import 'whatwg-fetch';
+
 // ------------------------------------
 // Constants
 // ------------------------------------
-export const FETCH_USER = 'FETCH_USER';
+export const FETCH_USER_SUCCESS = 'FETCH_USER_SUCCESS';
 
 // ------------------------------------
 // Actions
 // ------------------------------------
-export function fetchUser() {
-  return {
-    type: FETCH_USER
+export const fetchUser = () => {
+  return (dispatch, getState) => {
+    return new Promise((resolve) => {
+      fetch(config.api_url + 'user/582cdb4f58afe7001d0dac5f/').then((response) =>{
+        return response.json();
+      }).then((json) => {
+        dispatch(fetchUserSuccess(json));
+        resolve();
+      });
+    })
   }
 };
+
+export function fetchUserSuccess(json) {
+  return {
+    type: FETCH_USER_SUCCESS,
+    payload: json
+  }
+}
 
 // ------------------------------------
 // Action Handlers
 // ------------------------------------
 const ACTION_HANDLERS = {
-  [FETCH_USER]: (state, action) => {
-    // TODO: fetch from api
-    return {
-      id: '8bjfjs3rjeoflknfe3i',
-      name: 'Kevin Moses',
-      email: 'test@example.com',
-      groups: [{
-        type: 'Group',
-        ref: 'My awesome group'
-      },
-      {
-        type: 'Group',
-        ref: 'Another group'
-      }],
-      devices: [{
-        name: 'Personal cell',
-        type: 'sms',
-        contactInformation: '545-343-4353',
-        createdAt: Date.now()
-      }]
-    };
+  [FETCH_USER_SUCCESS]: (state, action) => {
+    return action.payload;
   }
 };
 
