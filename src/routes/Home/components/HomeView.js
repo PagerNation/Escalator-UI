@@ -1,12 +1,17 @@
 import React from "react";
-import { Header } from 'semantic-ui-react';
 import GroupsInfo from './GroupsInfo';
 import "./HomeView.scss";
 
-export const HomeView = () => (
-    <div>
-      <GroupsInfo />
-    </div>
-);
+class HomeView extends React.Component {
+
+  render() {
+    console.log(this.props);
+    return (
+      <div>
+        {this.props.user && <GroupsInfo groups={this.props.user.groups} />}
+      </div>
+    );
+  }
+}
 
 export default HomeView;
