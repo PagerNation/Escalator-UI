@@ -1,3 +1,5 @@
+import { injectReducer } from '../store/reducers';
+
 // ------------------------------------
 // Constants
 // ------------------------------------
@@ -8,8 +10,13 @@ export const FETCH_USER = 'FETCH_USER';
 // ------------------------------------
 export function fetchUser() {
   return {
-    type: FETCH_USER
+    type: FETCH_USER,
+    payload: value
   }
+}
+
+export const actions = {
+  fetchUser
 };
 
 // ------------------------------------
@@ -17,23 +24,23 @@ export function fetchUser() {
 // ------------------------------------
 const ACTION_HANDLERS = {
   [FETCH_USER]: (state, action) => {
-    // TODO: fetch from api
+    // TODO: Use endpoint
     return {
-      id: '8bjfjs3rjeoflknfe3i',
+      id: '693d9a0698aff95c',
       name: 'Kevin Moses',
-      email: 'test@example.com',
+      email: 'kwm4385@rit.edu',
       groups: [{
-        type: 'Group',
-        ref: 'My awesome group'
+        type: "Group",
+        ref: 'Some group'
       },
-      {
-        type: 'Group',
-        ref: 'Another group'
-      }],
+        {
+          type: "Group",
+          ref: 'Awesome Group'
+        }],
       devices: [{
-        name: 'Personal cell',
+        name: 'Cell',
         type: 'sms',
-        contactInformation: '545-343-4353',
+        contactInformation: '585-328-5354',
         createdAt: Date.now()
       }]
     };
@@ -50,3 +57,8 @@ export default function userReducer(state = initialState, action) {
 
   return handler ? handler(state, action) : state;
 };
+
+injectReducer(store, {
+  key: 'user',
+  reducer: userReducer
+});
