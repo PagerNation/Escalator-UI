@@ -1,5 +1,3 @@
-import Devices from "./containers/DevicesContainer";
-
 import {injectReducer} from "../../store/reducers";
 
 export default (store) => ({
@@ -11,10 +9,9 @@ export default (store) => ({
     require.ensure([], (require) => {
       /*  Webpack - use require callback to define
        dependencies for bundling   */
-      const Counter = require('./containers/DevicesContainer').default;
+      const Devices = require('./containers/DevicesContainer').default;
       const reducer = require('./modules/devices').default;
 
-      /*  Add the reducer to the store on key 'counter'  */
       injectReducer(store, {key: 'devices', reducer});
 
       /*  Return getComponent   */
