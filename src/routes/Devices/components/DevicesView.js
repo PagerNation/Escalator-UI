@@ -18,7 +18,7 @@ class DevicesView extends React.Component {
 
   constructor() {
     super();
-    _.bindAll(this, "handleAddDevice", "handleClose", "handleSubmit");
+    _.bindAll(this, "handleAddDevice", "handleClose", "handleSubmit", "handleDeleteDevice");
     this.state = {
       modalOpen: false,
       creatingType: null
@@ -32,6 +32,10 @@ class DevicesView extends React.Component {
     })
   }
 
+  handleDeleteDevice(id) {
+    this.props.deleteDevice(id);
+  }
+
   handleClose() {
     this.setState({
       modalOpen: false,
@@ -41,7 +45,6 @@ class DevicesView extends React.Component {
 
   handleSubmit(e, serializedForm) {
     e.preventDefault();
-    console.log(serializedForm);
     this.props.addDevice({
       device: {
         name: serializedForm.name,
@@ -85,11 +88,12 @@ class DevicesView extends React.Component {
   }
 
   render() {
+    console.log(_.get(this, 'props.user.devices'));
     return (
       <div>
         <Header as="h1">My Devices</Header>
-        {this.props.user && <DeviceList devices={this.props.user.devices} />}
-
+        {this.props.user && <DeviceList devices={this.props.user.devices} onDeleteDevice={this.handleDeleteDevice} />}
+        {this.props.user && this.props.user.devices.length}
         <div className="add-button">
           {this.props.user &&
           <Dropdown text='Add Device' floating labeled button className='icon green' icon='add circle'>

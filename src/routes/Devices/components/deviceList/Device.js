@@ -65,7 +65,7 @@ export default class Device extends Component {
   }
 
   render() {
-    const { text, type, contactInformation, isLast, isDragging, connectDragSource, connectDropTarget } = this.props;
+    const { id, text, type, contactInformation, isLast, isDragging, connectDragSource, connectDropTarget, onDelete } = this.props;
     const time = isLast && (
       <div style={{textAlign: 'center', paddingBottom: '15px'}}>
         <Input
@@ -81,6 +81,8 @@ export default class Device extends Component {
           <Card.Content>
             <Icon name={this.getIcon(type)} />
             {text}
+            <Icon onClick={() => onDelete(id)} className="action-icon" name="x" link />
+            <Icon className="action-icon" name="pencil" link />
           </Card.Content>
           <Card.Content extra>
             {contactInformation}

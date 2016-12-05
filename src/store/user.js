@@ -5,6 +5,7 @@ import 'whatwg-fetch';
 // ------------------------------------
 export const FETCH_USER_SUCCESS = 'FETCH_USER_SUCCESS';
 export const ADD_DEVICE_SUCCESS = 'ADD_DEVICE';
+export const DELETE_DEVICE_SUCCESS = 'DELETE_DEVICE_SUCCESS';
 
 // ------------------------------------
 // Actions
@@ -47,6 +48,24 @@ export const addDevice = (device) => {
   }
 };
 
+export const deleteDevice = (id) => {
+  return (dispatch, getState) => {
+    return new Promise((resolve) => {
+      fetch(config.api_url + 'user/582cdb4f58afe7001d0dac5f/device/' + id, {
+        method: 'DELETE'
+      }).then((response) => {
+        return response.text();
+      }).then((text) => {
+        dispatch({
+          type: DELETE_DEVICE_SUCCESS,
+          payload: id
+        });
+        resolve();
+      });
+    })
+  }
+};
+
 // ------------------------------------
 // Action Handlers
 // ------------------------------------
@@ -56,6 +75,13 @@ const ACTION_HANDLERS = {
   },
   [ADD_DEVICE_SUCCESS]: (state, action) => {
     return action.payload;
+  },
+  [DELETE_DEVICE_SUCCESS]: (state, action) => {
+    const newState = _.extend({}, state);
+    newState.devices = _.filter(newState.devices, (device) => {
+      device._id !== action.payload;
+    });
+    return newState;
   }
 };
 
@@ -66,6 +92,6 @@ const initialState = null;
 
 export default function userReducer(state = initialState, action) {
   const handler = ACTION_HANDLERS[action.type];
-
+  console.warn(handler && handler(state, action));
   return handler ? handler(state, action) : state;
 };

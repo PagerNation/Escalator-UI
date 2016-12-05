@@ -5,6 +5,7 @@ import { DropTarget, DragDropContext } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
 import ItemTypes from './ItemTypes';
 import _ from 'lodash';
+import './deviceList.scss';
 
 const cardTarget = {
   drop() {}
@@ -74,7 +75,8 @@ export default class Container extends Component {
                 contactInformation={card.contactInformation}
                 isLast={index != cards.length - 1}
                 moveCard={this.moveCard}
-                findCard={this.findCard} />
+                findCard={this.findCard}
+                onDelete={this.props.onDeleteDevice} />
           );
         })}
       </div>
