@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import ItemTypes from './ItemTypes';
 import { DragSource, DropTarget } from 'react-dnd';
-import { Card, Icon, Input } from 'semantic-ui-react';
+import { Card, Icon, Input, Label } from 'semantic-ui-react';
 
 const cardSource = {
   beginDrag(props) {
@@ -69,18 +69,25 @@ export default class Device extends Component {
     const time = isLast && (
       <div style={{textAlign: 'center', paddingBottom: '15px'}}>
         <Input
+            type="number"
             label={{ basic: true, content: 'minutes' }}
             labelPosition='right'
             placeholder=''
+            value={5}
         />
       </div>
     );
     return connectDragSource(connectDropTarget(
       <div>
-        <Card fluid>
+        <Card color="green" fluid>
+          <Label attached="bottom right">
+            <Icon name="check" color="green" />
+            Verified
+          </Label>
           <Card.Content>
             <Icon name={this.getIcon(type)} />
             {text}
+
             <Icon onClick={() => onDelete(id)} className="action-icon" name="x" link />
             <Icon className="action-icon" name="pencil" link />
           </Card.Content>

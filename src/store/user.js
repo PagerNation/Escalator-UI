@@ -12,18 +12,20 @@ export const DELETE_DEVICE_SUCCESS = 'DELETE_DEVICE_SUCCESS';
 // ------------------------------------
 export const fetchUser = () => {
   return (dispatch, getState) => {
-    return new Promise((resolve) => {
-      fetch(config.api_url + 'user/582cdb4f58afe7001d0dac5f/').then((response) =>{
-        return response.json();
-      }).then((json) => {
-        dispatch({
-          type: FETCH_USER_SUCCESS,
-          payload: json
-        });
-        resolve();
-      });
-    })
-  }
+// ------------------------------------
+// Reducer
+return new Promise((resolve) => {
+  fetch(config.api_url + 'user/582cdb4f58afe7001d0dac5f/').then((response) =>{
+    return response.json();
+  }).then((json) => {
+    dispatch({
+      type: FETCH_USER_SUCCESS,
+      payload: json
+    });
+    resolve();
+  });
+})
+}
 };
 
 export const addDevice = (device) => {
@@ -57,7 +59,7 @@ export const deleteDevice = (id) => {
         return response.text();
       }).then((text) => {
         dispatch({
-          type: DELETE_DEVICE_SUCCESS,
+          type: DELETE_DEVICE_SUCCESS,  
           payload: id
         });
         resolve();
@@ -78,15 +80,13 @@ const ACTION_HANDLERS = {
   },
   [DELETE_DEVICE_SUCCESS]: (state, action) => {
     const newState = _.extend({}, state);
-    newState.devices = _.filter(newState.devices, (device) => {
-      device._id !== action.payload;
+    _.remove(newState.devices, (device) => {
+      device._id === action.payload;
     });
     return newState;
   }
 };
 
-// ------------------------------------
-// Reducer
 // ------------------------------------
 const initialState = null;
 

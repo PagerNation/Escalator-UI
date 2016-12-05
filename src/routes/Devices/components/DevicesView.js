@@ -93,7 +93,7 @@ class DevicesView extends React.Component {
       <div>
         <Header as="h1">My Devices</Header>
         {this.props.user && <DeviceList devices={this.props.user.devices} onDeleteDevice={this.handleDeleteDevice} />}
-        {this.props.user && this.props.user.devices.length}
+
         <div className="add-button">
           {this.props.user &&
           <Dropdown text='Add Device' floating labeled button className='icon green' icon='add circle'>

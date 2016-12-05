@@ -16,6 +16,7 @@ const cardTarget = {
   connectDropTarget: connect.dropTarget()
 }))
 export default class Container extends Component {
+
   static propTypes = {
     connectDropTarget: PropTypes.func.isRequired,
     devices: PropTypes.array.isRequired
@@ -29,6 +30,17 @@ export default class Container extends Component {
     // TODO: Rely just on props and updating via Redux
     this.state = {};
     this.state.cards = _.map(this.props.devices, (device) => {
+      return {
+        id: device._id,
+        text: device.name,
+        type: device.type,
+        contactInformation: device.contactInformation
+      }
+    });
+  }
+
+  componentWillReceiveProps(nextProps) {
+    this.state.cards = _.map(nextProps.devices, (device) => {
       return {
         id: device._id,
         text: device.name,
