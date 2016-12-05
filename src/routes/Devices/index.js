@@ -1,4 +1,3 @@
-import {injectReducer} from "../../store/reducers";
 
 export default (store) => ({
   path: 'devices',
@@ -10,9 +9,6 @@ export default (store) => ({
       /*  Webpack - use require callback to define
        dependencies for bundling   */
       const Devices = require('./containers/DevicesContainer').default;
-      const reducer = require('./modules/devices').default;
-
-      injectReducer(store, {key: 'devices', reducer});
 
       /*  Return getComponent   */
       cb(null, Devices);
@@ -20,4 +16,4 @@ export default (store) => ({
       /* Webpack named bundle   */
     }, 'devices')
   }
-})
+});

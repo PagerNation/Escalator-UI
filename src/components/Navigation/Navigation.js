@@ -28,7 +28,6 @@ class Navigation extends React.Component {
           <Menu inverted>
             <Menu.Item header>Escalator</Menu.Item>
             <Menu.Item name="home" active={pathname === '/'} onClick={() => this.props.router.push('/')} />
-            <Menu.Item name="counter" active={pathname === '/counter'} onClick={() => this.props.router.push('/counter')} />
             {userMenu}
           </Menu>
         </div>

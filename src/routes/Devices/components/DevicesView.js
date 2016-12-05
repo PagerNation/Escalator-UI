@@ -1,12 +1,90 @@
 import React from "react";
-import { Header, Dropdown } from 'semantic-ui-react';
+import _ from "lodash";
+import { Header, Dropdown, Modal, Form, Button, Icon} from 'semantic-ui-react';
 import "./DevicesView.scss";
 import DeviceList from './deviceList/DeviceList';
 
-class HomeView extends React.Component {
+class DevicesView extends React.Component {
+
+  static DEVICE_TYPES = {SMS: 'SMS', PHONE: 'Phone', EMAIL: 'Email'};
+
+  static getIconForDevice(type) {
+    switch(type) {
+      case DevicesView.DEVICE_TYPES.SMS: return 'comment';
+      case DevicesView.DEVICE_TYPES.PHONE: return 'phone';
+      case DevicesView.DEVICE_TYPES.EMAIL: return 'mail';
+    }
+  }
+
+  constructor() {
+    super();
+    _.bindAll(this, "handleAddDevice", "handleClose", "handleSubmit");
+    this.state = {
+      modalOpen: false,
+      creatingType: null
+    };
+  }
+
+  handleAddDevice(type) {
+    this.setState({
+      modalOpen: true,
+      creatingType: type
+    })
+  }
+
+  handleClose() {
+    this.setState({
+      modalOpen: false,
+      creatingType: null
+    });
+  }
+
+  handleSubmit(e, serializedForm) {
+    e.preventDefault();
+    console.log(serializedForm);
+    this.props.addDevice({
+      device: {
+        name: serializedForm.name,
+        type: _.lowerCase(this.state.creatingType),
+        contactInformation: serializedForm.contactInformation
+      },
+      index: this.props.user.devices.length
+    });
+    this.handleClose();
+  }
+
+  renderAddModal() {
+    return (
+      <Modal
+          open={this.state.modalOpen}
+          onClose={this.handleClose}
+          size='small'
+      >
+        <Modal.Header>Add new device</Modal.Header>
+        <Modal.Content image>
+          <Modal.Description>
+            <Header>{this.state.creatingType} Details</Header>
+            <Form onSubmit={this.handleSubmit}>
+              <Form.Field>
+                <label>Name</label>
+                <input name="name" type="text" required />
+              </Form.Field>
+              <Form.Field>
+                <label>
+                  {this.state.creatingType === DevicesView.DEVICE_TYPES.EMAIL ? "Email Address" : "Phone Number"}
+                </label>
+                <input name="contactInformation" type={this.state.creatingType === DevicesView.DEVICE_TYPES.EMAIL ? "email" : "tel"} required />
+              </Form.Field>
+              <Button onClick={this.handleClose} type="button">Cancel</Button>
+              <Button className="green" type='submit'>Create</Button>
+            </Form>
+          </Modal.Description>
+        </Modal.Content>
+      </Modal>
+    );
+  }
 
   render() {
-    console.log(this.props);
     return (
       <div>
         <Header as="h1">My Devices</Header>
@@ -16,16 +94,27 @@ class HomeView extends React.Component {
           {this.props.user &&
           <Dropdown text='Add Device' floating labeled button className='icon green' icon='add circle'>
             <Dropdown.Menu>
-              <Dropdown.Item icon='phone' text='Phone' />
-              <Dropdown.Item icon='mail' text='SMS' />
-              <Dropdown.Item icon='comment' text='Email' />
+              <Dropdown.Item
+                  onClick={() => this.handleAddDevice(DevicesView.DEVICE_TYPES.PHONE)}
+                  icon={DevicesView.getIconForDevice(DevicesView.DEVICE_TYPES.PHONE)}
+                  text='Phone' />
+              <Dropdown.Item
+                  onClick={() => this.handleAddDevice(DevicesView.DEVICE_TYPES.SMS)}
+                  icon={DevicesView.getIconForDevice(DevicesView.DEVICE_TYPES.SMS)}
+                  text='SMS' />
+              <Dropdown.Item
+                  onClick={() => this.handleAddDevice(DevicesView.DEVICE_TYPES.EMAIL)}
+                  icon={DevicesView.getIconForDevice(DevicesView.DEVICE_TYPES.EMAIL)}
+                  text='Email' />
             </Dropdown.Menu>
           </Dropdown>
           }
         </div>
+
+        {this.renderAddModal()}
       </div>
     );
   }
 }
 
-export default HomeView;
+export default DevicesView;

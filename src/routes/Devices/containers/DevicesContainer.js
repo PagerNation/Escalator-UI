@@ -1,9 +1,10 @@
 import {connect} from "react-redux";
-import { fetchUser } from '../../../store/user';
+import { fetchUser, addDevice } from '../../../store/user';
 import Devices from "../components/DevicesView";
 
 const mapDispatchToProps = {
-  fetchUser
+  fetchUser,
+  addDevice
 };
 
 const mapStateToProps = (state) => ({
