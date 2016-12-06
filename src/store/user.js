@@ -56,11 +56,11 @@ export const deleteDevice = (id) => {
       fetch(config.api_url + 'user/582cdb4f58afe7001d0dac5f/device/' + id, {
         method: 'DELETE'
       }).then((response) => {
-        return response.text();
-      }).then((text) => {
+        return response.json();
+      }).then((json) => {
         dispatch({
           type: DELETE_DEVICE_SUCCESS,  
-          payload: id
+          payload: json
         });
         resolve();
       });
@@ -79,11 +79,7 @@ const ACTION_HANDLERS = {
     return action.payload;
   },
   [DELETE_DEVICE_SUCCESS]: (state, action) => {
-    const newState = _.extend({}, state);
-    _.remove(newState.devices, (device) => {
-      device._id === action.payload;
-    });
-    return newState;
+    return action.payload;
   }
 };
 
