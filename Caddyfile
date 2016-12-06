@@ -1,0 +1,10 @@
+localhost:80 54.202.234.194:80 {
+  root  {$HOME}/dist
+
+  rewrite {
+    r  ^([^.]+)$
+    to /
+  }
+
+  log {$HOME}/access.log
+}

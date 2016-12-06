@@ -10,9 +10,15 @@ cache:
 install:
   - npm install
 
-script:
-  - npm run deploy:dev
-  - npm run deploy:prod
+before_script:
+  - echo -e "Host $DEPLOY_HOST\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
+  - npm prune
+  - openssl aes-256-cbc -K $encrypted_6c2362b3fc90_key -iv $encrypted_6c2362b3fc90_iv -in EscalatorUI.pem.enc -out EscalatorUI.pem -d
+  - chmod +x deploy.sh
 
 after_success:
   - npm run codecov
+  - ./deploy.sh
+
+after_script:
+  - rm -f EscalatorUI.pem

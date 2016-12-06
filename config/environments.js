@@ -26,6 +26,6 @@ module.exports = {
       chunkModules : true,
       colors       : true
     },
-    api_url : null
+    api_url : `${process.env.API_URL}/api/v1/`
   })
 }
