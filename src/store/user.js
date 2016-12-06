@@ -1,4 +1,5 @@
 import 'whatwg-fetch';
+import _ from 'lodash';
 
 // ------------------------------------
 // Constants
@@ -6,32 +7,48 @@ import 'whatwg-fetch';
 export const FETCH_USER_SUCCESS = 'FETCH_USER_SUCCESS';
 export const ADD_DEVICE_SUCCESS = 'ADD_DEVICE';
 export const DELETE_DEVICE_SUCCESS = 'DELETE_DEVICE_SUCCESS';
+export const FETCH_GROUPS_SUCCESS = 'FETCH_GROUPS_SUCCESS';
+
 
 // ------------------------------------
 // Actions
 // ------------------------------------
 export const fetchUser = () => {
   return (dispatch, getState) => {
-// ------------------------------------
-// Reducer
-return new Promise((resolve) => {
-  fetch(config.api_url + 'user/582cdb4f58afe7001d0dac5f/').then((response) =>{
-    return response.json();
-  }).then((json) => {
-    dispatch({
-      type: FETCH_USER_SUCCESS,
-      payload: json
+    return new Promise((resolve) => {
+      fetch(config.api_url + 'user/5846fe065921bfae9fe28eea/').then((response) =>{
+        return response.json();
+      }).then((json) => {
+        dispatch({
+          type: FETCH_USER_SUCCESS,
+          payload: json
+        });
+        resolve();
+      });
     });
-    resolve();
-  });
-})
-}
+  }
+};
+
+export const fetchUserGroups = () => {
+  return (dispatch, getState) => {
+    return new Promise((resolve) => {
+      fetch(config.api_url + 'user/5846fe065921bfae9fe28eea/group').then((response) =>{
+        return response.json();
+      }).then((json) => {
+        dispatch({
+          type: FETCH_GROUPS_SUCCESS,
+          payload: json
+        });
+        resolve();
+      });
+    });
+  }
 };
 
 export const addDevice = (device) => {
   return (dispatch, getState) => {
     return new Promise((resolve) => {
-      fetch(config.api_url + 'user/582cdb4f58afe7001d0dac5f/device', {
+      fetch(config.api_url + 'user/5846fe065921bfae9fe28eea/device', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -53,7 +70,7 @@ export const addDevice = (device) => {
 export const deleteDevice = (id) => {
   return (dispatch, getState) => {
     return new Promise((resolve) => {
-      fetch(config.api_url + 'user/582cdb4f58afe7001d0dac5f/device/' + id, {
+      fetch(config.api_url + 'user/5846fe065921bfae9fe28eea/device/' + id, {
         method: 'DELETE'
       }).then((response) => {
         return response.json();
@@ -80,14 +97,20 @@ const ACTION_HANDLERS = {
   },
   [DELETE_DEVICE_SUCCESS]: (state, action) => {
     return action.payload;
+  },
+  [FETCH_GROUPS_SUCCESS]: (state, action) => {
+    const newState = _.extend({}, state);
+    newState.groups = action.payload.groups;
+    return newState;
   }
 };
 
+// ------------------------------------
+// Reducer
 // ------------------------------------
 const initialState = null;
 
 export default function userReducer(state = initialState, action) {
   const handler = ACTION_HANDLERS[action.type];
-  console.warn(handler && handler(state, action));
   return handler ? handler(state, action) : state;
 };

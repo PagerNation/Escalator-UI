@@ -1,9 +1,10 @@
 import {connect} from "react-redux";
-import {fetchUser} from "../../../store/user";
+import {fetchUser, fetchUserGroups} from "../../../store/user";
 import HomeView from "../components/HomeView";
 
 const mapDispatchToProps = {
-  fetchUser
+  fetchUser,
+  fetchUserGroups
 };
 
 const mapStateToProps = (state) => ({

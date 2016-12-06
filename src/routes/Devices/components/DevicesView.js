@@ -88,7 +88,6 @@ class DevicesView extends React.Component {
   }
 
   render() {
-    console.log(_.get(this, 'props.user.devices'));
     return (
       <div>
         <Header as="h1">My Devices</Header>

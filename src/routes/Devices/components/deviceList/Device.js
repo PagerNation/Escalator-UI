@@ -73,7 +73,7 @@ export default class Device extends Component {
             label={{ basic: true, content: 'minutes' }}
             labelPosition='right'
             placeholder=''
-            value={5}
+            defaultValue={5}
         />
       </div>
     );
