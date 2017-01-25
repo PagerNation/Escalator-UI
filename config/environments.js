@@ -10,7 +10,7 @@ module.exports = {
   // http://stackoverflow.com/questions/34133808/webpack-ots-parsing-error-loading-fonts/34133809#34133809
   development : (config) => ({
     compiler_public_path : `http://${config.server_host}:${config.server_port}/`,
-    api_url : `http://64.137.183.14/api/v1/`
+    api_url : `http://localhost:3000/api/v1/`
   }),
 
   // ======================================================
