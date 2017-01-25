@@ -5,7 +5,7 @@ import _ from 'lodash';
 // Constants
 // ------------------------------------
 export const FETCH_USER_SUCCESS = 'FETCH_USER_SUCCESS';
-export const ADD_DEVICE_SUCCESS = 'ADD_DEVICE';
+export const ADD_DEVICE_SUCCESS = 'ADD_DEVICE_SUCCESS';
 export const DELETE_DEVICE_SUCCESS = 'DELETE_DEVICE_SUCCESS';
 export const FETCH_GROUPS_SUCCESS = 'FETCH_GROUPS_SUCCESS';
 

@@ -8,7 +8,8 @@ export const createRoutes = (store) => ({
   indexRoute: Home(store),
   childRoutes: [
     require('./Counter').default(store),
-    require('./Devices').default(store)
+    require('./Devices').default(store),
+    require('./Group').default(store)
   ]
 });
 
