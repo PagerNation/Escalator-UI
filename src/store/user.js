@@ -1,5 +1,6 @@
 import 'whatwg-fetch';
 import _ from 'lodash';
+import { getJSON } from './apiRequest';
 
 // ------------------------------------
 // Constants
@@ -16,9 +17,7 @@ export const FETCH_GROUPS_SUCCESS = 'FETCH_GROUPS_SUCCESS';
 export const fetchUser = () => {
   return (dispatch, getState) => {
     return new Promise((resolve) => {
-      fetch(config.api_url + 'user/5846fe065921bfae9fe28eea/').then((response) =>{
-        return response.json();
-      }).then((json) => {
+      getJSON('user/5888fb6ca7583615bf9aa5c9/').then((json) => {
         dispatch({
           type: FETCH_USER_SUCCESS,
           payload: json
@@ -32,9 +31,7 @@ export const fetchUser = () => {
 export const fetchUserGroups = () => {
   return (dispatch, getState) => {
     return new Promise((resolve) => {
-      fetch(config.api_url + 'user/5846fe065921bfae9fe28eea/group').then((response) =>{
-        return response.json();
-      }).then((json) => {
+      getJSON('user/5888fb6ca7583615bf9aa5c9/group').then((json) => {
         dispatch({
           type: FETCH_GROUPS_SUCCESS,
           payload: json
@@ -48,7 +45,7 @@ export const fetchUserGroups = () => {
 export const addDevice = (device) => {
   return (dispatch, getState) => {
     return new Promise((resolve) => {
-      fetch(config.api_url + 'user/5846fe065921bfae9fe28eea/device', {
+      fetch(config.api_url + 'user/5888fb6ca7583615bf9aa5c9/device', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -70,13 +67,13 @@ export const addDevice = (device) => {
 export const deleteDevice = (id) => {
   return (dispatch, getState) => {
     return new Promise((resolve) => {
-      fetch(config.api_url + 'user/5846fe065921bfae9fe28eea/device/' + id, {
+      fetch(config.api_url + 'user/5888fb6ca7583615bf9aa5c9/device/' + id, {
         method: 'DELETE'
       }).then((response) => {
         return response.json();
       }).then((json) => {
         dispatch({
-          type: DELETE_DEVICE_SUCCESS,  
+          type: DELETE_DEVICE_SUCCESS,
           payload: json
         });
         resolve();
