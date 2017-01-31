@@ -1,6 +1,7 @@
 import React from "react";
 import { connect } from 'react-redux';
 import { logIn } from '../../store/user';
+import { clearLoginError } from '../../store/api';
 import { Grid, Header, Form, Input, Button, Segment, Image, Message } from 'semantic-ui-react';
 import "./Login.scss";
 import '../../static/escalator.png';
@@ -11,6 +12,10 @@ class Login extends React.Component {
     _.bindAll(this, 'onSubmit');
   }
 
+  componentWillUnmount() {
+    this.props.clearLoginError();
+  }
+
   render() {
     return (
       <Grid verticalAlign='middle' centered>
@@ -19,7 +24,7 @@ class Login extends React.Component {
           <Header as='h2'>
             Escalator Login
           </Header>
-          <Form onSubmit={this.onSubmit}>
+          <Form error={!!this.props.loginError} onSubmit={this.onSubmit}>
             <Segment stacked>
                 <Form.Field>
                   <Input
@@ -60,8 +65,13 @@ class Login extends React.Component {
   }
 }
 
+const mapStateToProps = (state) => ({
+  loginError: state.api.loginError
+});
+
 const mapDispatchToProps = {
-  logIn
+  logIn,
+  clearLoginError
 };
 
-export default connect(null, mapDispatchToProps)(Login);
+export default connect(mapStateToProps, mapDispatchToProps)(Login);

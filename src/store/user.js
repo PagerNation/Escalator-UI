@@ -1,12 +1,12 @@
 import 'whatwg-fetch';
 import _ from 'lodash';
-import { getJSON, postJSON, deleteObject } from './apiRequest';
+import { getJSON, postJSON, deleteObject } from '../utils/apiRequest';
+import {LOG_IN_FAILURE} from "./api";
 
 // ------------------------------------
 // Constants
 // ------------------------------------
 export const LOG_IN_SUCCESS = 'LOG_IN_SUCCESS';
-export const LOG_IN_FAILURE = 'LOG_IN_FAILURE';
 export const LOG_OUT = 'LOG_OUT';
 
 export const FETCH_USER_SUCCESS = 'FETCH_USER_SUCCESS';
@@ -28,7 +28,6 @@ export const logIn = (email, password) => {
         });
         resolve();
       }).catch((response) => {
-        // TODO: This action is unhandled since the backend is accepting everything
         dispatch({
           type: LOG_IN_FAILURE,
           payload: response
