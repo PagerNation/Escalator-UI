@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from 'react-redux';
-import { fetchUser } from '../../store/user';
+import { fetchUser, logOut } from '../../store/user';
 import { Menu, Dropdown } from 'semantic-ui-react';
 import { withRouter } from 'react-router';
 import "./Navigation.scss";
@@ -18,19 +18,19 @@ class Navigation extends React.Component {
       <Menu.Item as={Dropdown} text={this.props.user.name} position="right">
         <Dropdown.Menu>
           <Dropdown.Item onClick={() => this.props.router.push('/devices')}>Devices</Dropdown.Item>
-          <Dropdown.Item>Log Out</Dropdown.Item>
+          <Dropdown.Item onClick={this.props.logOut}>Log Out</Dropdown.Item>
         </Dropdown.Menu>
       </Menu.Item>
     );
 
     return  (
-        <div>
-          <Menu inverted>
-            <Menu.Item header>Escalator</Menu.Item>
-            <Menu.Item name="home" active={pathname === '/'} onClick={() => this.props.router.push('/')} />
-            {userMenu}
-          </Menu>
-        </div>
+      <div>
+        <Menu inverted>
+          <Menu.Item header>Escalator</Menu.Item>
+          <Menu.Item name="home" active={pathname === '/'} onClick={() => this.props.router.push('/')} />
+          {userMenu}
+        </Menu>
+      </div>
     );
   }
 }
@@ -45,7 +45,8 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = {
-  fetchUser
+  fetchUser,
+  logOut
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Navigation));

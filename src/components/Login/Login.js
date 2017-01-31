@@ -1,11 +1,15 @@
 import React from "react";
 import { connect } from 'react-redux';
-import { fetchUser } from '../../store/user';
-import { Grid, Header, Form, Input, Button, Segment, Image } from 'semantic-ui-react';
+import { logIn } from '../../store/user';
+import { Grid, Header, Form, Input, Button, Segment, Image, Message } from 'semantic-ui-react';
 import "./Login.scss";
 import '../../static/escalator.png';
 
 class Login extends React.Component {
+
+  componentWillMount() {
+    _.bindAll(this, 'onSubmit');
+  }
 
   render() {
     return (
@@ -15,25 +19,46 @@ class Login extends React.Component {
           <Header as='h2'>
             Escalator Login
           </Header>
-          <Segment stacked>
-            <Form>
-              <Form.Field>
-                <Input placeholder='Email'  icon='user' iconPosition='left' type="email" />
-              </Form.Field>
-              <Form.Field>
-                <Input placeholder='Password' icon='lock' iconPosition='left' type="password" />
-              </Form.Field>
-              <Button primary fluid type='submit'>Submit</Button>
-            </Form>
-          </Segment>
+          <Form onSubmit={this.onSubmit}>
+            <Segment stacked>
+                <Form.Field>
+                  <Input
+                    name="email"
+                    placeholder='Email'
+                    icon='user'
+                    iconPosition='left'
+                    type="email"
+                    required />
+                </Form.Field>
+                <Form.Field>
+                  <Input
+                    name="password"
+                    placeholder='Password'
+                    icon='lock'
+                    iconPosition='left'
+                    type="password"
+                    required />
+                </Form.Field>
+                <Button primary fluid type='submit'>Submit</Button>
+            </Segment>
+            <Message
+              error
+              content='Your login information is incorrect.'
+            />
+          </Form>
         </Grid.Column>
       </Grid>
     );
   }
+
+  onSubmit(event, data) {
+    event.preventDefault();
+    this.props.logIn(data.email, data.password);
+  }
 }
 
 const mapDispatchToProps = {
-  fetchUser
+  logIn
 };
 
 export default connect(null, mapDispatchToProps)(Login);

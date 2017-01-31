@@ -1,10 +1,14 @@
 import 'whatwg-fetch';
 import _ from 'lodash';
-import { getJSON } from './apiRequest';
+import { getJSON, postJSON, deleteObject } from './apiRequest';
 
 // ------------------------------------
 // Constants
 // ------------------------------------
+export const LOG_IN_SUCCESS = 'LOG_IN_SUCCESS';
+export const LOG_IN_FAILURE = 'LOG_IN_FAILURE';
+export const LOG_OUT = 'LOG_OUT';
+
 export const FETCH_USER_SUCCESS = 'FETCH_USER_SUCCESS';
 export const ADD_DEVICE_SUCCESS = 'ADD_DEVICE';
 export const DELETE_DEVICE_SUCCESS = 'DELETE_DEVICE_SUCCESS';
@@ -14,13 +18,42 @@ export const FETCH_GROUPS_SUCCESS = 'FETCH_GROUPS_SUCCESS';
 // ------------------------------------
 // Actions
 // ------------------------------------
+export const logIn = (email, password) => {
+  return (dispatch, getState) => {
+    return new Promise((resolve) => {
+      postJSON('auth/login', {email, password}).then((response) => {
+        dispatch({
+          type: LOG_IN_SUCCESS,
+          payload: response
+        });
+        resolve();
+      }).catch((response) => {
+        // TODO: This action is unhandled since the backend is accepting everything
+        dispatch({
+          type: LOG_IN_FAILURE,
+          payload: response
+        });
+        resolve();
+      });
+    })
+  }
+};
+
+export const logOut = () => {
+  return (dispatch, getState) => {
+    dispatch({
+      type: LOG_OUT
+    });
+  }
+};
+
 export const fetchUser = () => {
   return (dispatch, getState) => {
     return new Promise((resolve) => {
-      getJSON('user/5888fb6ca7583615bf9aa5c9/').then((json) => {
+      getJSON('user/5888fb6ca7583615bf9aa5c9/').then((response) => {
         dispatch({
           type: FETCH_USER_SUCCESS,
-          payload: json
+          payload: response
         });
         resolve();
       });
@@ -31,10 +64,10 @@ export const fetchUser = () => {
 export const fetchUserGroups = () => {
   return (dispatch, getState) => {
     return new Promise((resolve) => {
-      getJSON('user/5888fb6ca7583615bf9aa5c9/group').then((json) => {
+      getJSON('user/5888fb6ca7583615bf9aa5c9/group').then((response) => {
         dispatch({
           type: FETCH_GROUPS_SUCCESS,
-          payload: json
+          payload: response
         });
         resolve();
       });
@@ -45,18 +78,10 @@ export const fetchUserGroups = () => {
 export const addDevice = (device) => {
   return (dispatch, getState) => {
     return new Promise((resolve) => {
-      fetch(config.api_url + 'user/5888fb6ca7583615bf9aa5c9/device', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(device)
-      }).then((response) =>{
-        return response.json();
-      }).then((json) => {
+      postJSON('user/5888fb6ca7583615bf9aa5c9/device', device).then((response) => {
         dispatch({
           type: ADD_DEVICE_SUCCESS,
-          payload: json
+          payload: response
         });
         resolve();
       });
@@ -67,11 +92,7 @@ export const addDevice = (device) => {
 export const deleteDevice = (id) => {
   return (dispatch, getState) => {
     return new Promise((resolve) => {
-      fetch(config.api_url + 'user/5888fb6ca7583615bf9aa5c9/device/' + id, {
-        method: 'DELETE'
-      }).then((response) => {
-        return response.json();
-      }).then((json) => {
+      deleteObject('user/5888fb6ca7583615bf9aa5c9/device/' + id).then((json) => {
         dispatch({
           type: DELETE_DEVICE_SUCCESS,
           payload: json
@@ -86,6 +107,14 @@ export const deleteDevice = (id) => {
 // Action Handlers
 // ------------------------------------
 const ACTION_HANDLERS = {
+  [LOG_IN_SUCCESS]: (state, action) => {
+    localStorage.setItem('escalatorToken', action.payload.token);
+    return action.payload.user;
+  },
+  [LOG_OUT]: (state, action) => {
+    localStorage.removeItem('escalatorToken');
+    return null;
+  },
   [FETCH_USER_SUCCESS]: (state, action) => {
     return action.payload;
   },
