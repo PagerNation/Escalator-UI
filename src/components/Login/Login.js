@@ -45,6 +45,9 @@ class Login extends React.Component {
               error
               content='Your login information is incorrect.'
             />
+            <Message
+              content={<span>New to us? <a href="#">Sign Up</a></span>}
+            />
           </Form>
         </Grid.Column>
       </Grid>
