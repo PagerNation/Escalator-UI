@@ -1,6 +1,5 @@
 import 'whatwg-fetch';
 
-
 export const getJSON = (path) => {
     return fetch(config.api_url + path, {
       headers: {
