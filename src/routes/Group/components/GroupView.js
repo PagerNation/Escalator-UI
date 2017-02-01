@@ -9,7 +9,7 @@ class GroupView extends React.Component {
 
   render() {
     console.log(this.props.group);
-    return (
+    return this.props.group && (
       <div>
         {this.props.group.name}
       </div>

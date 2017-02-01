@@ -1,45 +1,46 @@
 import 'whatwg-fetch';
 import _ from 'lodash';
-import {getJSON} from "../utils/apiRequest";
 
 // ------------------------------------
 // Constants
 // ------------------------------------
-export const FETCH_GROUP_SUCCESS = 'FETCH_GROUP_SUCCESS';
+export const LOG_IN_FAILURE = "LOG_IN_ERROR";
+export const CLEAR_LOG_IN_ERROR = "CLEAR_LOG_IN_ERROR";
+
 
 // ------------------------------------
 // Actions
 // ------------------------------------
-export const fetchGroup = (groupId) => {
+export const clearLoginError = () => {
   return (dispatch, getState) => {
-    return new Promise((resolve) => {
-      getJSON('group/' + groupId).then((response) => {
-        dispatch({
-          type: FETCH_GROUP_SUCCESS,
-          payload: response
-        });
-        resolve();
-      });
+    dispatch({
+      type: CLEAR_LOG_IN_ERROR
     });
   }
 };
-
 
 // ------------------------------------
 // Action Handlers
 // ------------------------------------
 const ACTION_HANDLERS = {
-  [FETCH_GROUP_SUCCESS]: (state, action) => {
-    return action.payload;
+  [LOG_IN_FAILURE]: (state, action) => {
+    const newState = {};
+    _.assign(newState, state, {loginError: action.payload});
+    return newState;
+  },
+  [CLEAR_LOG_IN_ERROR]: (state, action) => {
+    const newState = {};
+    _.assign(newState, state, {loginError: null});
+    return newState;
   }
 };
 
 // ------------------------------------
 // Reducer
 // ------------------------------------
-const initialState = null;
+const initialState = {};
 
-export default function groupReducer(state = initialState, action) {
+export default function userReducer(state = initialState, action) {
   const handler = ACTION_HANDLERS[action.type];
   return handler ? handler(state, action) : state;
 };
