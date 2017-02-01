@@ -1,5 +1,6 @@
 import 'whatwg-fetch';
 import _ from 'lodash';
+import jwtDecode from 'jwt-decode';
 import { getJSON, postJSON, deleteObject } from '../utils/apiRequest';
 import {LOG_IN_FAILURE} from "./api";
 
@@ -49,7 +50,8 @@ export const logOut = () => {
 export const fetchUser = () => {
   return (dispatch, getState) => {
     return new Promise((resolve) => {
-      getJSON('user/5888fb6ca7583615bf9aa5c9/').then((response) => {
+      const userId = jwtDecode(localStorage.getItem('escalatorToken')).id;
+      getJSON(`user/${userId}/`).then((response) => {
         dispatch({
           type: FETCH_USER_SUCCESS,
           payload: response
@@ -63,7 +65,8 @@ export const fetchUser = () => {
 export const fetchUserGroups = () => {
   return (dispatch, getState) => {
     return new Promise((resolve) => {
-      getJSON('user/5888fb6ca7583615bf9aa5c9/group').then((response) => {
+      const userId = jwtDecode(localStorage.getItem('escalatorToken')).id;
+      getJSON(`user/${userId}/group`).then((response) => {
         dispatch({
           type: FETCH_GROUPS_SUCCESS,
           payload: response
@@ -77,7 +80,8 @@ export const fetchUserGroups = () => {
 export const addDevice = (device) => {
   return (dispatch, getState) => {
     return new Promise((resolve) => {
-      postJSON('user/5888fb6ca7583615bf9aa5c9/device', device).then((response) => {
+      const userId = jwtDecode(localStorage.getItem('escalatorToken')).id;
+      postJSON(`user/${userId}/device`, device).then((response) => {
         dispatch({
           type: ADD_DEVICE_SUCCESS,
           payload: response
@@ -91,7 +95,8 @@ export const addDevice = (device) => {
 export const deleteDevice = (id) => {
   return (dispatch, getState) => {
     return new Promise((resolve) => {
-      deleteObject('user/5888fb6ca7583615bf9aa5c9/device/' + id).then((json) => {
+      const userId = jwtDecode(localStorage.getItem('escalatorToken')).id;
+      deleteObject(`user/${userId}/device/${id}`).then((json) => {
         dispatch({
           type: DELETE_DEVICE_SUCCESS,
           payload: json
