@@ -14,8 +14,7 @@ class AppContainer extends Component {
   };
 
   isLoggedIn() {
-    const exp = jwtDecode(localStorage.getItem('escalatorToken')).iat;
-    return !!localStorage.getItem('escalatorToken') && exp < Date.now() / 1000;
+    return !!localStorage.getItem('escalatorToken') && jwtDecode(localStorage.getItem('escalatorToken')).iat < Date.now() / 1000;
   }
 
   render() {
