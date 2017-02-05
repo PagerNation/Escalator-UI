@@ -18,11 +18,11 @@ export const FETCH_USERS_SUCCESS = 'FETCH_USERS_SUCCESS';
 // ------------------------------------
 // Actions
 // ------------------------------------
-export const fetchOtherUser = () => {
-  console.log('hit')
+export const fetchOtherUser = (userId) => {
   return (dispatch, getState) => {
     return new Promise((resolve) => {
-      getJSON('user/5841d4a610b9621c9152b1e3/').then((response) => {
+      console.log(userId);
+      getJSON('user/' + userId + '/').then((response) => {
         dispatch({
           type: FETCH_USERS_SUCCESS,
           payload: response
