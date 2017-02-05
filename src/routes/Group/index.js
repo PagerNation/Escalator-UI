@@ -1,4 +1,3 @@
-
 export default (store) => ({
   path: 'group/:groupId',
 
