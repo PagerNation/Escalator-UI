@@ -4,7 +4,7 @@ import { logIn } from '../../store/user';
 import { clearLoginError } from '../../store/api';
 import { Grid, Header, Form, Input, Button, Segment, Image, Message } from 'semantic-ui-react';
 import "./Login.scss";
-import '../../static/escalator.png';
+import Logo from  '../../static/escalator.png';
 
 class Login extends React.Component {
 
@@ -20,7 +20,7 @@ class Login extends React.Component {
     return (
       <Grid verticalAlign='middle' centered>
         <Grid.Column>
-          <Image src='escalator.png' size='tiny' />
+          <Image src={Logo} size='tiny' />
           <Header as='h2'>
             Escalator Login
           </Header>
