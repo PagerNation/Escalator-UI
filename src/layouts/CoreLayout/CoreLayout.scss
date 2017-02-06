@@ -1,3 +1,11 @@
-.core-layout__viewport {
-  padding: 4rem;
+@media screen and (min-width: 400px) {
+  .core-layout__viewport {
+    padding: 4rem 14rem;
+  }
+}
+
+@media screen and (max-width: 400px) {
+  .core-layout__viewport {
+    padding: 4rem 1rem;
+  }
 }
