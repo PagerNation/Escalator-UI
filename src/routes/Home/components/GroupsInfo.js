@@ -6,7 +6,6 @@ class GroupsInfo extends React.Component {
 
   render() {
     const groupCards = this.props.groups.map((group, index) => {
-      console.log(group);
       return _.isObject(group) && (
           <Card key={index} color="green" fluid>
             <Card.Content>

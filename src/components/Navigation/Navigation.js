@@ -28,11 +28,10 @@ class Navigation extends React.Component {
     return  (
       <div>
         <Menu inverted>
-          <Menu.Item header>
+          <Menu.Item header onClick={() => this.props.router.push('/')}>
             <Image src={Logo} className="inverted" size='mini' spaced='right' />
             Escalator
           </Menu.Item>
-          <Menu.Item name="home" active={pathname === '/'} onClick={() => this.props.router.push('/')} />
           {userMenu}
         </Menu>
       </div>
