@@ -1,9 +1,10 @@
 import React from "react";
 import { connect } from 'react-redux';
 import { fetchUser, logOut } from '../../store/user';
-import { Menu, Dropdown, Icon } from 'semantic-ui-react';
+import { Menu, Dropdown, Icon, Image } from 'semantic-ui-react';
 import { withRouter } from 'react-router';
 import "./Navigation.scss";
+import Logo from  '../../static/escalator.png';
 
 class Navigation extends React.Component {
 
@@ -27,7 +28,10 @@ class Navigation extends React.Component {
     return  (
       <div>
         <Menu inverted>
-          <Menu.Item header>Escalator</Menu.Item>
+          <Menu.Item header>
+            <Image src={Logo} className="inverted" size='mini' spaced='right' />
+            Escalator
+          </Menu.Item>
           <Menu.Item name="home" active={pathname === '/'} onClick={() => this.props.router.push('/')} />
           {userMenu}
         </Menu>
