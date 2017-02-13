@@ -1,6 +1,6 @@
 import React from "react";
 import _ from "lodash";
-import { Header, Dropdown, Modal, Form, Button, Icon} from 'semantic-ui-react';
+import { Header, Dropdown, Modal, Form, Button, Icon } from 'semantic-ui-react';
 import "./DevicesView.scss";
 import DeviceList from './deviceList/DeviceList';
 
@@ -90,7 +90,15 @@ class DevicesView extends React.Component {
   render() {
     return (
       <div>
-        <Header as="h1">My Devices</Header>
+        <Header as='h1'>
+          <Icon name='setting' />
+          <Header.Content>
+            My Devices
+            <Header.Subheader>
+              Manage your devices
+            </Header.Subheader>
+          </Header.Content>
+        </Header>
         {this.props.user && <DeviceList devices={this.props.user.devices} onDeleteDevice={this.handleDeleteDevice} />}
 
         <div className="add-button">

@@ -1,7 +1,7 @@
 import 'whatwg-fetch';
 import _ from 'lodash';
 import jwtDecode from 'jwt-decode';
-import { getJSON, postJSON, deleteObject } from '../utils/apiRequest';
+import { getJSON, postJSON, putJSON, deleteObject } from '../utils/apiRequest';
 import {LOG_IN_FAILURE} from "./api";
 
 // ------------------------------------
@@ -14,6 +14,7 @@ export const FETCH_USER_SUCCESS = 'FETCH_USER_SUCCESS';
 export const ADD_DEVICE_SUCCESS = 'ADD_DEVICE';
 export const DELETE_DEVICE_SUCCESS = 'DELETE_DEVICE_SUCCESS';
 export const FETCH_GROUPS_SUCCESS = 'FETCH_GROUPS_SUCCESS';
+export const UPDATE_PROFILE_SUCCESS = 'UPDATE_PROFILE_SUCCESS';
 
 
 // ------------------------------------
@@ -54,6 +55,21 @@ export const fetchUser = () => {
       getJSON(`user/${userId}/`).then((response) => {
         dispatch({
           type: FETCH_USER_SUCCESS,
+          payload: response
+        });
+        resolve();
+      });
+    });
+  }
+};
+
+export const updateProfile = (profile) => {
+  return (dispatch, getState) => {
+    return new Promise((resolve) => {
+      const userId = jwtDecode(localStorage.getItem('escalatorToken')).id;
+      putJSON(`user/${userId}/`, profile).then((response) => {
+        dispatch({
+          type: UPDATE_PROFILE_SUCCESS,
           payload: response
         });
         resolve();
@@ -132,6 +148,9 @@ const ACTION_HANDLERS = {
     const newState = _.extend({}, state);
     newState.groups = action.payload.groups;
     return newState;
+  },
+  [UPDATE_PROFILE_SUCCESS]: (state, action) => {
+    return action.payload;
   }
 };
 

@@ -1,9 +1,10 @@
 import React from "react";
 import { connect } from 'react-redux';
 import { fetchUser, logOut } from '../../store/user';
-import { Menu, Dropdown } from 'semantic-ui-react';
+import { Menu, Dropdown, Icon, Image } from 'semantic-ui-react';
 import { withRouter } from 'react-router';
 import "./Navigation.scss";
+import Logo from  '../../static/escalator.png';
 
 class Navigation extends React.Component {
 
@@ -15,9 +16,9 @@ class Navigation extends React.Component {
     const pathname = this.props.location.pathname;
 
     const userMenu = this.props.user && (
-      <Menu.Item as={Dropdown} text={this.props.user.name} position="right">
+      <Menu.Item as={Dropdown} text={<span><Icon name="user" />{this.props.user.name}</span>} position="right">
         <Dropdown.Menu>
-          <Dropdown.Item onClick={() => this.props.router.push('/devices')}>Devices</Dropdown.Item>
+          <Dropdown.Item onClick={() => this.props.router.push('/profile')}>Profile</Dropdown.Item>
           <Dropdown.Item onClick={this.props.logOut}>Log Out</Dropdown.Item>
         </Dropdown.Menu>
       </Menu.Item>
@@ -26,8 +27,10 @@ class Navigation extends React.Component {
     return  (
       <div>
         <Menu inverted>
-          <Menu.Item header>Escalator</Menu.Item>
-          <Menu.Item name="home" active={pathname === '/'} onClick={() => this.props.router.push('/')} />
+          <Menu.Item header onClick={() => this.props.router.push('/')}>
+            <Image src={Logo} className="inverted" size='mini' spaced='right' />
+            Escalator
+          </Menu.Item>
           {userMenu}
         </Menu>
       </div>

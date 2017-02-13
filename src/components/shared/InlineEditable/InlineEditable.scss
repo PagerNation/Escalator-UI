@@ -1,0 +1,17 @@
+.inlineEditable {
+
+  padding: 1em 0;
+
+  a {
+    color: inherit;
+    cursor: pointer;
+
+    i {
+      padding-left: 1em;
+    }
+  }
+
+  .hidden {
+    display: none;
+  }
+}

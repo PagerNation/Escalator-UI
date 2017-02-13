@@ -27,6 +27,21 @@ export const postJSON = (path, body) => {
   })
 };
 
+export const putJSON = (path, body) => {
+  return fetch(config.api_url + path, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + localStorage.getItem('escalatorToken')
+    },
+    body: JSON.stringify(body)
+  })
+    .then(checkStatus)
+    .then((response) =>{
+      return response.json();
+    })
+};
+
 export const deleteObject = (path) => {
   return fetch(config.api_url + path, {
     method: 'DELETE'
