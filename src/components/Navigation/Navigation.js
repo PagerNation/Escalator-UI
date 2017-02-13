@@ -19,7 +19,6 @@ class Navigation extends React.Component {
       <Menu.Item as={Dropdown} text={<span><Icon name="user" />{this.props.user.name}</span>} position="right">
         <Dropdown.Menu>
           <Dropdown.Item onClick={() => this.props.router.push('/profile')}>Profile</Dropdown.Item>
-          <Dropdown.Item onClick={() => this.props.router.push('/devices')}>Devices</Dropdown.Item>
           <Dropdown.Item onClick={this.props.logOut}>Log Out</Dropdown.Item>
         </Dropdown.Menu>
       </Menu.Item>

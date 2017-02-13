@@ -78,7 +78,7 @@ export default class Device extends Component {
       </div>
     );
     return connectDragSource(connectDropTarget(
-      <div>
+      <div className="draggable">
         <Card color="green" fluid>
           <Label attached="bottom right">
             <Icon name="check" color="green" />

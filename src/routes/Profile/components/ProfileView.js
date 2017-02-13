@@ -1,8 +1,9 @@
 import React from "react";
 import _ from 'lodash';
 import "./ProfileView.scss";
-import { Header, Icon } from 'semantic-ui-react';
+import { Header, Icon, Grid } from 'semantic-ui-react';
 import InlineEditable from '../../../components/shared/InlineEditable';
+import Devices from './Devices';
 
 class ProfileView extends React.Component {
 
@@ -21,9 +22,8 @@ class ProfileView extends React.Component {
     this.props.updateProfile(profile);
   }
 
-  render() {
-    const user = this.props.user;
-    return user && (
+  renderProfile(user) {
+    return (
       <div className="profile">
         <Header as='h1'>
           <Icon name='user' />
@@ -40,6 +40,20 @@ class ProfileView extends React.Component {
           <InlineEditable name="Email" value={user.email}  onChange={this.handleChange} />
         </div>
       </div>
+    );
+  }
+
+  render() {
+    const user = this.props.user;
+    return user && (
+      <Grid columns='equal'>
+        <Grid.Column mobile={16} computer={6}>
+          {this.renderProfile(user)}
+        </Grid.Column>
+        <Grid.Column mobile={16} computer={10}>
+          <Devices {...this.props} />
+        </Grid.Column>
+      </Grid>
     );
   }
 }
