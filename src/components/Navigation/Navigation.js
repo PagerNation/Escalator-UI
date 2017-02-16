@@ -1,16 +1,12 @@
 import React from "react";
 import { connect } from 'react-redux';
-import { fetchUser, logOut } from '../../store/user';
+import { logOut } from '../../store/user';
 import { Menu, Dropdown, Icon, Image } from 'semantic-ui-react';
 import { withRouter } from 'react-router';
 import "./Navigation.scss";
 import Logo from  '../../static/escalator.png';
 
 class Navigation extends React.Component {
-
-  componentWillMount() {
-    this.props.fetchUser();
-  }
 
   render() {
     const pathname = this.props.location.pathname;
@@ -48,7 +44,6 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = {
-  fetchUser,
   logOut
 };
 

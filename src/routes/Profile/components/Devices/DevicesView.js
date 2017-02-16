@@ -99,10 +99,9 @@ class DevicesView extends React.Component {
             </Header.Subheader>
           </Header.Content>
         </Header>
-        {this.props.user && <DeviceList devices={this.props.user.devices} onDeleteDevice={this.handleDeleteDevice} />}
+        <DeviceList devices={this.props.user.devices} onDeleteDevice={this.handleDeleteDevice} />
 
         <div className="add-button">
-          {this.props.user &&
           <Dropdown text='Add Device' floating labeled button className='icon green' icon='add circle'>
             <Dropdown.Menu>
               <Dropdown.Item
@@ -119,7 +118,6 @@ class DevicesView extends React.Component {
                   text='Email' />
             </Dropdown.Menu>
           </Dropdown>
-          }
         </div>
 
         {this.renderAddModal()}

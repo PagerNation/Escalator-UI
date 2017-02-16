@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import {browserHistory, Router} from "react-router";
 import {Provider} from "react-redux";
 import jwtDecode from 'jwt-decode';
-
 import Login from '../components/Login';
 
 class AppContainer extends Component {

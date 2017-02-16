@@ -12,10 +12,6 @@ class ProfileView extends React.Component {
     _.bindAll(this, 'handleChange');
   }
 
-  componentWillMount() {
-    this.props.fetchUser();
-  }
-
   handleChange(data) {
     let profile = {name: this.props.user.name, email: this.props.user.email};
     _.extend(profile, data);

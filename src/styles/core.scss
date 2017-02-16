@@ -22,3 +22,10 @@ body {
 img.inverted {
   filter: invert(100%);
 }
+
+.loading-icon {
+  color: #999;
+  margin-left: calc(50vw - 0.5em) !important;
+  margin-top: calc(50vh - 0.5em) !important;
+
+}
