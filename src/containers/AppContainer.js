@@ -2,6 +2,7 @@ import React, {Component, PropTypes} from "react";
 import { connect } from 'react-redux';
 import {browserHistory, Router} from "react-router";
 import {Provider} from "react-redux";
+import jwtDecode from 'jwt-decode';
 
 import Login from '../components/Login';
 
@@ -13,7 +14,7 @@ class AppContainer extends Component {
   };
 
   isLoggedIn() {
-    return !!localStorage.getItem('escalatorToken');
+    return !!localStorage.getItem('escalatorToken') && jwtDecode(localStorage.getItem('escalatorToken')).iat < Date.now() / 1000;
   }
 
   render() {

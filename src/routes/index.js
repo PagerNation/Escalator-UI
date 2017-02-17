@@ -9,7 +9,8 @@ export const createRoutes = (store) => ({
   childRoutes: [
     require('./Counter').default(store),
     require('./Devices').default(store),
-    require('./Group').default(store)
+    require('./Group').default(store),
+    require('./Profile').default(store)
   ]
 });
 
