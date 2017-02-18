@@ -7,8 +7,8 @@ export const createRoutes = (store) => ({
   component: CoreLayout,
   indexRoute: Home(store),
   childRoutes: [
-    require('./Counter').default(store),
-    require('./Devices').default(store),
+//    require('./Counter').default(store),
+//    require('./Devices').default(store),
     require('./Group').default(store),
     require('./Profile').default(store)
   ]
