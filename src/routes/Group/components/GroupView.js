@@ -1,6 +1,6 @@
 import React from "react";
 import "./GroupView.scss";
-import { Divider, Label, Grid } from 'semantic-ui-react';
+import { Icon, Divider, Label, Grid } from 'semantic-ui-react';
 
 class GroupView extends React.Component {
 
@@ -13,9 +13,18 @@ class GroupView extends React.Component {
     this.props.group.escalationPolicy.subscribers.indexOf(user._id) > -1
    ).map((user, i) =>
       <div key={"active_"+i}>
+      {this.arrow(i)}
       {this.userLink(user)}
       </div>
     )
+  };
+
+  arrow(index) {
+    if (index != 0) {
+      return <div>
+        <Icon name='arrow circle outline down'/>
+      </div>
+    }
   };
 
   benched() {
