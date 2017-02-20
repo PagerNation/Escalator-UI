@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from 'react-redux';
-import { logIn } from '../../store/user';
+import { logIn, signUp } from '../../store/user';
 import { clearLoginError } from '../../store/api';
 import { Grid, Message } from 'semantic-ui-react';
 import "./Login.scss";
@@ -62,6 +62,8 @@ class Login extends React.Component {
 
   onSignupSubmit(event, data) {
     event.preventDefault();
+    console.log(data);
+    this.props.signUp(data.name, data.email, data.password)
   }
 
   toggleForm() {
@@ -77,6 +79,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = {
   logIn,
+  signUp,
   clearLoginError
 };
 

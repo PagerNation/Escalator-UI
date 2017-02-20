@@ -40,6 +40,17 @@ export const logIn = (email, password) => {
   }
 };
 
+export const signUp = (name, email, password) => {
+  return (dispatch, getState) => {
+    return new Promise((resolve) => {
+      postJSON('auth/signup', {name, email, password}).then((response) => {
+        logIn(email, password);
+        resolve();
+      });
+    })
+  }
+};
+
 export const logOut = () => {
   return (dispatch, getState) => {
     dispatch({
