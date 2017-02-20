@@ -136,9 +136,7 @@ const ACTION_HANDLERS = {
     return null;
   },
   [FETCH_USER_SUCCESS]: (state, action) => {
-    let newState = _.extend({}, state);
-    newState = _.extend(newState, action.payload);
-    return newState;
+    return action.payload;
   },
   [ADD_DEVICE_SUCCESS]: (state, action) => {
     return action.payload;
