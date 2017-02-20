@@ -2,66 +2,72 @@ import React from "react";
 import { connect } from 'react-redux';
 import { logIn } from '../../store/user';
 import { clearLoginError } from '../../store/api';
-import { Grid, Header, Form, Input, Button, Segment, Image, Message } from 'semantic-ui-react';
+import { Grid, Message } from 'semantic-ui-react';
 import "./Login.scss";
-import Logo from  '../../static/escalator.png';
+import LoginForm from  "./LoginForm";
+import SignupForm from "./SignupForm";
+import _ from 'lodash';
 
 class Login extends React.Component {
 
+  constructor() {
+    super();
+    this.state = {
+      showLogin: true
+    };
+  }
+
   componentWillMount() {
-    _.bindAll(this, 'onSubmit');
+    _.bindAll(this, 'onLoginSubmit', 'onSignupSubmit', 'toggleForm');
   }
 
   componentWillUnmount() {
     this.props.clearLoginError();
   }
 
+  renderForm() {
+    if (this.state.showLogin) {
+      return (
+        <div>
+          <LoginForm loginError={!!this.props.loginError} onSubmit={this.onLoginSubmit} />
+          <Message
+            content={<span>New to us? <a onClick={this.toggleForm}>Sign Up</a></span>} />
+        </div>
+      );
+    } else {
+      return (
+        <div>
+          <SignupForm error={false} onSubmit={this.onSignupSubmit} />
+          <Message
+            content={<span>Already have an account? <a onClick={this.toggleForm}>Log In</a></span>} />
+        </div>
+      )
+    }
+  }
+
   render() {
     return (
       <Grid verticalAlign='middle' centered>
         <Grid.Column>
-          <Image src={Logo} size='tiny' />
-          <Header as='h2'>
-            Escalator Login
-          </Header>
-          <Form error={!!this.props.loginError} onSubmit={this.onSubmit}>
-            <Segment stacked>
-                <Form.Field>
-                  <Input
-                    name="email"
-                    placeholder='Email'
-                    icon='user'
-                    iconPosition='left'
-                    type="email"
-                    required />
-                </Form.Field>
-                <Form.Field>
-                  <Input
-                    name="password"
-                    placeholder='Password'
-                    icon='lock'
-                    iconPosition='left'
-                    type="password"
-                    required />
-                </Form.Field>
-                <Button primary fluid type='submit'>Submit</Button>
-            </Segment>
-            <Message
-              error
-              content='Your login information is incorrect.'
-            />
-            <Message
-              content={<span>New to us? <a href="#">Sign Up</a></span>}
-            />
-          </Form>
+          {this.renderForm()}
         </Grid.Column>
       </Grid>
     );
   }
 
-  onSubmit(event, data) {
+  onLoginSubmit(event, data) {
     event.preventDefault();
     this.props.logIn(data.email, data.password);
+  }
+
+  onSignupSubmit(event, data) {
+    event.preventDefault();
+  }
+
+  toggleForm() {
+    this.setState({
+      showLogin: !this.state.showLogin
+    });
   }
 }
 
