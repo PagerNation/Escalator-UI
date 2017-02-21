@@ -155,7 +155,6 @@ export const deleteDevice = (id) => {
 // ------------------------------------
 const ACTION_HANDLERS = {
   [LOG_IN_SUCCESS]: (state, action) => {
-    console.log('login', action.payload);
     localStorage.setItem('escalatorToken', action.payload.token);
     return action.payload.user;
   },
