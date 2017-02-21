@@ -44,7 +44,7 @@ class SignupForm extends React.Component {
           </Segment>
           <Message
             error
-            content='Your login information is incorrect.'
+            content={this.props.error}
           />
         </Form>
       </div>

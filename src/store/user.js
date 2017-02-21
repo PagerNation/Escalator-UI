@@ -44,7 +44,10 @@ export const signUp = (name, email, password) => {
   return (dispatch, getState) => {
     return new Promise((resolve) => {
       postJSON('auth/signup', {name, email, password}).then((response) => {
-        logIn(email, password);
+        dispatch({
+          type: LOG_IN_SUCCESS,
+          payload: response
+        });
         resolve();
       });
     })
@@ -139,6 +142,7 @@ export const deleteDevice = (id) => {
 // ------------------------------------
 const ACTION_HANDLERS = {
   [LOG_IN_SUCCESS]: (state, action) => {
+    console.log('login', action.payload);
     localStorage.setItem('escalatorToken', action.payload.token);
     return action.payload.user;
   },
