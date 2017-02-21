@@ -11,7 +11,7 @@ class SignupForm extends React.Component {
         <Header as='h2'>
           Create an Account
         </Header>
-        <Form error={this.props.error} onSubmit={this.props.onSubmit}>
+        <Form error={!!this.props.error} onSubmit={this.props.onSubmit}>
           <Segment stacked>
               <Form.Field>
                 <Input

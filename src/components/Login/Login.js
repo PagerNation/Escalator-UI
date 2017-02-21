@@ -37,7 +37,7 @@ class Login extends React.Component {
     } else {
       return (
         <div>
-          <SignupForm error={false} onSubmit={this.onSignupSubmit} />
+          <SignupForm error={this.props.signupError} onSubmit={this.onSignupSubmit} />
           <Message
             content={<span>Already have an account? <a onClick={this.toggleForm}>Log In</a></span>} />
         </div>
@@ -62,8 +62,7 @@ class Login extends React.Component {
 
   onSignupSubmit(event, data) {
     event.preventDefault();
-    console.log(data);
-    this.props.signUp(data.name, data.email, data.password)
+    this.props.signUp(data.name, data.email, data.password, data.password2);
   }
 
   toggleForm() {
@@ -74,7 +73,8 @@ class Login extends React.Component {
 }
 
 const mapStateToProps = (state) => ({
-  loginError: state.api.loginError
+  loginError: state.api.loginError,
+  signupError: state.api.signupError
 });
 
 const mapDispatchToProps = {

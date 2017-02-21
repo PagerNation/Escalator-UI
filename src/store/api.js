@@ -6,6 +6,7 @@ import _ from 'lodash';
 // ------------------------------------
 export const LOG_IN_FAILURE = "LOG_IN_ERROR";
 export const CLEAR_LOG_IN_ERROR = "CLEAR_LOG_IN_ERROR";
+export const SIGN_UP_FAILURE = "SIGN_UP_FAILURE";
 
 
 // ------------------------------------
@@ -32,7 +33,12 @@ const ACTION_HANDLERS = {
     const newState = {};
     _.assign(newState, state, {loginError: null});
     return newState;
-  }
+  },
+  [SIGN_UP_FAILURE]: (state, action) => {
+    const newState = {};
+    _.assign(newState, state, {signupError: action.payload});
+    return newState;
+  },
 };
 
 // ------------------------------------

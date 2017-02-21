@@ -2,7 +2,7 @@ import 'whatwg-fetch';
 import _ from 'lodash';
 import jwtDecode from 'jwt-decode';
 import { getJSON, postJSON, putJSON, deleteObject } from '../utils/apiRequest';
-import {LOG_IN_FAILURE} from "./api";
+import { LOG_IN_FAILURE, SIGN_UP_FAILURE } from "./api";
 
 // ------------------------------------
 // Constants
@@ -36,21 +36,34 @@ export const logIn = (email, password) => {
         });
         resolve();
       });
-    })
+    });
   }
 };
 
-export const signUp = (name, email, password) => {
+export const signUp = (name, email, password, passwordConfirm) => {
   return (dispatch, getState) => {
     return new Promise((resolve) => {
-      postJSON('auth/signup', {name, email, password}).then((response) => {
+      if (password !== passwordConfirm) {
         dispatch({
-          type: LOG_IN_SUCCESS,
-          payload: response
+          type: SIGN_UP_FAILURE,
+          payload: "Passwords do not match."
         });
-        resolve();
-      });
-    })
+      } else {
+        postJSON('auth/signup', {name, email, password}).then((response) => {
+          dispatch({
+            type: LOG_IN_SUCCESS,
+            payload: response
+          });
+          resolve();
+        }).catch((response) => {
+          dispatch({
+            type: SIGN_UP_FAILURE,
+            payload: response
+          });
+          resolve();
+        });
+      }
+    });
   }
 };
 
