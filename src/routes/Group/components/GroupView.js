@@ -38,14 +38,14 @@ class GroupView extends React.Component {
   };
 
   onCall() {
-    var group = this.props.group
-    var uid = group.escalationPolicy.subscribers[0]
-    var user = group.users.filter( u => u._id === uid)[0]
+    var group = this.props.group;
+    var uid = group.escalationPolicy.subscribers[0];
+    var user = group.users.filter(u => u._id === uid)[0];
     return <h4>User on call: {this.userLink(user)}</h4>
   };
 
-  userLink(user_object) {
-    return <a href={'/user/' + user_object._id +'/'}>{user_object.name}</a>
+  userLink(user) {
+    return user ? <a href={'/user/' + user._id +'/'}>{user.name}</a> : <span>No one</span>;
   };
 
 
