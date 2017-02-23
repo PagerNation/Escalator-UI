@@ -9,3 +9,5 @@ coverage
 .idea/
 
 *.pem
+*.swp
+*.swo
