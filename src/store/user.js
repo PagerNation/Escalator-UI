@@ -78,21 +78,6 @@ export const updateProfile = (profile) => {
   }
 };
 
-export const fetchUserGroups = () => {
-  return (dispatch, getState) => {
-    return new Promise((resolve) => {
-      const userId = jwtDecode(localStorage.getItem('escalatorToken')).id;
-      getJSON(`user/${userId}/group`).then((response) => {
-        dispatch({
-          type: FETCH_GROUPS_SUCCESS,
-          payload: response
-        });
-        resolve();
-      });
-    });
-  }
-};
-
 export const addDevice = (device) => {
   return (dispatch, getState) => {
     return new Promise((resolve) => {
