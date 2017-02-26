@@ -1,14 +1,13 @@
-import {connect} from "react-redux";
-import {fetchUser, fetchUserGroups} from "../../../store/user";
+import { fetchUser } from "../../../store/user";
 import HomeView from "../components/HomeView";
+import RouteContainer from '../../../containers/RouteContainer';
 
 const mapDispatchToProps = {
-  fetchUser,
-  fetchUserGroups
+  fetchUser
 };
 
 const mapStateToProps = (state) => ({
   user: state.user
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(HomeView);
+export default RouteContainer(mapStateToProps, mapDispatchToProps, HomeView);

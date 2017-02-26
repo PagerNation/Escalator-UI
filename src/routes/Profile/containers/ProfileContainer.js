@@ -1,9 +1,8 @@
-import {connect} from "react-redux";
-import {fetchUser, updateProfile, addDevice, deleteDevice} from "../../../store/user";
+import {updateProfile, addDevice, deleteDevice} from "../../../store/user";
 import ProfileView from "../components/ProfileView";
+import RouteContainer from "../../../containers/RouteContainer";
 
 const mapDispatchToProps = {
-  fetchUser,
   updateProfile,
   addDevice,
   deleteDevice
@@ -13,4 +12,4 @@ const mapStateToProps = (state) => ({
   user: state.user
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(ProfileView);
+export default RouteContainer(mapStateToProps, mapDispatchToProps, ProfileView);
