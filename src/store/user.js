@@ -15,6 +15,7 @@ export const ADD_DEVICE_SUCCESS = 'ADD_DEVICE';
 export const DELETE_DEVICE_SUCCESS = 'DELETE_DEVICE_SUCCESS';
 export const FETCH_GROUPS_SUCCESS = 'FETCH_GROUPS_SUCCESS';
 export const UPDATE_PROFILE_SUCCESS = 'UPDATE_PROFILE_SUCCESS';
+export const REORDER_DEVICES_SUCCESS = "REORDER_DEVICES_SUCCESS";
 
 
 // ------------------------------------
@@ -135,6 +136,21 @@ export const deleteDevice = (id) => {
   }
 };
 
+export const reorderDevices = (ids) => {
+  return (dispatch, getState) => {
+    return new Promise((resolve) => {
+      const userId = jwtDecode(localStorage.getItem('escalatorToken')).id;
+      putJSON(`user/${userId}/devices/`, {sortOrder: ids}).then((response) => {
+        dispatch({
+          type: REORDER_DEVICES_SUCCESS,
+          payload: response
+        });
+        resolve();
+      });
+    })
+  }
+};
+
 // ------------------------------------
 // Action Handlers
 // ------------------------------------
@@ -154,6 +170,9 @@ const ACTION_HANDLERS = {
     return action.payload;
   },
   [DELETE_DEVICE_SUCCESS]: (state, action) => {
+    return action.payload;
+  },
+  [REORDER_DEVICES_SUCCESS]: (state, action) => {
     return action.payload;
   },
   [FETCH_GROUPS_SUCCESS]: (state, action) => {

@@ -18,11 +18,16 @@ class DevicesView extends React.Component {
 
   constructor() {
     super();
-    _.bindAll(this, "handleAddDevice", "handleClose", "handleSubmit", "handleDeleteDevice");
+    _.bindAll(this, "handleAddDevice", "handleClose", "handleSubmit", "handleDeleteDevice", "handleSort");
     this.state = {
       modalOpen: false,
       creatingType: null
     };
+  }
+
+  handleSort(sorted) {
+    const ids = sorted.map((item) => item.content.props.device._id);
+    this.props.reorderDevices(ids);
   }
 
   handleAddDevice(type) {
@@ -100,7 +105,7 @@ class DevicesView extends React.Component {
           </Header.Content>
         </Header>
 
-        <DeviceList devices={this.props.user.devices} onDeleteDevice={this.handleDeleteDevice} />
+        <DeviceList devices={this.props.user.devices} onDeleteDevice={this.handleDeleteDevice} onSort={this.handleSort} />
 
         <div className="add-button">
           <Dropdown text='Add Device' floating labeled button className='icon green' icon='add circle'>

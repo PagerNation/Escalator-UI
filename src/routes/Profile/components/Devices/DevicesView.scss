@@ -6,3 +6,13 @@
 .action-icon {
   float: right;
 }
+
+.drag-placeholder {
+  width: 100%;
+  border: 4px #ccc dashed;
+  height: 100px;
+}
+
+.dragged {
+  opacity: 0.6;
+}
