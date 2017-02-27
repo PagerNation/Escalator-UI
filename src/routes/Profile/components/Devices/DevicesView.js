@@ -2,7 +2,7 @@ import React from "react";
 import _ from "lodash";
 import { Header, Dropdown, Modal, Form, Button, Icon } from 'semantic-ui-react';
 import "./DevicesView.scss";
-import DeviceList from './deviceList/DeviceList';
+import DeviceList from './DeviceList';
 
 class DevicesView extends React.Component {
 
@@ -99,6 +99,7 @@ class DevicesView extends React.Component {
             </Header.Subheader>
           </Header.Content>
         </Header>
+
         <DeviceList devices={this.props.user.devices} onDeleteDevice={this.handleDeleteDevice} />
 
         <div className="add-button">

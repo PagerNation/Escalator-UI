@@ -44,7 +44,10 @@ export const putJSON = (path, body) => {
 
 export const deleteObject = (path) => {
   return fetch(config.api_url + path, {
-    method: 'DELETE'
+    method: 'DELETE',
+    headers: {
+      'Authorization': 'Bearer ' + localStorage.getItem('escalatorToken')
+    }
   })
   .then(checkStatus)
   .then((response) => {
