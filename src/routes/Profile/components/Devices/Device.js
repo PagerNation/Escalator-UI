@@ -1,7 +1,22 @@
 import React, { Component, PropTypes } from 'react';
-import { Card, Icon, Input, Label } from 'semantic-ui-react';
+import { Card, Icon, Input, Label, Confirm } from 'semantic-ui-react';
+import _ from 'lodash';
 
 class Device extends Component {
+
+  constructor() {
+    super();
+    this.state = {
+      confirmOpen: false
+    };
+    _.bindAll(this, "toggleConfirm");
+  }
+
+  toggleConfirm() {
+    this.setState({
+      confirmOpen: !this.state.confirmOpen
+    });
+  }
 
   getIcon(type) {
     switch(type) {
@@ -27,8 +42,19 @@ class Device extends Component {
       </div>
     );
 
+    const confirm = (
+      <Confirm
+        open={this.state.confirmOpen}
+        content={`Are you sure you want to delete ${device.name}?`}
+        confirmButton="Delete"
+        onCancel={this.toggleConfirm}
+        onConfirm={() => this.props.onDelete(device._id)}
+      />
+    );
+
     return (
       <div className="draggable">
+        {confirm}
         <Card color="green" fluid>
           <Label attached="bottom right">
             <Icon name="check" color="green" />
@@ -38,7 +64,7 @@ class Device extends Component {
             <Icon name={this.getIcon(device.type)} />
             {device.name}
 
-            <Icon onClick={() => this.props.onDelete(device._id)} className="action-icon" name="x" link />
+            <Icon onClick={this.toggleConfirm} className="action-icon" name="x" link />
           </Card.Content>
           <Card.Content extra>
             {device.contactInformation}
