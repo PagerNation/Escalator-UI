@@ -18,7 +18,6 @@ class AppContainer extends Component {
 
   render() {
     const {routes, store} = this.props;
-
     const page = this.isLoggedIn() ? <Router history={browserHistory} children={routes}/> : <Login/>;
 
     return (

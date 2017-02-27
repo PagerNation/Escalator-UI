@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from "react-redux";
-import { Icon } from 'semantic-ui-react';
+import { Icon, Message } from 'semantic-ui-react';
 import { fetchUser } from '../store/user';
 import _ from 'lodash';
 
@@ -32,9 +32,26 @@ const RouteContainer = (mapStateToProps, mapDispatchToProps, WrappedContainer, r
       });
     }
 
+    renderPage() {
+      const error = this.props.globalError && <Message
+        className="error-message"
+        negative
+        onDismiss={_.noop}
+        header='Something went wrong...'
+        content={this.props.globalError.message}
+      />;
+
+      return (
+        <div>
+          {error}
+          <WrappedContainer {...this.props}/>
+        </div>
+      )
+    }
+
     render() {
       return this.state.pageLoaded ?
-        <WrappedContainer {...this.props}/> :
+        this.renderPage() :
         <Icon className="loading-icon" loading name="circle notched" size="huge" />;
     }
   });

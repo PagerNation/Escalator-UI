@@ -7,7 +7,8 @@ const mapDispatchToProps = {
 };
 
 const mapStateToProps = (state) => ({
-  user: state.user
+  user: state.user,
+  globalError: state.api.globalError
 });
 
 export default RouteContainer(mapStateToProps, mapDispatchToProps, HomeView);
