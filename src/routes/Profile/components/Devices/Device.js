@@ -20,7 +20,7 @@ class Device extends Component {
   }
 
   handleChange(data) {
-    console.log(data);
+    this.props.onUpdate(this.props.device._id, data);
   }
 
   getIcon(type) {

@@ -7,7 +7,7 @@ class DeviceList extends React.Component {
   renderDevices() {
     return this.props.devices.map((deviceObject, i, devices) => {
       return {
-        content: (<Device key={i} device={deviceObject} onDelete={this.props.onDeleteDevice} isLast={i === devices.length - 1}/>)
+        content: (<Device key={i} device={deviceObject} onDelete={this.props.onDeleteDevice} onUpdate={this.props.onUpdateDevice} isLast={i === devices.length - 1}/>)
       };
     });
   }

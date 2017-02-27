@@ -42,7 +42,7 @@ class InlineEditable extends React.Component {
 
   handleSave() {
     const data = {};
-    data[this.props.name.toLowerCase()] = this.state.editorValue;
+    data[this.props.name] = this.state.editorValue;
     this.props.onChange(data);
     this.toggleEditor();
     this.setState({
@@ -83,15 +83,11 @@ class InlineEditable extends React.Component {
   render() {
     return (
       <div className="inlineEditable">
-        {this.props.header && <Header sub>{this.props.name}</Header>}
+        {this.props.header && <Header sub>{this.props.header}</Header>}
         {this.state.isEditing ? this.renderEditor() : this.renderText()}
       </div>
     )
   }
 }
-
-InlineEditable.defaultProps = {
-  header: true
-};
 
 export default InlineEditable;
