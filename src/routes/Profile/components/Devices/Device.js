@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { Card, Icon, Input, Label, Confirm } from 'semantic-ui-react';
 import _ from 'lodash';
+import InlineEditable from '../../../../components/shared/InlineEditable';
 
 class Device extends Component {
 
@@ -9,13 +10,17 @@ class Device extends Component {
     this.state = {
       confirmOpen: false
     };
-    _.bindAll(this, "toggleConfirm");
+    _.bindAll(this, "toggleConfirm", "handleChange");
   }
 
   toggleConfirm() {
     this.setState({
       confirmOpen: !this.state.confirmOpen
     });
+  }
+
+  handleChange(data) {
+    console.log(data);
   }
 
   getIcon(type) {
@@ -62,12 +67,12 @@ class Device extends Component {
           </Label>
           <Card.Content>
             <Icon name={this.getIcon(device.type)} />
-            {device.name}
+            <InlineEditable name="name" value={device.name} onChange={this.handleChange} header={false} />
 
             <Icon onClick={this.toggleConfirm} className="action-icon" name="x" link />
           </Card.Content>
           <Card.Content extra>
-            {device.contactInformation}
+            <InlineEditable name="contactInformation" value={device.contactInformation} onChange={this.handleChange} header={false} />
           </Card.Content>
         </Card>
         {time}

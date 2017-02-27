@@ -3,7 +3,7 @@ import _ from 'lodash';
 import { Header, Icon, Input } from 'semantic-ui-react';
 import './InlineEditable.scss';
 
-export default class InlineEditable extends React.Component {
+class InlineEditable extends React.Component {
 
   constructor(props) {
     super();
@@ -83,9 +83,15 @@ export default class InlineEditable extends React.Component {
   render() {
     return (
       <div className="inlineEditable">
-        <Header sub>{this.props.name}</Header>
+        {this.props.header && <Header sub>{this.props.name}</Header>}
         {this.state.isEditing ? this.renderEditor() : this.renderText()}
       </div>
     )
   }
 }
+
+InlineEditable.defaultProps = {
+  header: true
+};
+
+export default InlineEditable;

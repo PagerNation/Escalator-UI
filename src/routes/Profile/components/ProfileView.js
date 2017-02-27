@@ -31,8 +31,10 @@ class ProfileView extends React.Component {
           </Header.Content>
         </Header>
 
-        <div>
+        <div className="section">
           <InlineEditable name="Name" value={user.name} onChange={this.handleChange} />
+        </div>
+        <div className="section">
           <InlineEditable name="Email" value={user.email}  onChange={this.handleChange} />
         </div>
       </div>
