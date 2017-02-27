@@ -2,7 +2,7 @@ import 'whatwg-fetch';
 import _ from 'lodash';
 import jwtDecode from 'jwt-decode';
 import { getJSON, postJSON, putJSON, deleteObject } from '../utils/apiRequest';
-import { LOG_IN_FAILURE, SIGN_UP_FAILURE } from "./api";
+import { LOG_IN_FAILURE, SIGN_UP_FAILURE, GLOBAL_ERROR, CLEAR_GLOBAL_ERROR } from "./api";
 
 // ------------------------------------
 // Constants
@@ -83,6 +83,15 @@ export const fetchUser = () => {
         dispatch({
           type: FETCH_USER_SUCCESS,
           payload: response
+        });
+        resolve();
+      }).catch((response) => {
+        dispatch({
+          type: GLOBAL_ERROR,
+          payload: {
+            response,
+            message: response.message
+          }
         });
         resolve();
       });

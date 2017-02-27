@@ -33,6 +33,7 @@ const RouteContainer = (mapStateToProps, mapDispatchToProps, WrappedContainer, r
     }
 
     renderPage() {
+      console.log(this.props.globalError);
       const error = this.props.globalError && <Message
         className="error-message"
         negative
@@ -43,8 +44,7 @@ const RouteContainer = (mapStateToProps, mapDispatchToProps, WrappedContainer, r
 
       return (
         <div>
-          {error}
-          <WrappedContainer {...this.props}/>
+          {error || <WrappedContainer {...this.props}/>}
         </div>
       )
     }

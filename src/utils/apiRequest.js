@@ -50,7 +50,7 @@ export const deleteObject = (path) => {
   .then((response) => {
     return response.json();
   });
-}
+};
 
 
 // =====================================
