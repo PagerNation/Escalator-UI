@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import _ from 'lodash';
 import { Header, Icon, Input } from 'semantic-ui-react';
 import './InlineEditable.scss';
@@ -89,5 +89,15 @@ class InlineEditable extends React.Component {
     )
   }
 }
+
+InlineEditable.PropTypes = {
+  name: PropTypes.string.isRequired,
+  onChange: PropTypes.func.isRequired,
+  value: PropTypes.oneOfType([
+    React.PropTypes.string,
+    React.PropTypes.number
+  ]),
+  header: PropTypes.string
+};
 
 export default InlineEditable;
