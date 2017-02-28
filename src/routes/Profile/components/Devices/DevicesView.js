@@ -111,6 +111,25 @@ class DevicesView extends React.Component {
           </Header.Content>
         </Header>
 
+        <div className="add-button">
+          <Dropdown text='Add Device' floating labeled button className='icon green' icon='add circle'>
+            <Dropdown.Menu>
+              <Dropdown.Item
+                onClick={() => this.handleAddDevice(DevicesView.DEVICE_TYPES.PHONE)}
+                icon={DevicesView.getIconForDevice(DevicesView.DEVICE_TYPES.PHONE)}
+                text='Phone' />
+              <Dropdown.Item
+                onClick={() => this.handleAddDevice(DevicesView.DEVICE_TYPES.SMS)}
+                icon={DevicesView.getIconForDevice(DevicesView.DEVICE_TYPES.SMS)}
+                text='SMS' />
+              <Dropdown.Item
+                onClick={() => this.handleAddDevice(DevicesView.DEVICE_TYPES.EMAIL)}
+                icon={DevicesView.getIconForDevice(DevicesView.DEVICE_TYPES.EMAIL)}
+                text='Email' />
+            </Dropdown.Menu>
+          </Dropdown>
+        </div>
+
         <DeviceList
           devices={this.props.user.devices}
           delays={this.props.user.delays}
@@ -119,25 +138,6 @@ class DevicesView extends React.Component {
           onUpdateDevice={this.props.updateDevice}
           onUpdateInterval={this.handleUpdateInterval}
         />
-
-        <div className="add-button">
-          <Dropdown text='Add Device' floating labeled button className='icon green' icon='add circle'>
-            <Dropdown.Menu>
-              <Dropdown.Item
-                  onClick={() => this.handleAddDevice(DevicesView.DEVICE_TYPES.PHONE)}
-                  icon={DevicesView.getIconForDevice(DevicesView.DEVICE_TYPES.PHONE)}
-                  text='Phone' />
-              <Dropdown.Item
-                  onClick={() => this.handleAddDevice(DevicesView.DEVICE_TYPES.SMS)}
-                  icon={DevicesView.getIconForDevice(DevicesView.DEVICE_TYPES.SMS)}
-                  text='SMS' />
-              <Dropdown.Item
-                  onClick={() => this.handleAddDevice(DevicesView.DEVICE_TYPES.EMAIL)}
-                  icon={DevicesView.getIconForDevice(DevicesView.DEVICE_TYPES.EMAIL)}
-                  text='Email' />
-            </Dropdown.Menu>
-          </Dropdown>
-        </div>
 
         {this.renderAddModal()}
       </div>
