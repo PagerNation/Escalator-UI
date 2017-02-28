@@ -36,7 +36,7 @@ class Device extends Component {
     const device = this.props.device;
 
     const time = !this.props.isLast && (
-      <div style={{textAlign: 'center', paddingBottom: '15px'}}>
+      <div className="device-interval">
         <Input
             type="number"
             label={{ basic: true, content: 'minutes' }}
