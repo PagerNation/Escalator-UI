@@ -10,7 +10,7 @@ class Device extends Component {
     this.state = {
       confirmOpen: false
     };
-    _.bindAll(this, "toggleConfirm", "handleChange");
+    _.bindAll(this, "toggleConfirm", "handleChange", "handleIntervalChange");
   }
 
   toggleConfirm() {
@@ -21,6 +21,10 @@ class Device extends Component {
 
   handleChange(data) {
     this.props.onUpdate(this.props.device._id, data);
+  }
+
+  handleIntervalChange(event) {
+    this.props.onUpdateInterval(this.props.index, parseInt(event.target.value));
   }
 
   getIcon(type) {
@@ -38,12 +42,13 @@ class Device extends Component {
     const time = !this.props.isLast && (
       <div className="device-interval">
         <Input
-            type="number"
-            label={{ basic: true, content: 'minutes' }}
-            labelPosition='right'
-            placeholder=''
-            defaultValue={5}
-        />
+          type="number"
+          label={{ basic: true, content: 'minutes' }}
+          labelPosition='right'
+          placeholder=''
+          value={this.props.delay}
+          onChange={this.handleIntervalChange}
+       />
       </div>
     );
 

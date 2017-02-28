@@ -18,7 +18,7 @@ class DevicesView extends React.Component {
 
   constructor() {
     super();
-    _.bindAll(this, "handleAddDevice", "handleClose", "handleSubmit", "handleDeleteDevice", "handleSort");
+    _.bindAll(this, "handleAddDevice", "handleClose", "handleSubmit", "handleDeleteDevice", "handleSort", "handleUpdateInterval");
     this.state = {
       modalOpen: false,
       creatingType: null
@@ -28,6 +28,12 @@ class DevicesView extends React.Component {
   handleSort(sorted) {
     const ids = sorted.map((item) => item.content.props.device._id);
     this.props.reorderDevices(ids);
+  }
+
+  handleUpdateInterval(index, value) {
+    const profile = _.pick(this.props.user, "delays");
+    profile.delays[index] = value;
+    this.props.updateProfile(profile);
   }
 
   handleAddDevice(type) {
@@ -107,9 +113,11 @@ class DevicesView extends React.Component {
 
         <DeviceList
           devices={this.props.user.devices}
+          delays={this.props.user.delays}
           onDeleteDevice={this.handleDeleteDevice}
           onSort={this.handleSort}
           onUpdateDevice={this.props.updateDevice}
+          onUpdateInterval={this.handleUpdateInterval}
         />
 
         <div className="add-button">
