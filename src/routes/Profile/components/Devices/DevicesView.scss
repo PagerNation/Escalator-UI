@@ -1,4 +1,33 @@
 .add-button {
   float: right;
-  margin-top: 15px;
+  clear: both;
+  margin-top: -50px;
+}
+
+.action-icon {
+  float: right;
+}
+
+.device-interval {
+  text-align: center;
+  padding-bottom: 15px;
+}
+
+.drag-placeholder {
+  width: 100%;
+  border: 4px #ccc dashed;
+  height: 100px;
+}
+
+.dragged {
+  opacity: 0.6;
+  width: 100%;
+
+  .device-interval {
+    display: none;
+  }
+}
+
+.draggable {
+  cursor: move;
 }

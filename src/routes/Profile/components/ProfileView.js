@@ -13,9 +13,7 @@ class ProfileView extends React.Component {
   }
 
   handleChange(data) {
-    let profile = {name: this.props.user.name, email: this.props.user.email};
-    _.extend(profile, data);
-    this.props.updateProfile(profile);
+    this.props.updateProfile(data);
   }
 
   renderProfile(user) {
@@ -31,9 +29,11 @@ class ProfileView extends React.Component {
           </Header.Content>
         </Header>
 
-        <div>
-          <InlineEditable name="Name" value={user.name} onChange={this.handleChange} />
-          <InlineEditable name="Email" value={user.email}  onChange={this.handleChange} />
+        <div className="section">
+          <InlineEditable header="Name" name="name" value={user.name} onChange={this.handleChange} />
+        </div>
+        <div className="section">
+          <InlineEditable header="Email" name="email" value={user.email}  onChange={this.handleChange} />
         </div>
       </div>
     );

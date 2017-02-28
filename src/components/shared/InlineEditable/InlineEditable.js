@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import _ from 'lodash';
 import { Header, Icon, Input } from 'semantic-ui-react';
 import './InlineEditable.scss';
 
-export default class InlineEditable extends React.Component {
+class InlineEditable extends React.Component {
 
   constructor(props) {
     super();
@@ -42,7 +42,7 @@ export default class InlineEditable extends React.Component {
 
   handleSave() {
     const data = {};
-    data[this.props.name.toLowerCase()] = this.state.editorValue;
+    data[this.props.name] = this.state.editorValue;
     this.props.onChange(data);
     this.toggleEditor();
     this.setState({
@@ -83,9 +83,21 @@ export default class InlineEditable extends React.Component {
   render() {
     return (
       <div className="inlineEditable">
-        <Header sub>{this.props.name}</Header>
+        {this.props.header && <Header sub>{this.props.header}</Header>}
         {this.state.isEditing ? this.renderEditor() : this.renderText()}
       </div>
     )
   }
 }
+
+InlineEditable.PropTypes = {
+  name: PropTypes.string.isRequired,
+  onChange: PropTypes.func.isRequired,
+  value: PropTypes.oneOfType([
+    React.PropTypes.string,
+    React.PropTypes.number
+  ]),
+  header: PropTypes.string
+};
+
+export default InlineEditable;

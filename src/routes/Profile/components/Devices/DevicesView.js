@@ -2,7 +2,7 @@ import React from "react";
 import _ from "lodash";
 import { Header, Dropdown, Modal, Form, Button, Icon } from 'semantic-ui-react';
 import "./DevicesView.scss";
-import DeviceList from './deviceList/DeviceList';
+import DeviceList from './DeviceList';
 
 class DevicesView extends React.Component {
 
@@ -18,11 +18,22 @@ class DevicesView extends React.Component {
 
   constructor() {
     super();
-    _.bindAll(this, "handleAddDevice", "handleClose", "handleSubmit", "handleDeleteDevice");
+    _.bindAll(this, "handleAddDevice", "handleClose", "handleSubmit", "handleDeleteDevice", "handleSort", "handleUpdateInterval");
     this.state = {
       modalOpen: false,
       creatingType: null
     };
+  }
+
+  handleSort(sorted) {
+    const ids = sorted.map((item) => item.content.props.device._id);
+    this.props.reorderDevices(ids);
+  }
+
+  handleUpdateInterval(index, value) {
+    const profile = _.pick(this.props.user, "delays");
+    profile.delays[index] = value;
+    this.props.updateProfile(profile);
   }
 
   handleAddDevice(type) {
@@ -99,26 +110,34 @@ class DevicesView extends React.Component {
             </Header.Subheader>
           </Header.Content>
         </Header>
-        <DeviceList devices={this.props.user.devices} onDeleteDevice={this.handleDeleteDevice} />
 
         <div className="add-button">
           <Dropdown text='Add Device' floating labeled button className='icon green' icon='add circle'>
             <Dropdown.Menu>
               <Dropdown.Item
-                  onClick={() => this.handleAddDevice(DevicesView.DEVICE_TYPES.PHONE)}
-                  icon={DevicesView.getIconForDevice(DevicesView.DEVICE_TYPES.PHONE)}
-                  text='Phone' />
+                onClick={() => this.handleAddDevice(DevicesView.DEVICE_TYPES.PHONE)}
+                icon={DevicesView.getIconForDevice(DevicesView.DEVICE_TYPES.PHONE)}
+                text='Phone' />
               <Dropdown.Item
-                  onClick={() => this.handleAddDevice(DevicesView.DEVICE_TYPES.SMS)}
-                  icon={DevicesView.getIconForDevice(DevicesView.DEVICE_TYPES.SMS)}
-                  text='SMS' />
+                onClick={() => this.handleAddDevice(DevicesView.DEVICE_TYPES.SMS)}
+                icon={DevicesView.getIconForDevice(DevicesView.DEVICE_TYPES.SMS)}
+                text='SMS' />
               <Dropdown.Item
-                  onClick={() => this.handleAddDevice(DevicesView.DEVICE_TYPES.EMAIL)}
-                  icon={DevicesView.getIconForDevice(DevicesView.DEVICE_TYPES.EMAIL)}
-                  text='Email' />
+                onClick={() => this.handleAddDevice(DevicesView.DEVICE_TYPES.EMAIL)}
+                icon={DevicesView.getIconForDevice(DevicesView.DEVICE_TYPES.EMAIL)}
+                text='Email' />
             </Dropdown.Menu>
           </Dropdown>
         </div>
+
+        <DeviceList
+          devices={this.props.user.devices}
+          delays={this.props.user.delays}
+          onDeleteDevice={this.handleDeleteDevice}
+          onSort={this.handleSort}
+          onUpdateDevice={this.props.updateDevice}
+          onUpdateInterval={this.handleUpdateInterval}
+        />
 
         {this.renderAddModal()}
       </div>
