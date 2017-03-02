@@ -1,6 +1,6 @@
 import React from "react";
 import "./GroupView.scss";
-import { Icon, Divider, Label, Grid } from 'semantic-ui-react';
+import { Divider, Label, Grid, Header } from 'semantic-ui-react';
 
 class GroupView extends React.Component {
 
@@ -12,27 +12,18 @@ class GroupView extends React.Component {
    return [,...this.props.group.users].filter((user) =>
     this.props.group.escalationPolicy.subscribers.indexOf(user._id) > -1
    ).map((user, i) =>
-      <div key={"active_"+i}>
-      {this.arrow(i)}
-      {this.userLink(user)}
-      </div>
-    )
-  };
-
-  arrow(index) {
-    if (index != 0) {
-      return <div>
-        <Icon name='arrow circle outline down'/>
-      </div>
-    }
+     <a className="arrow_box" key={i} href={'/user/' + user._id +'/'}>
+      {user.name}
+     </a>
+    );
   };
 
   benched() {
    return [,...this.props.group.users].filter((user) =>
-    this.props.group.escalationPolicy.subscribers.indexOf(user._id) === -1
+     this.props.group.escalationPolicy.subscribers.indexOf(user._id) === -1
    ).map((user, i) =>
-      <div key={"benched_"+i}>
-      {this.userLink(user)}
+      <div key={"benched_" + i}>
+        {this.userLink(user)}
       </div>
     )
   };
@@ -41,23 +32,25 @@ class GroupView extends React.Component {
     var group = this.props.group;
     var uid = group.escalationPolicy.subscribers[0];
     var user = group.users.filter(u => u._id === uid)[0];
-    return <h4>User on call: {this.userLink(user)}</h4>
+    return <Header as="h4">User on call: {this.userLink(user)}</Header>;
   };
 
   userLink(user) {
     return user ? <a href={'/user/' + user._id +'/'}>{user.name}</a> : <span>No one</span>;
   };
 
-
   escalationInterval() {
-    return <div>Escalation Interval:&nbsp;
-      <Label color='teal' horizontal>{this.props.group.escalationPolicy.pagingIntervalInDays}</Label>
-    minutes</div>
+    return (
+      <span>
+        Escalation Interval: <Label color='teal' horizontal>{this.props.group.escalationPolicy.pagingIntervalInDays}</Label> minutes
+      </span>
+    );
   };
+
   render() {
     return this.props.group && (
       <div>
-        <h1>{this.props.group.name}</h1>
+        <Header as="h1">{this.props.group.name}</Header>
         {this.onCall()}
         {this.escalationInterval()}
         <Divider/>
