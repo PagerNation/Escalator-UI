@@ -1,5 +1,5 @@
 import React from "react";
-//import "./GroupView.scss";
+import "./GroupView.scss";
 import { Divider, Label, Grid, Header } from 'semantic-ui-react';
 
 class GroupView extends React.Component {

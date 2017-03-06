@@ -155,5 +155,11 @@
     "webpack-dev-middleware": "^1.6.1",
     "webpack-hot-middleware": "^2.12.2",
     "zombie": "^5.0.5"
+  },
+  "jest": {
+    "moduleNameMapper": {
+      "\\.(css|scss)$": "<rootDir>/CSSStub.js"
+    }
   }
+
 }

@@ -14,7 +14,6 @@ export const fetchGroup = (groupId) => {
   return (dispatch, getState) => {
     return new Promise((resolve) => {
       getJSON('group/' + groupId).then((response) => {
-        console.log(JSON.stringify(response))
         dispatch({
           type: FETCH_GROUP_SUCCESS,
           payload: response
