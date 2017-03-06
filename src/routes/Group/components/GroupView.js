@@ -1,8 +1,27 @@
 import React from "react";
 import "./GroupView.scss";
-import { Divider, Label, Grid, Header } from 'semantic-ui-react';
+import { Divider, Label, Grid, Header, Button, Confirm } from 'semantic-ui-react';
+import _ from 'lodash';
 
 class GroupView extends React.Component {
+
+  constructor() {
+    super();
+    this.state = {
+      confirmOpen: false
+    };
+    _.bindAll(this, "toggleConfirm", "handleLeave");
+  }
+
+  toggleConfirm() {
+    this.setState({
+      confirmOpen: !this.state.confirmOpen
+    });
+  }
+
+  handleLeave() {
+    this.props.leaveGroup(this.props.group.name, this.props.user._id).then(this.toggleConfirm);
+  }
 
   componentWillMount() {
     this.props.fetchGroup(this.props.params.groupId)
@@ -48,9 +67,25 @@ class GroupView extends React.Component {
   };
 
   render() {
+    const leaveButton = this.props.group && _.find(this.props.group.users, (user) => user._id === this.props.user._id) && (
+      <Button className="action-button" onClick={this.toggleConfirm}>Leave Group</Button>
+    );
+
+    const confirm = (
+      <Confirm
+        open={this.state.confirmOpen}
+        content={`Are you sure you want to leave this group?`}
+        confirmButton="Leave"
+        onCancel={this.toggleConfirm}
+        onConfirm={this.handleLeave}
+      />
+    );
+
     return this.props.group && (
       <div>
+        {confirm}
         <Header as="h1">{this.props.group.name}</Header>
+        {leaveButton}
         {this.onCall()}
         {this.escalationInterval()}
         <Divider/>
