@@ -41,7 +41,6 @@ export const leaveGroup = (groupName, userId) => {
 };
 
 export const updateEscalationPolicy = (groupName, ep) => {
-  console.log(ep)
   return (dispatch, getState) => {
     return new Promise((resolve) => {
       putJSON(`group/${groupName}/escalationpolicy`, ep).then((response) => {

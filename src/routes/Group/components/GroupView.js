@@ -91,7 +91,7 @@ class GroupView extends React.Component {
      this.props.group.escalationPolicy.subscribers.indexOf(user._id) === -1
    ).map((user, i) =>
       <a
-        className={classNames("box", this.state.selectedBenched.includes(i))}
+        className={classNames("box", {"selected": this.state.selectedBenched.includes(i)})}
         onClick={() => this.toggleSelectBenched(i)}
         key={i}>
         {user.name}
