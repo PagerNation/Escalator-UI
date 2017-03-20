@@ -1,16 +1,37 @@
 import React from "react";
 import "./GroupView.scss";
-import { Divider, Label, Grid, Header, Button, Confirm } from 'semantic-ui-react';
+import { Divider, Label, Grid, Header, Button, Confirm, Icon } from 'semantic-ui-react';
 import _ from 'lodash';
+import classNames from 'classnames';
 
 class GroupView extends React.Component {
 
   constructor() {
     super();
     this.state = {
-      confirmOpen: false
+      confirmOpen: false,
+      selectedOnCall: [],
+      selectedBenched: []
     };
-    _.bindAll(this, "toggleConfirm", "handleLeave");
+    _.bindAll(this,
+      "toggleConfirm",
+      "handleLeave",
+      "toggleSelectOnCall",
+      "toggleSelectBenched",
+      "handleRemoveSubscribers",
+      "handleAddSubscribers");
+  }
+
+  toggleSelectOnCall(index) {
+    this.setState({
+      selectedOnCall: _.xor(this.state.selectedOnCall, [index])
+    });
+  }
+
+  toggleSelectBenched(index) {
+    this.setState({
+      selectedBenched: _.xor(this.state.selectedBenched, [index])
+    });
   }
 
   toggleConfirm() {
@@ -23,6 +44,31 @@ class GroupView extends React.Component {
     this.props.leaveGroup(this.props.group.name, this.props.user._id).then(this.toggleConfirm);
   }
 
+  handleRemoveSubscribers() {
+    const subs = this.props.group.escalationPolicy.subscribers;
+    this.state.selectedOnCall.forEach((i) => subs.splice(i, 1));
+    const ep = {};
+    _.extend(ep, this.props.group.escalationPolicy, {subscribers: subs});
+    this.props.updateEscalationPolicy(this.props.group.name, _.omit(ep, "_id"));
+    this.setState({
+      selectedOnCall: []
+    });
+  }
+
+  handleAddSubscribers() {
+    const subs = this.props.group.escalationPolicy.subscribers;
+    const benched = [,...this.props.group.users].filter((user) =>
+      this.props.group.escalationPolicy.subscribers.indexOf(user._id) === -1
+    );
+    this.state.selectedBenched.forEach((i) => subs.push(benched[i]._id));
+    const ep = {};
+    _.extend(ep, this.props.group.escalationPolicy, {subscribers: subs});
+    this.props.updateEscalationPolicy(this.props.group.name, _.omit(ep, "_id"));
+    this.setState({
+      selectedBenched: []
+    });
+  }
+
   componentWillMount() {
     this.props.fetchGroup(this.props.params.groupId)
   }
@@ -31,7 +77,10 @@ class GroupView extends React.Component {
    return [,...this.props.group.users].filter((user) =>
     this.props.group.escalationPolicy.subscribers.indexOf(user._id) > -1
    ).map((user, i) =>
-     <a className="arrow_box" key={i} href={'/user/' + user._id +'/'}>
+     <a
+       className={classNames("box arrow_box", {"selected": this.state.selectedOnCall.includes(i)})}
+       onClick={() => this.toggleSelectOnCall(i)}
+       key={i}>
       {user.name}
      </a>
     );
@@ -41,9 +90,12 @@ class GroupView extends React.Component {
    return [,...this.props.group.users].filter((user) =>
      this.props.group.escalationPolicy.subscribers.indexOf(user._id) === -1
    ).map((user, i) =>
-      <div key={"benched_" + i}>
-        {this.userLink(user)}
-      </div>
+      <a
+        className={classNames("box", this.state.selectedBenched.includes(i))}
+        onClick={() => this.toggleSelectBenched(i)}
+        key={i}>
+        {user.name}
+      </a>
     )
   };
 
@@ -90,11 +142,29 @@ class GroupView extends React.Component {
         {this.escalationInterval()}
         <Divider/>
         <Grid>
-          <Grid.Column mobile={16} computer={6}>
+          <Grid.Column mobile={16} computer={5}>
             <h3>Escalation Order:</h3>
             {this.active()}
           </Grid.Column>
-          <Grid.Column mobile={16} computer={6}>
+          <Grid.Column verticalAlign="middle" mobile={16} computer={1}>
+            <Button
+              className="move-btn"
+              size="mini"
+              disabled={this.state.selectedBenched.length == 0}
+              onClick={this.handleAddSubscribers}
+            >
+                <Icon name="chevron left" />
+            </Button>
+            <Button
+              className="move-btn"
+              size="mini"
+              disabled={this.state.selectedOnCall.length == 0}
+              onClick={this.handleRemoveSubscribers}
+            >
+                <Icon name="chevron right" />
+            </Button>
+          </Grid.Column>
+          <Grid.Column mobile={16} computer={5}>
             <h3>Not On Call:</h3>
             {this.benched()}
           </Grid.Column>

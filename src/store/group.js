@@ -1,12 +1,13 @@
 import 'whatwg-fetch';
 import _ from 'lodash';
-import { getJSON, deleteObject } from "../utils/apiRequest";
+import { getJSON, deleteObject, putJSON } from "../utils/apiRequest";
 
 // ------------------------------------
 // Constants
 // ------------------------------------
 export const FETCH_GROUP_SUCCESS = 'FETCH_GROUP_SUCCESS';
 export const LEAVE_GROUP_SUCCESS = 'LEAVE_GROUP_SUCCESS';
+export const UPDATE_EP_SUCCESS = 'UPDATE_EP_SUCCESS';
 
 // ------------------------------------
 // Actions
@@ -39,6 +40,21 @@ export const leaveGroup = (groupName, userId) => {
   }
 };
 
+export const updateEscalationPolicy = (groupName, ep) => {
+  console.log(ep)
+  return (dispatch, getState) => {
+    return new Promise((resolve) => {
+      putJSON(`group/${groupName}/escalationpolicy`, ep).then((response) => {
+        dispatch({
+          type: UPDATE_EP_SUCCESS,
+          payload: response
+        });
+        resolve();
+      });
+    })
+  }
+};
+
 
 // ------------------------------------
 // Action Handlers
@@ -48,6 +64,9 @@ const ACTION_HANDLERS = {
     return action.payload;
   },
   [LEAVE_GROUP_SUCCESS]: (state, action) => {
+    return action.payload;
+  },
+  [UPDATE_EP_SUCCESS]: (state, action) => {
     return action.payload;
   }
 };
