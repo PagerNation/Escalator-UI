@@ -1,0 +1,171 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Login renders LoginForm 1`] = `
+<div>
+  <img
+    alt={undefined}
+    className="ui tiny image"
+    height={undefined}
+    src="test-file-stub"
+    width={undefined}
+  />
+  <h2
+    className="ui header"
+  >
+    Escalator Login
+  </h2>
+  <form
+    className="ui form"
+    onSubmit={[Function]}
+  >
+    <div
+      className="ui stacked segment"
+    >
+      <div
+        className="field"
+      >
+        <div
+          className="ui left icon input"
+        >
+          <i
+            className="user icon"
+          />
+          <input
+            name="email"
+            placeholder="Email"
+            required={true}
+            type="email"
+          />
+        </div>
+      </div>
+      <div
+        className="field"
+      >
+        <div
+          className="ui left icon input"
+        >
+          <i
+            className="lock icon"
+          />
+          <input
+            name="password"
+            placeholder="Password"
+            required={true}
+            type="password"
+          />
+        </div>
+      </div>
+      <button
+        className="ui fluid primary button"
+        tabIndex={undefined}
+        type="submit"
+      >
+        Submit
+      </button>
+    </div>
+    <div
+      className="ui error message"
+    >
+      <div
+        className="content"
+      >
+        <p>
+          Your login information is incorrect.
+        </p>
+      </div>
+    </div>
+  </form>
+</div>
+`;
+
+exports[`Login renders SignupForm 1`] = `
+<div>
+  <img
+    alt={undefined}
+    className="ui tiny image"
+    height={undefined}
+    src="test-file-stub"
+    width={undefined}
+  />
+  <h2
+    className="ui header"
+  >
+    Create an Account
+  </h2>
+  <form
+    className="ui form"
+    onSubmit={[Function]}
+  >
+    <div
+      className="ui stacked segment"
+    >
+      <div
+        className="field"
+      >
+        <div
+          className="ui input"
+        >
+          <input
+            name="name"
+            placeholder="Name"
+            required={true}
+            type="text"
+          />
+        </div>
+      </div>
+      <div
+        className="field"
+      >
+        <div
+          className="ui input"
+        >
+          <input
+            name="email"
+            placeholder="Email"
+            required={true}
+            type="email"
+          />
+        </div>
+      </div>
+      <div
+        className="field"
+      >
+        <div
+          className="ui input"
+        >
+          <input
+            name="password"
+            placeholder="Password"
+            required={true}
+            type="password"
+          />
+        </div>
+      </div>
+      <div
+        className="field"
+      >
+        <div
+          className="ui input"
+        >
+          <input
+            name="password2"
+            placeholder="Confirm Password"
+            required={true}
+            type="password"
+          />
+        </div>
+      </div>
+      <button
+        className="ui fluid primary button"
+        tabIndex={undefined}
+        type="submit"
+      >
+        Submit
+      </button>
+    </div>
+    <div
+      className="ui error message"
+    />
+  </form>
+</div>
+`;
