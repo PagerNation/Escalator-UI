@@ -6,13 +6,15 @@ import DeviceList from './DeviceList';
 
 class DevicesView extends React.Component {
 
-  static DEVICE_TYPES = {SMS: 'SMS', PHONE: 'Phone', EMAIL: 'Email'};
+  static DEVICE_TYPES() {
+    return {SMS: 'SMS', PHONE: 'Phone', EMAIL: 'Email'};
+  }
 
   static getIconForDevice(type) {
     switch(type) {
-      case DevicesView.DEVICE_TYPES.SMS: return 'comment';
-      case DevicesView.DEVICE_TYPES.PHONE: return 'phone';
-      case DevicesView.DEVICE_TYPES.EMAIL: return 'mail';
+      case DevicesView.DEVICE_TYPES().SMS: return 'comment';
+      case DevicesView.DEVICE_TYPES().PHONE: return 'phone';
+      case DevicesView.DEVICE_TYPES().EMAIL: return 'mail';
     }
   }
 
@@ -68,6 +70,7 @@ class DevicesView extends React.Component {
   }
 
   renderAddModal() {
+    console.log(this.props);
     return (
       <Modal
           open={this.state.modalOpen}
@@ -85,9 +88,9 @@ class DevicesView extends React.Component {
               </Form.Field>
               <Form.Field>
                 <label>
-                  {this.state.creatingType === DevicesView.DEVICE_TYPES.EMAIL ? "Email Address" : "Phone Number"}
+                  {this.state.creatingType === DevicesView.DEVICE_TYPES().EMAIL ? "Email Address" : "Phone Number"}
                 </label>
-                <input name="contactInformation" type={this.state.creatingType === DevicesView.DEVICE_TYPES.EMAIL ? "email" : "tel"} required />
+                <input name="contactInformation" type={this.state.creatingType === DevicesView.DEVICE_TYPES().EMAIL ? "email" : "tel"} required />
               </Form.Field>
               <Button onClick={this.handleClose} type="button">Cancel</Button>
               <Button className="green" type='submit'>Create</Button>
@@ -115,16 +118,16 @@ class DevicesView extends React.Component {
           <Dropdown text='Add Device' floating labeled button className='icon green' icon='add circle'>
             <Dropdown.Menu>
               <Dropdown.Item
-                onClick={() => this.handleAddDevice(DevicesView.DEVICE_TYPES.PHONE)}
-                icon={DevicesView.getIconForDevice(DevicesView.DEVICE_TYPES.PHONE)}
+                onClick={() => this.handleAddDevice(DevicesView.DEVICE_TYPES().PHONE)}
+                icon={DevicesView.getIconForDevice(DevicesView.DEVICE_TYPES().PHONE)}
                 text='Phone' />
               <Dropdown.Item
-                onClick={() => this.handleAddDevice(DevicesView.DEVICE_TYPES.SMS)}
-                icon={DevicesView.getIconForDevice(DevicesView.DEVICE_TYPES.SMS)}
+                onClick={() => this.handleAddDevice(DevicesView.DEVICE_TYPES().SMS)}
+                icon={DevicesView.getIconForDevice(DevicesView.DEVICE_TYPES().SMS)}
                 text='SMS' />
               <Dropdown.Item
-                onClick={() => this.handleAddDevice(DevicesView.DEVICE_TYPES.EMAIL)}
-                icon={DevicesView.getIconForDevice(DevicesView.DEVICE_TYPES.EMAIL)}
+                onClick={() => this.handleAddDevice(DevicesView.DEVICE_TYPES().EMAIL)}
+                icon={DevicesView.getIconForDevice(DevicesView.DEVICE_TYPES().EMAIL)}
                 text='Email' />
             </Dropdown.Menu>
           </Dropdown>
