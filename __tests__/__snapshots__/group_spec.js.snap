@@ -1,0 +1,71 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`GroupView renders GroupView 1`] = `
+<div>
+  <h1
+    className="ui header"
+  >
+    AudraDickinson
+  </h1>
+  <h4
+    className="ui header"
+  >
+    User on call: 
+    <a
+      href="/user/58a09497b73f14c7d6d64437/"
+    >
+      Kelly85
+    </a>
+  </h4>
+  <span>
+    Escalation Interval: 
+    <div
+      className="ui teal horizontal label"
+      onClick={[Function]}
+    >
+      10
+    </div>
+     minutes
+  </span>
+  <div
+    className="ui divider"
+  />
+  <div
+    className="ui grid"
+  >
+    <div
+      className="six wide computer sixteen wide mobile column"
+    >
+      <h3>
+        Escalation Order:
+      </h3>
+      <a
+        className="arrow_box"
+        href="/user/58a09497b73f14c7d6d64437/"
+      >
+        Kelly85
+      </a>
+      <a
+        className="arrow_box"
+        href="/user/58a09497b73f14c7d6d64438/"
+      >
+        Demetrius.Hahn
+      </a>
+    </div>
+    <div
+      className="six wide computer sixteen wide mobile column"
+    >
+      <h3>
+        Not On Call:
+      </h3>
+      <div>
+        <a
+          href="/user/58a09497b73f14c7d6d6443a/"
+        >
+          Seth4
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+`;

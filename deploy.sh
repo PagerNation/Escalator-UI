@@ -1,6 +1,6 @@
 #! /bin/bash
 
-if [ "$TRAVIS_BRANCH" == "master" ]; then
+if [ "$TRAVIS_BRANCH" == "master" ] && [ "$TRAVIS_PULL_REQUEST" = "false" ]; then
   chmod 400 EscalatorUI.pem
   NODE_ENV=production npm run compile
   mv Caddyfile dist/Caddyfile
