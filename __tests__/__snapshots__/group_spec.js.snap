@@ -7,6 +7,13 @@ exports[`GroupView renders GroupView 1`] = `
   >
     AudraDickinson
   </h1>
+  <button
+    className="ui button action-button"
+    onClick={[Function]}
+    tabIndex={undefined}
+  >
+    Leave Group
+  </button>
   <h4
     className="ui header"
   >
@@ -34,37 +41,58 @@ exports[`GroupView renders GroupView 1`] = `
     className="ui grid"
   >
     <div
-      className="six wide computer sixteen wide mobile column"
+      className="five wide computer sixteen wide mobile column"
     >
       <h3>
         Escalation Order:
       </h3>
       <a
-        className="arrow_box"
-        href="/user/58a09497b73f14c7d6d64437/"
+        className="box arrow_box"
+        onClick={[Function]}
       >
         Kelly85
       </a>
       <a
-        className="arrow_box"
-        href="/user/58a09497b73f14c7d6d64438/"
+        className="box arrow_box"
+        onClick={[Function]}
       >
         Demetrius.Hahn
       </a>
     </div>
     <div
-      className="six wide computer sixteen wide mobile column"
+      className="middle aligned one wide computer sixteen wide mobile column"
+    >
+      <button
+        className="ui mini disabled button move-btn"
+        onClick={[Function]}
+        tabIndex={undefined}
+      >
+        <i
+          className="chevron left icon"
+        />
+      </button>
+      <button
+        className="ui mini disabled button move-btn"
+        onClick={[Function]}
+        tabIndex={undefined}
+      >
+        <i
+          className="chevron right icon"
+        />
+      </button>
+    </div>
+    <div
+      className="five wide computer sixteen wide mobile column"
     >
       <h3>
         Not On Call:
       </h3>
-      <div>
-        <a
-          href="/user/58a09497b73f14c7d6d6443a/"
-        >
-          Seth4
-        </a>
-      </div>
+      <a
+        className="box"
+        onClick={[Function]}
+      >
+        Seth4
+      </a>
     </div>
   </div>
 </div>

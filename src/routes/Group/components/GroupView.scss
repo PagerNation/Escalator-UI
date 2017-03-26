@@ -1,18 +1,26 @@
-
 .on-call {
   color: green !important;
   font-weight: 800;
 }
 
-.arrow_box {
+.action-button {
+  float: right;
+  clear: both;
+}
+
+.box {
+  border: 3px solid #c2e1f5;
+  background: #88b7d5;
   display: block;
   position: relative;
-  background: #88b7d5;
-  border: 3px solid #c2e1f5;
   padding: 10px;
   text-align: center;
   margin-bottom: 20px;
   color: #fff;
+}
+
+.box.selected {
+  border-color: greenyellow;
 }
 
 .arrow_box:not(:last-of-type):after, .arrow_box:not(:last-of-type):before {
@@ -38,4 +46,9 @@
   border-top-color: #c2e1f5;
   border-width: 24px;
   margin-left: -24px;
+}
+
+.ui.mini.button.move-btn {
+  font-weight: 600;
+  margin-bottom: 5px;
 }

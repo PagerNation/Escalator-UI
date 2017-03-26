@@ -1,0 +1,34 @@
+{
+  "_id": "58a09497b73f14c7d6d64437",
+  "name": "Kelly85",
+  "email": "Elody39@hotmail.com",
+  "role": 0,
+  "__v": 3,
+  "createdAt": "2017-02-12T17:00:07.376Z",
+  "isSysAdmin": false,
+  "delays": [
+    1
+  ],
+  "devices": [
+    {
+      "_id": "58a09498b73f14c7d6d64526",
+      "contactInformation": "5100426798",
+      "type": "phone",
+      "name": "et",
+      "__v": 0,
+      "createdAt": "2017-02-12T17:00:07.368Z"
+    },
+    {
+      "_id": "58a09497b73f14c7d6d644b1",
+      "contactInformation": "Granville.Heathcote87@gmail.com",
+      "type": "email",
+      "name": "at",
+      "__v": 0,
+      "createdAt": "2017-02-12T17:00:07.368Z"
+    }
+  ],
+  "groups": [
+    "AudraDickinson"
+  ],
+  "auth": null
+}
