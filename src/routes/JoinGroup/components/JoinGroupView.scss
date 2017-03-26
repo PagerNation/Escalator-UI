@@ -1,0 +1,54 @@
+.on-call {
+  color: green !important;
+  font-weight: 800;
+}
+
+.action-button {
+  float: right;
+  clear: both;
+}
+
+.box {
+  border: 3px solid #c2e1f5;
+  background: #88b7d5;
+  display: block;
+  position: relative;
+  padding: 10px;
+  text-align: center;
+  margin-bottom: 20px;
+  color: #fff;
+}
+
+.box.selected {
+  border-color: greenyellow;
+}
+
+.arrow_box:not(:last-of-type):after, .arrow_box:not(:last-of-type):before {
+  top: 100%;
+  left: 50%;
+  border: solid transparent;
+  content: " ";
+  height: 0;
+  width: 0;
+  position: absolute;
+  pointer-events: none;
+}
+
+.arrow_box:not(:last-of-type):after {
+  border-color: rgba(136, 183, 213, 0);
+  border-top-color: #88b7d5;
+  border-width: 20px;
+  margin-left: -20px;
+}
+
+.arrow_box:not(:last-of-type):before {
+  border-color: rgba(194, 225, 245, 0);
+  border-top-color: #c2e1f5;
+  border-width: 24px;
+  margin-left: -24px;
+}
+
+.ui.mini.button.move-btn {
+  font-weight: 600;
+  margin-bottom: 5px;
+}
