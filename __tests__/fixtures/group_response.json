@@ -9,7 +9,7 @@
       "58a09497b73f14c7d6d64437",
       "58a09497b73f14c7d6d64438"
     ],
-    "pagingIntervalInDays": 10,
+    "pagingIntervalInMinutes": 10,
     "rotationIntervalInDays": 7
   },
   "users": [

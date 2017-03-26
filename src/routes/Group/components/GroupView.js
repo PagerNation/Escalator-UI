@@ -113,7 +113,7 @@ class GroupView extends React.Component {
   escalationInterval() {
     return (
       <span>
-        Escalation Interval: <Label color='teal' horizontal>{this.props.group.escalationPolicy.pagingIntervalInDays}</Label> minutes
+        Escalation Interval: <Label color='teal' horizontal>{this.props.group.escalationPolicy.pagingIntervalInMinutes}</Label> minutes
       </span>
     );
   };
