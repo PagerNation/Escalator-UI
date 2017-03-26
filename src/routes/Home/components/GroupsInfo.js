@@ -1,5 +1,6 @@
 import React from "react";
-import { Header, Card, Feed } from 'semantic-ui-react'
+import { Header, Card, Feed } from 'semantic-ui-react';
+import { Link } from 'react-router';
 import _ from 'lodash';
 
 class GroupsInfo extends React.Component {
@@ -10,7 +11,7 @@ class GroupsInfo extends React.Component {
           <Card key={index} color="green" fluid>
             <Card.Content>
               <Card.Header>
-                <a href={`/group/${group.name}`}>{group.name}</a>
+                <Link to={`/group/${group.name}`}>{group.name}</Link>
               </Card.Header>
               <Header as='h4' className="on-call">You are on call</Header>
               <Feed>
