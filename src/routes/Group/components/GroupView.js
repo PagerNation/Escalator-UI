@@ -19,7 +19,8 @@ class GroupView extends React.Component {
       "toggleSelectOnCall",
       "toggleSelectBenched",
       "handleRemoveSubscribers",
-      "handleAddSubscribers");
+      "handleAddSubscribers",
+      "handleProcessRequest");
   }
 
   toggleSelectOnCall(index) {
@@ -67,6 +68,10 @@ class GroupView extends React.Component {
     this.setState({
       selectedBenched: []
     });
+  }
+
+  handleProcessRequest(userId, approved) {
+    this.props.processRequest(this.props.group.name, userId, approved);
   }
 
   componentWillMount() {
@@ -131,8 +136,8 @@ class GroupView extends React.Component {
               {this.props.group.joinRequests.map((userId, i) =>
                 <Segment key={i} raised clearing>
                   {userId}
-                  <Button floated="right" color="green">Approve</Button>
-                  <Button floated="right" color="red">Deny</Button>
+                  <Button floated="right" color="green" onClick={() => this.handleProcessRequest(userId, true)}>Approve</Button>
+                  <Button floated="right" color="red" onClick={() => this.handleProcessRequest(userId, false)}>Deny</Button>
                 </Segment>
               )}
             </div>

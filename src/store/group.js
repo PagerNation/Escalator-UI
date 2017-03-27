@@ -9,6 +9,7 @@ export const FETCH_GROUP_SUCCESS = 'FETCH_GROUP_SUCCESS';
 export const LEAVE_GROUP_SUCCESS = 'LEAVE_GROUP_SUCCESS';
 export const UPDATE_EP_SUCCESS = 'UPDATE_EP_SUCCESS';
 export const JOIN_REQUEST_SUCCESS = 'JOIN_REQUEST_SUCCESS';
+export const JOIN_REQUEST_PROCESS_SUCCESS = 'JOIN_REQUEST_PROCESS_SUCCESS';
 
 // ------------------------------------
 // Actions
@@ -61,7 +62,21 @@ export const joinRequest = (groupName) => {
       const userId = jwtDecode(localStorage.getItem('escalatorToken')).id;
       postJSON(`group/${groupName}/request`, {userId}).then((response) => {
         dispatch({
-          type: UPDATE_EP_SUCCESS,
+          type: JOIN_REQUEST_SUCCESS,
+          payload: response
+        });
+        resolve();
+      });
+    })
+  }
+};
+
+export const processRequest = (groupName, userId, approved) => {
+  return (dispatch, getState) => {
+    return new Promise((resolve) => {
+      putJSON(`group/${groupName}/request`, {userId, isAccepted: approved}).then((response) => {
+        dispatch({
+          type: JOIN_REQUEST_PROCESS_SUCCESS,
           payload: response
         });
         resolve();
@@ -84,6 +99,9 @@ const ACTION_HANDLERS = {
     return action.payload;
   },
   [JOIN_REQUEST_SUCCESS]: (state, action) => {
+    return action.payload;
+  },
+  [JOIN_REQUEST_PROCESS_SUCCESS]: (state, action) => {
     return action.payload;
   }
 };
