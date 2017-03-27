@@ -1,6 +1,6 @@
 import 'whatwg-fetch';
-import _ from 'lodash';
-import { getJSON, deleteObject, putJSON } from "../utils/apiRequest";
+import jwtDecode from 'jwt-decode';
+import { getJSON, deleteObject, putJSON, postJSON } from "../utils/apiRequest";
 
 // ------------------------------------
 // Constants
@@ -8,6 +8,7 @@ import { getJSON, deleteObject, putJSON } from "../utils/apiRequest";
 export const FETCH_GROUP_SUCCESS = 'FETCH_GROUP_SUCCESS';
 export const LEAVE_GROUP_SUCCESS = 'LEAVE_GROUP_SUCCESS';
 export const UPDATE_EP_SUCCESS = 'UPDATE_EP_SUCCESS';
+export const JOIN_REQUEST_SUCCESS = 'JOIN_REQUEST_SUCCESS';
 
 // ------------------------------------
 // Actions
@@ -54,6 +55,20 @@ export const updateEscalationPolicy = (groupName, ep) => {
   }
 };
 
+export const joinRequest = (groupName) => {
+  return (dispatch, getState) => {
+    return new Promise((resolve) => {
+      const userId = jwtDecode(localStorage.getItem('escalatorToken')).id;
+      postJSON(`group/${groupName}/request`, {userId}).then((response) => {
+        dispatch({
+          type: UPDATE_EP_SUCCESS,
+          payload: response
+        });
+        resolve();
+      });
+    })
+  }
+};
 
 // ------------------------------------
 // Action Handlers
@@ -66,6 +81,9 @@ const ACTION_HANDLERS = {
     return action.payload;
   },
   [UPDATE_EP_SUCCESS]: (state, action) => {
+    return action.payload;
+  },
+  [JOIN_REQUEST_SUCCESS]: (state, action) => {
     return action.payload;
   }
 };
