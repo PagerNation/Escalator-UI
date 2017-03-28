@@ -133,11 +133,12 @@ class GroupView extends React.Component {
             <Header as="h4">Pending membership requests:</Header>
             {this.props.group.joinRequests.length > 0 ?
             <div>
-              {this.props.group.joinRequests.map((userId, i) =>
-                <Segment key={i} raised clearing>
-                  {userId}
-                  <Button floated="right" color="green" onClick={() => this.handleProcessRequest(userId, true)}>Approve</Button>
-                  <Button floated="right" color="red" onClick={() => this.handleProcessRequest(userId, false)}>Deny</Button>
+              {this.props.group.joinRequests.map((user, i) =>
+                <Segment key={i} raised>
+                  <Header as="h5">{user.name}</Header>
+                  <span>{user.email}</span>
+                  <Button style={{marginTop: "-20px"}} floated="right" color="green" onClick={() => this.handleProcessRequest(user._id, true)}>Approve</Button>
+                  <Button style={{marginTop: "-20px"}} className="section-btn" floated="right" color="red" onClick={() => this.handleProcessRequest(user._id, false)}>Deny</Button>
                 </Segment>
               )}
             </div>
