@@ -41,7 +41,7 @@ exports[`GroupView renders GroupView 1`] = `
     className="ui grid"
   >
     <div
-      className="five wide computer sixteen wide mobile column"
+      className="seven wide computer sixteen wide mobile column"
     >
       <h3>
         Escalation Order:
@@ -82,7 +82,7 @@ exports[`GroupView renders GroupView 1`] = `
       </button>
     </div>
     <div
-      className="five wide computer sixteen wide mobile column"
+      className="seven wide computer sixteen wide mobile column"
     >
       <h3>
         Not On Call:

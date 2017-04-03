@@ -1,6 +1,6 @@
 import React from "react";
 import "./GroupView.scss";
-import { Divider, Label, Grid, Header, Button, Confirm, Icon } from 'semantic-ui-react';
+import { Divider, Label, Grid, Header, Button, Confirm, Icon, Segment } from 'semantic-ui-react';
 import _ from 'lodash';
 import classNames from 'classnames';
 
@@ -19,7 +19,8 @@ class GroupView extends React.Component {
       "toggleSelectOnCall",
       "toggleSelectBenched",
       "handleRemoveSubscribers",
-      "handleAddSubscribers");
+      "handleAddSubscribers",
+      "handleProcessRequest");
   }
 
   toggleSelectOnCall(index) {
@@ -67,6 +68,10 @@ class GroupView extends React.Component {
     this.setState({
       selectedBenched: []
     });
+  }
+
+  handleProcessRequest(userId, approved) {
+    this.props.processRequest(this.props.group.name, userId, approved);
   }
 
   componentWillMount() {
@@ -118,6 +123,33 @@ class GroupView extends React.Component {
     );
   };
 
+  renderAdmin() {
+    return this.props.group.admins.includes(this.props.user._id) && (
+      <div>
+        <Divider/>
+        <Header as="h3">Administration</Header>
+        <Grid>
+          <Grid.Column mobile={16} computer={8}>
+            <Header as="h4">Pending membership requests:</Header>
+            {this.props.group.joinRequests.length > 0 ?
+            <div>
+              {this.props.group.joinRequests.map((user, i) =>
+                <Segment key={i} raised>
+                  <Header as="h5">{user.name}</Header>
+                  <span>{user.email}</span>
+                  <Button style={{marginTop: "-20px"}} floated="right" color="green" onClick={() => this.handleProcessRequest(user._id, true)}>Approve</Button>
+                  <Button style={{marginTop: "-20px"}} className="section-btn" floated="right" color="red" onClick={() => this.handleProcessRequest(user._id, false)}>Deny</Button>
+                </Segment>
+              )}
+            </div>
+              : <em>No requests</em>
+            }
+          </Grid.Column>
+        </Grid>
+      </div>
+    );
+  }
+
   render() {
     const leaveButton = this.props.group && _.find(this.props.group.users, (user) => user._id === this.props.user._id) && (
       <Button className="action-button" onClick={this.toggleConfirm}>Leave Group</Button>
@@ -142,7 +174,7 @@ class GroupView extends React.Component {
         {this.escalationInterval()}
         <Divider/>
         <Grid>
-          <Grid.Column mobile={16} computer={5}>
+          <Grid.Column mobile={16} computer={7}>
             <h3>Escalation Order:</h3>
             {this.active()}
           </Grid.Column>
@@ -164,11 +196,12 @@ class GroupView extends React.Component {
                 <Icon name="chevron right" />
             </Button>
           </Grid.Column>
-          <Grid.Column mobile={16} computer={5}>
+          <Grid.Column mobile={16} computer={7}>
             <h3>Not On Call:</h3>
             {this.benched()}
           </Grid.Column>
         </Grid>
+        {this.renderAdmin()}
       </div>
     );
   }

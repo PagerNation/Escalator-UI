@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from "react-redux";
-import { Icon } from 'semantic-ui-react';
+import { Loader } from 'semantic-ui-react';
 import { fetchUser } from '../store/user';
 import _ from 'lodash';
 
@@ -35,7 +35,7 @@ const RouteContainer = (mapStateToProps, mapDispatchToProps, WrappedContainer, r
     render() {
       return this.state.pageLoaded ?
         <WrappedContainer {...this.props}/> :
-        <Icon className="loading-icon" loading name="circle notched" size="huge" />;
+        <Loader active />
     }
   });
 };
