@@ -2,6 +2,7 @@ import React from "react";
 import "./GroupView.scss";
 import { Divider, Label, Grid, Header, Button, Confirm, Icon, Segment } from 'semantic-ui-react';
 import _ from 'lodash';
+import InlineEditable from '../../../components/shared/InlineEditable';
 import classNames from 'classnames';
 
 class GroupView extends React.Component {
@@ -20,7 +21,8 @@ class GroupView extends React.Component {
       "toggleSelectBenched",
       "handleRemoveSubscribers",
       "handleAddSubscribers",
-      "handleProcessRequest");
+      "handleProcessRequest",
+     "handleEditPagingInterval");
   }
 
   toggleSelectOnCall(index) {
@@ -68,6 +70,12 @@ class GroupView extends React.Component {
     this.setState({
       selectedBenched: []
     });
+  }
+
+  handleEditPagingInterval(values) {
+    const ep = {};
+    _.extend(ep, this.props.group.escalationPolicy, {pagingIntervalInMinutes: values.pagingIntervalInMinutes});
+    this.props.updateEscalationPolicy(this.props.group.name, _.omit(ep, "_id"));
   }
 
   handleProcessRequest(userId, approved) {
@@ -123,6 +131,20 @@ class GroupView extends React.Component {
     );
   };
 
+  escalationIntervalAdmin() {
+    return (
+      <span>
+        Escalation Interval: <Label color='teal' horizontal>
+          <InlineEditable
+            name="pagingIntervalInMinutes"
+            value={this.props.group.escalationPolicy.pagingIntervalInMinutes}
+            onChange={this.handleEditPagingInterval} />
+        </Label>
+        minutes
+      </span>
+    );
+  };
+
   renderAdmin() {
     return this.props.group.admins.includes(this.props.user._id) && (
       <div>
@@ -171,7 +193,10 @@ class GroupView extends React.Component {
         <Header as="h1">{this.props.group.name}</Header>
         {leaveButton}
         {this.onCall()}
-        {this.escalationInterval()}
+        {this.props.group.admins.includes(this.props.user._id) ?
+          this.escalationIntervalAdmin() :
+          this.escalationInterval()
+        }
         <Divider/>
         <Grid>
           <Grid.Column mobile={16} computer={7}>

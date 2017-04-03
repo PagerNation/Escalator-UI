@@ -33,7 +33,7 @@ class GroupView extends React.Component {
 
   render() {
     const message = this.state.sent && (
-      <Message positive icon='checkmark'>
+      <Message positive>
         Your request has been sent! You will be added to the group once its leader approves your request.
       </Message>
     );
