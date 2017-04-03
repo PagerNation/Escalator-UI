@@ -1,0 +1,17 @@
+.ui.input > div {
+  display: block !important;
+  width: 100%;
+
+  input {
+    width: 100%;
+  }
+}
+
+.menuItem {
+  padding: 5px;
+  text-align: left;
+}
+
+.menuItem.highlighted {
+  background: #eee;
+}
