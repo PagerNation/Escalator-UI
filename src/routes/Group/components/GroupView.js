@@ -3,6 +3,7 @@ import "./GroupView.scss";
 import { Divider, Label, Grid, Header, Button, Confirm, Icon } from 'semantic-ui-react';
 import _ from 'lodash';
 import classNames from 'classnames';
+import TicketView from './TicketView';
 
 class GroupView extends React.Component {
 
@@ -71,6 +72,7 @@ class GroupView extends React.Component {
 
   componentWillMount() {
     this.props.fetchGroup(this.props.params.groupId)
+    this.props.fetchGroupTickets(this.props.params.groupId)
   }
 
   active() {
@@ -169,6 +171,7 @@ class GroupView extends React.Component {
             {this.benched()}
           </Grid.Column>
         </Grid>
+      <TicketView tickets={this.props.tickets}/>
       </div>
     );
   }

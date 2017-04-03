@@ -2,6 +2,7 @@ import {combineReducers} from "redux";
 import locationReducer from "./location";
 import userReducer from './user';
 import groupReducer from './group';
+import ticketReducer from './ticket';
 import api from './api';
 
 export const makeRootReducer = (asyncReducers) => {
@@ -9,6 +10,7 @@ export const makeRootReducer = (asyncReducers) => {
     location: locationReducer,
     user: userReducer,
     group: groupReducer,
+    ticket: ticketReducer,
     api: api,
     ...asyncReducers
   })

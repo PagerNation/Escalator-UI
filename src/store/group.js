@@ -54,7 +54,6 @@ export const updateEscalationPolicy = (groupName, ep) => {
   }
 };
 
-
 // ------------------------------------
 // Action Handlers
 // ------------------------------------
@@ -67,7 +66,7 @@ const ACTION_HANDLERS = {
   },
   [UPDATE_EP_SUCCESS]: (state, action) => {
     return action.payload;
-  }
+  },
 };
 
 // ------------------------------------
