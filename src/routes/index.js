@@ -9,8 +9,9 @@ export const createRoutes = (store) => ({
   childRoutes: [
     require('./Group').default(store),
     require('./Profile').default(store),
-    require('./Admin').default(store)
+    require('./Admin').default(store),
+    require('./JoinGroup').default(store)
   ]
 });
 
-export default createRoutes
+export default createRoutes;

@@ -100,6 +100,7 @@
     "normalize.css": "^4.1.1",
     "postcss-loader": "^0.13.0",
     "react": "^15.0.0",
+    "react-autocomplete": "^1.4.1",
     "react-dom": "^15.0.0",
     "react-drag-sortable": "^1.0.1",
     "react-redux": "^4.4.5",

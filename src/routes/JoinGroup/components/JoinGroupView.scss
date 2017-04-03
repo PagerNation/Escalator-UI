@@ -1,0 +1,33 @@
+.menuItem {
+  padding: 5px;
+  text-align: left;
+}
+
+.menuItem.highlighted {
+  background: #eee;
+}
+
+.ui.primary.btn.send-btn {
+  display: block;
+}
+
+.ui.input > div {
+  display: block !important;
+  width: 100%;
+
+  input {
+    width: 100%;
+  }
+}
+
+.ui.button.send-btn {
+  margin-top: 10px;
+}
+
+.segment {
+  text-align: right;
+}
+
+.message {
+  text-align: left;
+}
