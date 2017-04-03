@@ -15,30 +15,30 @@ class TicketView extends React.Component {
 
   ticketRow(ticket, index){
     var title = (typeof ticket.metadata.title != undefined) ? ticket.metadata.title : 'No name';
-    var action = ticket.actions[index];
+    var rows = [];
     if (index == 0) {
-      return <Table.Row>
-        <Table.Cell rowSpan='5'>{title}</Table.Cell>
-        <Table.Cell>{"action"}</Table.Cell>
-        <Table.Cell>{"timestamp"}</Table.Cell>
-        <Table.Cell>{"UserId"}</Table.Cell>
-        <Table.Cell>{"device"}</Table.Cell>
-      </Table.Row>
-    } else {
-      return <Table.Row>
-        <Table.Cell>{"action"}</Table.Cell>
-        <Table.Cell>{"timestamp"}</Table.Cell>
-        <Table.Cell>{"UserId"}</Table.Cell>
-        <Table.Cell>{"device"}</Table.Cell>
-      </Table.Row>
+      rows.push(<Table.Cell rowSpan='5'>{title}</Table.Cell>)
     }
-        
+    if (typeof ticket.actions != 'undefined'){
+      var action = ticket.actions[index];
+      rows.push(<Table.Cell>{action.actionTaken}</Table.Cell>)
+      rows.push(<Table.Cell>{String(new Date(action.timestamp))}</Table.Cell>)
+      rows.push(<Table.Cell>{action.userId}</Table.Cell>)
+      if (typeof action.device != 'undefined' ) {
+        rows.push(<Table.Cell>{action.device.type}</Table.Cell>)
+      }
+    }
+    return <Table.Row>
+      {rows}
+    </Table.Row>
   }
 
   render() {
     var rows = []
-    for(var index in this.props.tickets[0].actions) {
-      rows.push(this.ticketRow(this.props.tickets[0], index))
+    for(var ticket of this.props.tickets) {
+      for(var index in ticket.actions) {
+        rows.push(this.ticketRow(ticket, index))
+      }
     }
     console.log(rows)
     return <div>
