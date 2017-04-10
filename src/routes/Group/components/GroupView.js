@@ -22,7 +22,7 @@ class GroupView extends React.Component {
       "handleRemoveSubscribers",
       "handleAddSubscribers",
       "handleProcessRequest",
-     "handleEditPagingInterval");
+      "handleEditPagingInterval");
   }
 
   toggleSelectOnCall(index) {
