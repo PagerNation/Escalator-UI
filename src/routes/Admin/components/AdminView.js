@@ -1,6 +1,6 @@
 import React from "react";
 import "./AdminView.scss";
-import { Header, Checkbox, Grid } from 'semantic-ui-react';
+import { Header, Checkbox, Grid, Button } from 'semantic-ui-react';
 import Select from 'react-select';
 
 class AdminView extends React.Component {
@@ -10,15 +10,22 @@ class AdminView extends React.Component {
     this.state = {
       searchValue: "",
       selectedUser: null,
-      loading: false
+      loading: false,
+      sysAdminValue: null,
+      valueChanged: false
     };
-    _.bindAll(this, "handleSearch", "getOptions", "handleSelectUser");
+    _.bindAll(this,
+      "handleSearch",
+      "getOptions",
+      "handleSelectUser",
+      "handleChangeSysAdmin"
+    );
   }
 
-  handleSelectUser(value) {
-    console.log(value);
+  handleSelectUser(selection) {
     this.setState({
-      selectedUser: value || null
+      selectedUser: selection,
+      sysAdminValue: selection && selection.value && selection.value.isSysAdmin
     });
   }
 
@@ -40,6 +47,14 @@ class AdminView extends React.Component {
     }
   }
 
+  handleChangeSysAdmin(event, checked) {
+    console.log(checked)
+    this.setState({
+      sysAdminValue: checked.checked,
+      valueChanged: true
+    });
+  }
+
   getOptions() {
     return this.props.searchResults.map((user) => {
       return {
@@ -50,14 +65,24 @@ class AdminView extends React.Component {
   }
 
   renderUserEditor() {
-    if(this.state.selectedUser) {
+    if(this.state.selectedUser && this.state.selectedUser.value) {
       const user = this.state.selectedUser.value;
       return (
         <div>
           <Header as="h3">{user.name}</Header>
           <p>{user.email}</p>
           <Header as="h4">Permissions:</Header>
-          <Checkbox label='Administrator' checked={user.isSysAdmin} />
+          <Checkbox
+            label='Administrator'
+            checked={this.state.sysAdminValue}
+            onChange={this.handleChangeSysAdmin}
+          />
+          <Button
+            className="update-btn"
+            disabled={!this.state.valueChanged}
+            color="green">
+            Update
+          </Button>
         </div>
       );
     } else {
@@ -74,6 +99,7 @@ class AdminView extends React.Component {
           <Grid.Column mobile={16} computer={8}>
             <Select
               name="user-search"
+              multi={false}
               placeholder="Search users..."
               isLoading={this.state.loading}
               value={this.state.selectedUser}
@@ -84,7 +110,6 @@ class AdminView extends React.Component {
           </Grid.Column>
           <Grid.Column mobile={16} computer={8}>
             {this.renderUserEditor()}
-
           </Grid.Column>
         </Grid>
       </div>

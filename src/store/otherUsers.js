@@ -8,6 +8,7 @@ import { getJSON, postJSON, putJSON, deleteObject } from '../utils/apiRequest';
 // ------------------------------------
 export const FETCH_OTHER_USER_SUCCESS = 'FETCH_OTHER_USER_SUCCESS';
 export const SEARCH_SUCCESS = 'SEARCH_SUCCESS';
+export const UPDATE_USER_ADMIN_SUCCESS = 'UPDATE_USER_ADMIN_SUCCESS';
 
 
 // ------------------------------------
@@ -42,6 +43,21 @@ export const searchByName = (query) => {
   }
 };
 
+export const updateUserAdmin = (userId, profile) => {
+  return (dispatch, getState) => {
+    return new Promise((resolve) => {
+      putJSON(`user/${userId}/`, profile).then((response) => {
+        dispatch({
+          type: UPDATE_USER_ADMIN_SUCCESS,
+          payload: response,
+          userId
+        });
+        resolve();
+      });
+    });
+  }
+};
+
 // ------------------------------------
 // Action Handlers
 // ------------------------------------
@@ -53,6 +69,11 @@ const ACTION_HANDLERS = {
   },
   [SEARCH_SUCCESS]: (state, action) => {
     const newState = _.extend({}, state, {searchResults: action.payload});
+    return newState;
+  },
+  [UPDATE_USER_ADMIN_SUCCESS]: (state, action) => {
+    const newState = _.extend({}, state);
+    newState.users[action.userId] = action.payload;
     return newState;
   }
 };

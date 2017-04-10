@@ -1,9 +1,10 @@
-import { searchByName } from "../../../store/otherUsers";
+import { searchByName, updateUserAdmin } from "../../../store/otherUsers";
 import AdminView from "../components/AdminView";
 import RouteContainer from '../../../containers/RouteContainer';
 
 const mapDispatchToProps = {
-  searchByName
+  searchByName,
+  updateUserAdmin
 };
 
 const mapStateToProps = (state) => ({
