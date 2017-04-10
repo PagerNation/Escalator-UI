@@ -78,8 +78,12 @@ class AdminView extends React.Component {
       const user = this.state.selectedUser.value;
       return (
         <div>
-          <Header as="h3">{user.name}</Header>
-          <p>{user.email}</p>
+          <Header as="h3">
+            {user.name}
+            <Header.Subheader>
+              {user.email}
+            </Header.Subheader>
+          </Header>
           <Header as="h4">Permissions:</Header>
           <Checkbox
             label='Administrator'
