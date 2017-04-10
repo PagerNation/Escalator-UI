@@ -6,21 +6,35 @@ import { getJSON, postJSON, putJSON, deleteObject } from '../utils/apiRequest';
 // ------------------------------------
 // Constants
 // ------------------------------------
-export const FETCH_USER_SUCCESS = 'FETCH_USER_SUCCESS';
+export const FETCH_OTHER_USER_SUCCESS = 'FETCH_OTHER_USER_SUCCESS';
+export const SEARCH_SUCCESS = 'SEARCH_SUCCESS';
 
 
 // ------------------------------------
 // Actions
 // ------------------------------------
-export const fetchUser = (userId) => {
+export const fetchOtherUser = (userId) => {
   return (dispatch, getState) => {
     return new Promise((resolve) => {
-      const userId = jwtDecode(localStorage.getItem('escalatorToken')).id;
       getJSON(`user/${userId}/`).then((response) => {
         dispatch({
-          type: FETCH_USER_SUCCESS,
+          type: FETCH_OTHER_USER_SUCCESS,
           payload: response,
           userId
+        });
+        resolve();
+      });
+    });
+  }
+};
+
+export const searchByName = (query) => {
+  return (dispatch, getState) => {
+    return new Promise((resolve) => {
+      getJSON(`user/searchByName/${query}`).then((response) => {
+        dispatch({
+          type: SEARCH_SUCCESS,
+          payload: response
         });
         resolve();
       });
@@ -32,15 +46,24 @@ export const fetchUser = (userId) => {
 // Action Handlers
 // ------------------------------------
 const ACTION_HANDLERS = {
-  [FETCH_USER_SUCCESS]: (state, action) => {
-    return action.payload;
+  [FETCH_OTHER_USER_SUCCESS]: (state, action) => {
+    const newState = _.extend({}, state);
+    newState.users[action.userId] = action.payload;
+    return newState;
+  },
+  [SEARCH_SUCCESS]: (state, action) => {
+    const newState = _.extend({}, state, {searchResults: action.payload});
+    return newState;
   }
 };
 
 // ------------------------------------
 // Reducer
 // ------------------------------------
-const initialState = null;
+const initialState = {
+  users: null,
+  searchResults: []
+};
 
 export default function userReducer(state = initialState, action) {
   const handler = ACTION_HANDLERS[action.type];
