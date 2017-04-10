@@ -74,6 +74,7 @@ const ACTION_HANDLERS = {
   [UPDATE_USER_ADMIN_SUCCESS]: (state, action) => {
     const newState = _.extend({}, state);
     newState.users[action.userId] = action.payload;
+    newState.searchResults = [];
     return newState;
   }
 };
@@ -82,7 +83,7 @@ const ACTION_HANDLERS = {
 // Reducer
 // ------------------------------------
 const initialState = {
-  users: null,
+  users: {},
   searchResults: []
 };
 

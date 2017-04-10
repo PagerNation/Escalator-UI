@@ -18,14 +18,16 @@ class AdminView extends React.Component {
       "handleSearch",
       "getOptions",
       "handleSelectUser",
-      "handleChangeSysAdmin"
+      "handleChangeSysAdmin",
+      "handleUpdateUser"
     );
   }
 
   handleSelectUser(selection) {
     this.setState({
       selectedUser: selection,
-      sysAdminValue: selection && selection.value && selection.value.isSysAdmin
+      sysAdminValue: selection && selection.value && selection.value.isSysAdmin,
+      valueChanged: false
     });
   }
 
@@ -48,10 +50,17 @@ class AdminView extends React.Component {
   }
 
   handleChangeSysAdmin(event, checked) {
-    console.log(checked)
     this.setState({
       sysAdminValue: checked.checked,
       valueChanged: true
+    });
+  }
+
+  handleUpdateUser() {
+    this.props.updateUserAdmin(this.state.selectedUser.value._id,
+      {isSysAdmin: this.state.sysAdminValue});
+    this.setState({
+      selectedUser: null
     });
   }
 
@@ -80,7 +89,8 @@ class AdminView extends React.Component {
           <Button
             className="update-btn"
             disabled={!this.state.valueChanged}
-            color="green">
+            color="green"
+            onClick={this.handleUpdateUser}>
             Update
           </Button>
         </div>
