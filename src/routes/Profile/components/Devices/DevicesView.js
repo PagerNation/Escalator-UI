@@ -73,7 +73,7 @@ class DevicesView extends React.Component {
     if (type == DevicesView.DEVICE_TYPES.EMAIL) {
       return <input name="contactInformation" type="email" required />
     } else {
-      return <Cleave name="contactInformation" required options={{phone: true, phoneRegionCode: 'US', delimiter: '-'}} />
+      return <Cleave name="contactInformation" type="tel" required options={{phone: true, phoneRegionCode: 'US', delimiter: '-'}} />
     }
   }
 
