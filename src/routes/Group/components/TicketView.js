@@ -13,6 +13,10 @@ class TicketView extends React.Component {
     )
   }
 
+  userLink(user) {
+    return user ? <a href={'/user/' + user._id +'/'}>{user.name}</a> : <span>No one</span>;
+  };
+
   ticketRow(ticket, index){
     var title = (typeof ticket.metadata.title != undefined) ? ticket.metadata.title : 'No name';
     var rows = [];
@@ -23,7 +27,8 @@ class TicketView extends React.Component {
       var action = ticket.actions[index];
       rows.push(<Table.Cell>{action.actionTaken}</Table.Cell>)
       rows.push(<Table.Cell>{String(new Date(action.timestamp))}</Table.Cell>)
-      rows.push(<Table.Cell>{action.userId}</Table.Cell>)
+      console.log(action.user);
+      rows.push(<Table.Cell>{this.userLink(action.user)}</Table.Cell>)
       if (typeof action.device != 'undefined' ) {
         rows.push(<Table.Cell>{action.device.type}</Table.Cell>)
       }
@@ -40,7 +45,6 @@ class TicketView extends React.Component {
         rows.push(this.ticketRow(ticket, index))
       }
     }
-    console.log(rows)
     return <div>
       <Table celled structured>
         <Table.Header>
