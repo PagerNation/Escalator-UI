@@ -21,7 +21,7 @@ class TicketView extends React.Component {
     var title = (typeof ticket.metadata.title != undefined) ? ticket.metadata.title : 'No name';
     var rows = [];
     if (index == 0) {
-      rows.push(<Table.Cell rowSpan='5'>{title}</Table.Cell>)
+      rows.push(<Table.Cell rowSpan={ticket.actions.length}>{title}</Table.Cell>)
     }
     if (typeof ticket.actions != 'undefined'){
       var action = ticket.actions[index];
