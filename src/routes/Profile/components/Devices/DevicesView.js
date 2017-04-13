@@ -1,5 +1,7 @@
 import React from "react";
 import _ from "lodash";
+import Cleave from 'cleave.js/dist/cleave-react';
+import CleavePhone from 'cleave.js/dist/addons/cleave-phone.us';
 import { Header, Dropdown, Modal, Form, Button, Icon } from 'semantic-ui-react';
 import "./DevicesView.scss";
 import DeviceList from './DeviceList';
@@ -67,6 +69,14 @@ class DevicesView extends React.Component {
     this.handleClose();
   }
 
+  getInfoInput(type) {
+    if (type == DevicesView.DEVICE_TYPES.EMAIL) {
+      return <input name="contactInformation" type="email" required />
+    } else {
+      return <Cleave name="contactInformation" required options={{phone: true, phoneRegionCode: 'US', delimiter: '-'}} />
+    }
+  }
+
   renderAddModal() {
     return (
       <Modal
@@ -86,8 +96,8 @@ class DevicesView extends React.Component {
               <Form.Field>
                 <label>
                   {this.state.creatingType === DevicesView.DEVICE_TYPES.EMAIL ? "Email Address" : "Phone Number"}
+                  {this.getInfoInput(this.state.creatingType)}
                 </label>
-                <input name="contactInformation" type={this.state.creatingType === DevicesView.DEVICE_TYPES.EMAIL ? "email" : "tel"} required />
               </Form.Field>
               <Button onClick={this.handleClose} type="button">Cancel</Button>
               <Button className="green" type='submit'>Create</Button>
