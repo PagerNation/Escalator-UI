@@ -6,8 +6,18 @@
   "escalationPolicy": {
     "_id": "58a09498b73f14c7d6d6459e",
     "subscribers": [
-      "58a09497b73f14c7d6d64437",
-      "58a09497b73f14c7d6d64438"
+      {
+        "user": "58a09497b73f14c7d6d64437",
+        "active": true,
+        "deactivateDate": null,
+        "reactivateDate": null
+      },
+      {
+        "user": "58a09497b73f14c7d6d64438",
+        "active": true,
+        "deactivateDate": null,
+        "reactivateDate": null
+      }
     ],
     "pagingIntervalInMinutes": 10,
     "rotationIntervalInDays": 7
