@@ -60,10 +60,16 @@ class GroupView extends React.Component {
 
   handleAddSubscribers() {
     const subs = this.props.group.escalationPolicy.subscribers;
+    const subIds = subs.map((user) => user.userId);
     const benched = [,...this.props.group.users].filter((user) =>
-      this.props.group.escalationPolicy.subscribers.indexOf(user._id) === -1
+      subIds.indexOf(user._id) === -1
     );
-    this.state.selectedBenched.forEach((i) => subs.push(benched[i]._id));
+    this.state.selectedBenched.forEach((i) => subs.push({
+      userId: benched[i]._id,
+      active: true,
+      deactivateDate: null,
+      reactivateDate: null
+    }));
     const ep = {};
     _.extend(ep, this.props.group.escalationPolicy, {subscribers: subs});
     this.props.updateEscalationPolicy(this.props.group.name, _.omit(ep, "_id"));
@@ -87,21 +93,23 @@ class GroupView extends React.Component {
   }
 
   active() {
-   return [,...this.props.group.users].filter((user) =>
-    this.props.group.escalationPolicy.subscribers.indexOf(user._id) > -1
-   ).map((user, i) =>
-     <a
-       className={classNames("box arrow_box", {"selected": this.state.selectedOnCall.includes(i)})}
-       onClick={() => this.toggleSelectOnCall(i)}
-       key={i}>
-      {user.name}
-     </a>
+    const subIds = this.props.group.escalationPolicy.subscribers.map(u => u.userId);
+    return [,...this.props.group.users].filter((user) =>
+      subIds.indexOf(user._id) > -1
+    ).map((user, i) =>
+      <a
+        className={classNames("box arrow_box", {"selected": this.state.selectedOnCall.includes(i)})}
+        onClick={() => this.toggleSelectOnCall(i)}
+        key={i}>
+        {user.name}
+      </a>
     );
   };
 
   benched() {
+   const subIds = this.props.group.escalationPolicy.subscribers.map(u => u.userId);
    return [,...this.props.group.users].filter((user) =>
-     this.props.group.escalationPolicy.subscribers.indexOf(user._id) === -1
+     subIds.indexOf(user._id) === -1
    ).map((user, i) =>
       <a
         className={classNames("box", {"selected": this.state.selectedBenched.includes(i)})}
