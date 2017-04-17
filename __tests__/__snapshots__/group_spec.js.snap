@@ -25,7 +25,7 @@ exports[`GroupView renders GroupView 1`] = `
     </a>
   </h4>
   <span>
-    Escalation Interval:
+    Escalation Interval: 
     <div
       className="ui teal horizontal label"
       onClick={[Function]}
@@ -61,26 +61,7 @@ exports[`GroupView renders GroupView 1`] = `
     </div>
     <div
       className="middle aligned one wide computer sixteen wide mobile column"
-    >
-      <button
-        className="ui mini disabled button move-btn"
-        onClick={[Function]}
-        tabIndex={undefined}
-      >
-        <i
-          className="chevron left icon"
-        />
-      </button>
-      <button
-        className="ui mini disabled button move-btn"
-        onClick={[Function]}
-        tabIndex={undefined}
-      >
-        <i
-          className="chevron right icon"
-        />
-      </button>
-    </div>
+    />
     <div
       className="seven wide computer sixteen wide mobile column"
     >
