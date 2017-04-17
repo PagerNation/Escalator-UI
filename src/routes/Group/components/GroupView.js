@@ -26,15 +26,19 @@ class GroupView extends React.Component {
   }
 
   toggleSelectOnCall(index) {
-    this.setState({
-      selectedOnCall: _.xor(this.state.selectedOnCall, [index])
-    });
+    if (this.props.group.admins.includes(this.props.user._id)) {
+      this.setState({
+        selectedOnCall: _.xor(this.state.selectedOnCall, [index])
+      });
+    }
   }
 
   toggleSelectBenched(index) {
-    this.setState({
-      selectedBenched: _.xor(this.state.selectedBenched, [index])
-    });
+    if (this.props.group.admins.includes(this.props.user._id)) {
+      this.setState({
+        selectedBenched: _.xor(this.state.selectedBenched, [index])
+      });
+    }
   }
 
   toggleConfirm() {
@@ -182,6 +186,29 @@ class GroupView extends React.Component {
     );
   }
 
+  renderButtons() {
+    return this.props.group.admins.includes(this.props.user._id) && (
+      <div>
+        <Button
+          className="move-btn"
+          size="mini"
+          disabled={this.state.selectedBenched.length == 0}
+          onClick={this.handleAddSubscribers}
+        >
+          <Icon name="chevron left" />
+        </Button>
+        <Button
+          className="move-btn"
+          size="mini"
+          disabled={this.state.selectedOnCall.length == 0}
+          onClick={this.handleRemoveSubscribers}
+        >
+          <Icon name="chevron right" />
+        </Button>
+      </div>
+    );
+  }
+
   render() {
     const leaveButton = this.props.group && _.find(this.props.group.users, (user) => user._id === this.props.user._id) && (
       <Button className="action-button" onClick={this.toggleConfirm}>Leave Group</Button>
@@ -214,22 +241,7 @@ class GroupView extends React.Component {
             {this.active()}
           </Grid.Column>
           <Grid.Column verticalAlign="middle" mobile={16} computer={1}>
-            <Button
-              className="move-btn"
-              size="mini"
-              disabled={this.state.selectedBenched.length == 0}
-              onClick={this.handleAddSubscribers}
-            >
-                <Icon name="chevron left" />
-            </Button>
-            <Button
-              className="move-btn"
-              size="mini"
-              disabled={this.state.selectedOnCall.length == 0}
-              onClick={this.handleRemoveSubscribers}
-            >
-                <Icon name="chevron right" />
-            </Button>
+            {this.renderButtons()}
           </Grid.Column>
           <Grid.Column mobile={16} computer={7}>
             <h3>Not On Call:</h3>
