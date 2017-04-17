@@ -21,6 +21,12 @@ class Navigation extends React.Component {
       </Menu.Item>
     );
 
+    const admin = this.props.user && this.props.user.isSysAdmin && (
+      <Menu.Item onClick={() => this.props.router.push('/admin')}>
+        Admin
+      </Menu.Item>
+    );
+
     return  (
       <div>
         <Menu inverted>
@@ -28,6 +34,7 @@ class Navigation extends React.Component {
             <Image src={Logo} className="inverted" size='mini' spaced='right' />
             Escalator
           </Menu.Item>
+          {admin}
           {userMenu}
         </Menu>
       </div>

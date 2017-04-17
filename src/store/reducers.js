@@ -4,6 +4,7 @@ import userReducer from './user';
 import groupReducer from './group';
 import api from './api';
 import groupSearch from './groupSearch';
+import otherUsers from './otherUsers';
 
 export const makeRootReducer = (asyncReducers) => {
   return combineReducers({
@@ -12,6 +13,7 @@ export const makeRootReducer = (asyncReducers) => {
     group: groupReducer,
     api,
     groupSearch,
+    otherUsers,
     ...asyncReducers
   })
 };
