@@ -48,7 +48,7 @@ class GroupView extends React.Component {
   }
 
   handleRemoveSubscribers() {
-    const subs = this.props.group.escalationPolicy.subscribers;
+    const subs = this.props.group.escalationPolicy.subscribers.map((user) =>  _.omit(user, "_id"));
     this.state.selectedOnCall.forEach((i) => subs.splice(i, 1));
     const ep = {};
     _.extend(ep, this.props.group.escalationPolicy, {subscribers: subs});
@@ -59,13 +59,13 @@ class GroupView extends React.Component {
   }
 
   handleAddSubscribers() {
-    const subs = this.props.group.escalationPolicy.subscribers;
-    const subIds = subs.map((user) => user.user);
+    const subs = this.props.group.escalationPolicy.subscribers.map((user) =>  _.omit(user, "_id"));
+    const subIds = subs.map((user) => user.userId);
     const benched = [,...this.props.group.users].filter((user) =>
       subIds.indexOf(user._id) === -1
     );
     this.state.selectedBenched.forEach((i) => subs.push({
-      user: benched[i]._id,
+      userId: benched[i]._id,
       active: true,
       deactivateDate: null,
       reactivateDate: null
@@ -93,7 +93,7 @@ class GroupView extends React.Component {
   }
 
   active() {
-    const subIds = this.props.group.escalationPolicy.subscribers.map(u => u.user);
+    const subIds = this.props.group.escalationPolicy.subscribers.map(u => u.userId);
     return [,...this.props.group.users].filter((user) =>
       subIds.indexOf(user._id) > -1
     ).map((user, i) =>
@@ -107,7 +107,7 @@ class GroupView extends React.Component {
   };
 
   benched() {
-   const subIds = this.props.group.escalationPolicy.subscribers.map(u => u.user);
+   const subIds = this.props.group.escalationPolicy.subscribers.map(u => u.userId);
    return [,...this.props.group.users].filter((user) =>
      subIds.indexOf(user._id) === -1
    ).map((user, i) =>
@@ -123,7 +123,7 @@ class GroupView extends React.Component {
   onCall() {
     const group = this.props.group;
     if (group.escalationPolicy.subscribers.length) {
-      const uid = group.escalationPolicy.subscribers[0].user;
+      const uid = group.escalationPolicy.subscribers[0].userId;
       const user = group.users.filter(u => u._id === uid)[0];
       return <Header as="h4">User on call:{this.userLink(user)}</Header>;
     }
