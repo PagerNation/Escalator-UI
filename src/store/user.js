@@ -82,6 +82,7 @@ export const fetchUser = () => {
     return new Promise((resolve) => {
       const userId = jwtDecode(localStorage.getItem('escalatorToken')).id;
       getJSON(`user/${userId}/`).then((response) => {
+        console.log(response);
         dispatch({
           type: FETCH_USER_SUCCESS,
           payload: response
