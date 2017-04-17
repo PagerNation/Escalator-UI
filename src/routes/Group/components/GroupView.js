@@ -121,10 +121,12 @@ class GroupView extends React.Component {
   };
 
   onCall() {
-    var group = this.props.group;
-    var uid = group.escalationPolicy.subscribers[0].user;
-    var user = group.users.filter(u => u._id === uid)[0];
-    return <Header as="h4">User on call:{this.userLink(user)}</Header>;
+    const group = this.props.group;
+    if (group.escalationPolicy.subscribers.length) {
+      const uid = group.escalationPolicy.subscribers[0].user;
+      const user = group.users.filter(u => u._id === uid)[0];
+      return <Header as="h4">User on call:{this.userLink(user)}</Header>;
+    }
   };
 
   userLink(user) {
@@ -134,7 +136,7 @@ class GroupView extends React.Component {
   escalationInterval() {
     return (
       <span>
-        Escalation Interval:<Label color='teal' horizontal>{this.props.group.escalationPolicy.pagingIntervalInMinutes}</Label> minutes
+        Escalation Interval: <Label color='teal' horizontal>{this.props.group.escalationPolicy.pagingIntervalInMinutes}</Label> minutes
       </span>
     );
   };
