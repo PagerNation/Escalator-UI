@@ -4,6 +4,7 @@ import { Divider, Label, Grid, Header, Button, Confirm, Icon, Segment } from 'se
 import _ from 'lodash';
 import InlineEditable from '../../../components/shared/InlineEditable';
 import classNames from 'classnames';
+import RemoveSubscriberModal from './RemoveSubscriberModal';
 
 class GroupView extends React.Component {
 
@@ -22,7 +23,14 @@ class GroupView extends React.Component {
       "handleRemoveSubscribers",
       "handleAddSubscribers",
       "handleProcessRequest",
-      "handleEditPagingInterval");
+      "handleEditPagingInterval",
+      "toggleRemoveModal");
+  }
+
+  toggleRemoveModal() {
+    const subs = this.props.group.escalationPolicy.subscribers;
+    const subsToRemove = this.state.selectedOnCall.forEach((i) => subsToRemove.push(subs[i]));
+    this.refs["removeSubModal"].open(subsToRemove);
   }
 
   toggleSelectOnCall(index) {
@@ -51,10 +59,9 @@ class GroupView extends React.Component {
     this.props.leaveGroup(this.props.group.name, this.props.user._id).then(this.toggleConfirm);
   }
 
-  handleRemoveSubscribers() {
-    const subs = this.props.group.escalationPolicy.subscribers.map((user) => _.omit(user, "_id"));
-    this.state.selectedOnCall.forEach((i) => subs.splice(i, 1));
+  handleRemoveSubscribers(subsToRemove) {
     const ep = {};
+    const subs = _.differenceBy(this.props.group.escalationPolicy.subscribers, subsToRemove, (user) => user._id);
     _.extend(ep, this.props.group.escalationPolicy, {subscribers: subs});
     this.props.updateEscalationPolicy(this.props.group.name, _.omit(ep, "_id"));
     this.setState({
@@ -201,7 +208,7 @@ class GroupView extends React.Component {
           className="move-btn"
           size="mini"
           disabled={this.state.selectedOnCall.length == 0}
-          onClick={this.handleRemoveSubscribers}
+          onClick={this.toggleRemoveModal}
         >
           <Icon name="chevron right" />
         </Button>
@@ -227,6 +234,7 @@ class GroupView extends React.Component {
     return this.props.group && (
       <div>
         {confirm}
+        <RemoveSubscriberModal ref="removeSubModal" onConfirm={this.handleRemoveSubscribers} />
         <Header as="h1">{this.props.group.name}</Header>
         {leaveButton}
         {this.onCall()}
