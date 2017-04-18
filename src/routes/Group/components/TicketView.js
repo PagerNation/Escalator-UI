@@ -33,7 +33,7 @@ class TicketView extends React.Component {
     if (index == 0) {
       rows.push(<Table.Cell key={'title_'+id} rowSpan={ticket.actions.length}>{title}</Table.Cell>)
     }
-    if (ticket.actions){
+    if (ticket.actions) {
       var action = ticket.actions[index];
       rows.push(<Table.Cell key={'actionTaken_'+id}>{actionFormatting[action.actionTaken]}</Table.Cell>)
       rows.push(<Table.Cell key={'date_'+id}>{String(new Date(action.timestamp))}</Table.Cell>)
@@ -52,7 +52,7 @@ class TicketView extends React.Component {
         rows.push(this.ticketRow(ticket, index))
       }
     }
-    return <div>
+    return (<div>
       <Table striped celled structured>
         <Table.Header>
           <Table.Row>
@@ -67,7 +67,7 @@ class TicketView extends React.Component {
         {rows}
         </Table.Body>
       </Table>
-      </div>
+      </div>)
   }
 }
 

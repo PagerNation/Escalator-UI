@@ -14,7 +14,7 @@ const mapDispatchToProps = {
 const mapStateToProps = (state) => ({
   group: state.group,
   user: state.user,
-  tickets: state.ticket,
+  tickets: state.ticket
 });
 
 export default RouteContainer(mapStateToProps, mapDispatchToProps, GroupView);
