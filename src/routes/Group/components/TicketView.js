@@ -38,9 +38,7 @@ class TicketView extends React.Component {
       rows.push(<Table.Cell key={'actionTaken_'+id}>{actionFormatting[action.actionTaken]}</Table.Cell>)
       rows.push(<Table.Cell key={'date_'+id}>{String(new Date(action.timestamp))}</Table.Cell>)
       rows.push(<Table.Cell key={'user_'+id}>{this.userLink(action.user)}</Table.Cell>)
-      if (action.device) {
-        rows.push(<Table.Cell key={'device_'+id}>{action.device.type}</Table.Cell>)
-      }
+      rows.push(<Table.Cell key={'device_'+id}>{action.device ? action.device.type : ''}</Table.Cell>)
     }
     return <Table.Row key={id}>
       {rows}

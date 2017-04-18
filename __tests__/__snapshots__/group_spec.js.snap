@@ -152,7 +152,7 @@ exports[`GroupView renders GroupView 1`] = `
           <td
             className=""
           >
-            Sat Mar 04 2017 18:11:01 GMT-0500 (EST)
+            Mockday 2017-03-04T23:11:01.466Z GMT-0500 (MockDate)
           </td>
           <td
             className=""
@@ -161,6 +161,9 @@ exports[`GroupView renders GroupView 1`] = `
               No one
             </span>
           </td>
+          <td
+            className=""
+          />
         </tr>
         <tr
           className=""
@@ -173,7 +176,7 @@ exports[`GroupView renders GroupView 1`] = `
           <td
             className=""
           >
-            Sat Mar 04 2017 18:11:01 GMT-0500 (EST)
+            Mockday 2017-03-04T23:11:01.504Z GMT-0500 (MockDate)
           </td>
           <td
             className=""
@@ -199,7 +202,7 @@ exports[`GroupView renders GroupView 1`] = `
           <td
             className=""
           >
-            Sat Mar 04 2017 18:12:01 GMT-0500 (EST)
+            Mockday 2017-03-04T23:12:01.914Z GMT-0500 (MockDate)
           </td>
           <td
             className=""
@@ -225,7 +228,7 @@ exports[`GroupView renders GroupView 1`] = `
           <td
             className=""
           >
-            Sat Mar 04 2017 18:21:02 GMT-0500 (EST)
+            Mockday 2017-03-04T23:21:02.519Z GMT-0500 (MockDate)
           </td>
           <td
             className=""
@@ -251,7 +254,7 @@ exports[`GroupView renders GroupView 1`] = `
           <td
             className=""
           >
-            Sat Mar 04 2017 18:22:01 GMT-0500 (EST)
+            Mockday 2017-03-04T23:22:01.881Z GMT-0500 (MockDate)
           </td>
           <td
             className=""
