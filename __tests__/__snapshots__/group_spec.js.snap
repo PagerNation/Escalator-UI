@@ -95,5 +95,179 @@ exports[`GroupView renders GroupView 1`] = `
       </a>
     </div>
   </div>
+  <div>
+    <table
+      className="ui celled striped structured table"
+    >
+      <thead
+        className=""
+      >
+        <tr
+          className=""
+        >
+          <th
+            className=""
+          >
+            Ticket
+          </th>
+          <th
+            className=""
+          >
+            Action
+          </th>
+          <th
+            className=""
+          >
+            Time of Action
+          </th>
+          <th
+            className=""
+          >
+            User
+          </th>
+          <th
+            className=""
+          >
+            Device
+          </th>
+        </tr>
+      </thead>
+      <tbody
+        className=""
+      >
+        <tr
+          className=""
+        >
+          <td
+            className=""
+            rowSpan={5}
+          >
+            fake title
+          </td>
+          <td
+            className=""
+          >
+            Created
+          </td>
+          <td
+            className=""
+          >
+            Sat Mar 04 2017 18:11:01 GMT-0500 (EST)
+          </td>
+          <td
+            className=""
+          >
+            <span>
+              No one
+            </span>
+          </td>
+        </tr>
+        <tr
+          className=""
+        >
+          <td
+            className=""
+          >
+            Page Sent
+          </td>
+          <td
+            className=""
+          >
+            Sat Mar 04 2017 18:11:01 GMT-0500 (EST)
+          </td>
+          <td
+            className=""
+          >
+            <span>
+              No one
+            </span>
+          </td>
+          <td
+            className=""
+          >
+            phone
+          </td>
+        </tr>
+        <tr
+          className=""
+        >
+          <td
+            className=""
+          >
+            Page Sent
+          </td>
+          <td
+            className=""
+          >
+            Sat Mar 04 2017 18:12:01 GMT-0500 (EST)
+          </td>
+          <td
+            className=""
+          >
+            <span>
+              No one
+            </span>
+          </td>
+          <td
+            className=""
+          >
+            email
+          </td>
+        </tr>
+        <tr
+          className=""
+        >
+          <td
+            className=""
+          >
+            Page Sent
+          </td>
+          <td
+            className=""
+          >
+            Sat Mar 04 2017 18:21:02 GMT-0500 (EST)
+          </td>
+          <td
+            className=""
+          >
+            <span>
+              No one
+            </span>
+          </td>
+          <td
+            className=""
+          >
+            phone
+          </td>
+        </tr>
+        <tr
+          className=""
+        >
+          <td
+            className=""
+          >
+            Page Sent
+          </td>
+          <td
+            className=""
+          >
+            Sat Mar 04 2017 18:22:01 GMT-0500 (EST)
+          </td>
+          <td
+            className=""
+          >
+            <span>
+              No one
+            </span>
+          </td>
+          <td
+            className=""
+          >
+            email
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 </div>
 `;

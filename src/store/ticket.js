@@ -14,7 +14,6 @@ export const fetchGroupTickets = (groupName) => {
   return (dispatch, getState) => {
     return new Promise((resolve) => {
       getJSON(`ticket/all?groupName=${groupName}`).then((response) =>{
-        console.log(response[0])
         dispatch({
           type: FETCH_TICKETS_SUCCESS,
           payload: response
@@ -31,7 +30,6 @@ export const fetchGroupTickets = (groupName) => {
 // ------------------------------------
 const ACTION_HANDLERS = {
   [FETCH_TICKETS_SUCCESS]: (state, action) => {
-    console.log(action);
     return action.payload;
   }
 };

@@ -1,5 +1,14 @@
 import React from "react";
 import { Table } from 'semantic-ui-react';
+import { Link } from 'react-router';
+
+const actionFormatting = {
+  CREATED: "Created",
+  PAGE_SENT: "Page Sent",
+  ACKNOWLEDGED: 'Acknowledged',
+  REJECTED: 'Rejected',
+  CLOSED: 'Closed'
+}
 
 class TicketView extends React.Component {
 
@@ -14,26 +23,26 @@ class TicketView extends React.Component {
   }
 
   userLink(user) {
-    return user ? <a href={'/user/' + user._id +'/'}>{user.name}</a> : <span>No one</span>;
+    return user ? <Link to={'/user/' + user._id}>{user.name}</Link> : <span>No one</span>;
   };
 
   ticketRow(ticket, index){
-    var title = (typeof ticket.metadata.title != undefined) ? ticket.metadata.title : 'No name';
+    var title = (ticket.metadata.title) ? ticket.metadata.title : 'No name';
     var rows = [];
+    var id = 'ticket_'+ticket._id+'_'+index;
     if (index == 0) {
-      rows.push(<Table.Cell rowSpan={ticket.actions.length}>{title}</Table.Cell>)
+      rows.push(<Table.Cell key={'title_'+id} rowSpan={ticket.actions.length}>{title}</Table.Cell>)
     }
-    if (typeof ticket.actions != 'undefined'){
+    if (ticket.actions){
       var action = ticket.actions[index];
-      rows.push(<Table.Cell>{action.actionTaken}</Table.Cell>)
-      rows.push(<Table.Cell>{String(new Date(action.timestamp))}</Table.Cell>)
-      console.log(action.user);
-      rows.push(<Table.Cell>{this.userLink(action.user)}</Table.Cell>)
-      if (typeof action.device != 'undefined' ) {
-        rows.push(<Table.Cell>{action.device.type}</Table.Cell>)
+      rows.push(<Table.Cell key={'actionTaken_'+id}>{actionFormatting[action.actionTaken]}</Table.Cell>)
+      rows.push(<Table.Cell key={'date_'+id}>{String(new Date(action.timestamp))}</Table.Cell>)
+      rows.push(<Table.Cell key={'user_'+id}>{this.userLink(action.user)}</Table.Cell>)
+      if (action.device) {
+        rows.push(<Table.Cell key={'device_'+id}>{action.device.type}</Table.Cell>)
       }
     }
-    return <Table.Row>
+    return <Table.Row key={id}>
       {rows}
     </Table.Row>
   }
@@ -46,7 +55,7 @@ class TicketView extends React.Component {
       }
     }
     return <div>
-      <Table celled structured>
+      <Table striped celled structured>
         <Table.Header>
           <Table.Row>
             <Table.HeaderCell>Ticket</Table.HeaderCell>

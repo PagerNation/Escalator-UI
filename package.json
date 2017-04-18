@@ -14,7 +14,8 @@
     "lint:fix": "npm run lint -- --fix",
     "start": "better-npm-run start",
     "dev": "better-npm-run dev",
-    "test": "jest",
+    "test": "better-npm-run test",
+    "test:update": "better-npm-run test:update",
     "test:dev": "npm run jest -- --watch",
     "deploy": "better-npm-run deploy",
     "deploy:dev": "better-npm-run deploy:dev",
@@ -63,6 +64,13 @@
     },
     "test": {
       "command": "jest",
+      "env": {
+        "NODE_ENV": "development",
+        "DEBUG": "app:*"
+      }
+    },
+    "test:update": {
+      "command": "jest --updateSnapshot",
       "env": {
         "NODE_ENV": "development",
         "DEBUG": "app:*"
