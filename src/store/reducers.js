@@ -4,6 +4,8 @@ import userReducer from './user';
 import groupReducer from './group';
 import ticketReducer from './ticket';
 import api from './api';
+import groupSearch from './groupSearch';
+import otherUsers from './otherUsers';
 
 export const makeRootReducer = (asyncReducers) => {
   return combineReducers({
@@ -11,7 +13,9 @@ export const makeRootReducer = (asyncReducers) => {
     user: userReducer,
     group: groupReducer,
     ticket: ticketReducer,
-    api: api,
+    api,
+    groupSearch,
+    otherUsers,
     ...asyncReducers
   })
 };
@@ -21,4 +25,4 @@ export const injectReducer = (store, {key, reducer}) => {
   store.replaceReducer(makeRootReducer(store.asyncReducers));
 };
 
-export default makeRootReducer
+export default makeRootReducer;

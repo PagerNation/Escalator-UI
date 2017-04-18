@@ -17,7 +17,7 @@ exports[`GroupView renders GroupView 1`] = `
   <h4
     className="ui header"
   >
-    User on call: 
+    User on call:
     <a
       href="/user/58a09497b73f14c7d6d64437/"
     >
@@ -41,7 +41,7 @@ exports[`GroupView renders GroupView 1`] = `
     className="ui grid"
   >
     <div
-      className="five wide computer sixteen wide mobile column"
+      className="seven wide computer sixteen wide mobile column"
     >
       <h3>
         Escalation Order:
@@ -61,28 +61,9 @@ exports[`GroupView renders GroupView 1`] = `
     </div>
     <div
       className="middle aligned one wide computer sixteen wide mobile column"
-    >
-      <button
-        className="ui mini disabled button move-btn"
-        onClick={[Function]}
-        tabIndex={undefined}
-      >
-        <i
-          className="chevron left icon"
-        />
-      </button>
-      <button
-        className="ui mini disabled button move-btn"
-        onClick={[Function]}
-        tabIndex={undefined}
-      >
-        <i
-          className="chevron right icon"
-        />
-      </button>
-    </div>
+    />
     <div
-      className="five wide computer sixteen wide mobile column"
+      className="seven wide computer sixteen wide mobile column"
     >
       <h3>
         Not On Call:

@@ -66,14 +66,9 @@ class Device extends Component {
       <div className="draggable">
         {confirm}
         <Card color="green" fluid>
-          <Label attached="bottom right">
-            <Icon name="check" color="green" />
-            Verified
-          </Label>
           <Card.Content>
             <Icon name={this.getIcon(device.type)} />
             <InlineEditable name="name" value={device.name} onChange={this.handleChange} header={false} />
-
             <Icon onClick={this.toggleConfirm} className="action-icon" name="x" link />
           </Card.Content>
           <Card.Content extra>
