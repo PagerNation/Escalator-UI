@@ -6,6 +6,9 @@
 
 `npm start` to run on localhost:4000
 
-`npm test` to test
+## Testing
+`npm run test` to test
+
+`npm run test:update` to update outdated snapshot tests
 
 More info: https://github.com/davezuko/react-redux-starter-kit

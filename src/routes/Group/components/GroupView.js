@@ -4,6 +4,7 @@ import { Divider, Label, Grid, Header, Button, Confirm, Icon, Segment } from 'se
 import _ from 'lodash';
 import InlineEditable from '../../../components/shared/InlineEditable';
 import classNames from 'classnames';
+import TicketView from './TicketView';
 
 class GroupView extends React.Component {
 
@@ -94,6 +95,7 @@ class GroupView extends React.Component {
 
   componentWillMount() {
     this.props.fetchGroup(this.props.params.groupId)
+    this.props.fetchGroupTickets(this.props.params.groupId)
   }
 
   active() {
@@ -249,6 +251,7 @@ class GroupView extends React.Component {
           </Grid.Column>
         </Grid>
         {this.renderAdmin()}
+      <TicketView tickets={this.props.tickets}/>
       </div>
     );
   }
