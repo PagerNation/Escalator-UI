@@ -5,15 +5,60 @@ import _ from 'lodash';
 
 class GroupsInfo extends React.Component {
 
+  constructor() {
+    super();
+    _.bindAll(this,
+      "onCall",
+      "getFirstActiveSubscriber",
+      "sortGroupsByOnCall"
+    );
+  }
+
+  componentsWillMount() {
+    this.props.fetchGroupTickets(this.props.params.groupId);
+  }
+
+  onCall(group) {
+    if (group.escalationPolicy.subscribers.length
+      && this.props.user._id === group.escalationPolicy.subscribers[0].user) {
+      return (
+        <Header as='h4' className="on-call">
+          You are on call
+        </Header>
+      );
+    }
+  }
+
+  getFirstActiveSubscriber(group) {
+    let firstActiveSub;
+
+    _.forEach(group.escalationPolicy.subscribers, (subscriber) => {
+      if (subscriber.active) {
+        firstActiveSub = subscriber;
+        return false;
+      }
+    });
+
+    return firstActiveSub;
+  }
+
+  sortGroupsByOnCall(groups) {
+    let subscriber;
+    return _.sortBy(groups, (group) => {
+      subscriber = this.getFirstActiveSubscriber(group);
+      return subscriber ? subscriber.user !== this.props.user._id : true;
+    });
+  }
+
   render() {
-    const groupCards = this.props.groups.map((group, index) => {
+    const groupCards = this.sortGroupsByOnCall(this.props.groups).map((group, index) => {
       return _.isObject(group) && (
           <Card key={index} color="green" fluid>
             <Card.Content>
               <Card.Header>
                 <Link to={`/group/${group.name}`}>{group.name}</Link>
               </Card.Header>
-              <Header as='h4' className="on-call">You are on call</Header>
+              { this.onCall(group) }
               <Feed>
                 <Feed.Event>
                   <Feed.Label image='http://semantic-ui.com/images/avatar/small/jenny.jpg' />
