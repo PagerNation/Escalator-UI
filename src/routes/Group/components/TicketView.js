@@ -8,18 +8,18 @@ const actionFormatting = {
   ACKNOWLEDGED: 'Acknowledged',
   REJECTED: 'Rejected',
   CLOSED: 'Closed'
-}
+};
 
 class TicketView extends React.Component {
 
   actionRow(action){
     return (
       <tr>
-      <td>{action.actionTaken}</td>
-      <td>{action.timestamp}</td>
-      <td>{action.userId}</td>
+        <td>{action.actionTaken}</td>
+        <td>{action.timestamp}</td>
+        <td>{action.userId}</td>
       </tr>
-    )
+    );
   }
 
   userLink(user) {
@@ -31,43 +31,53 @@ class TicketView extends React.Component {
     var rows = [];
     var id = 'ticket_'+ticket._id+'_'+index;
     if (index == 0) {
-      rows.push(<Table.Cell key={'title_'+id} rowSpan={ticket.actions.length}>{title}</Table.Cell>)
+      rows.push(<Table.Cell key={'title_'+id} rowSpan={ticket.actions.length}>{title}</Table.Cell>);
     }
     if (ticket.actions) {
       var action = ticket.actions[index];
-      rows.push(<Table.Cell key={'actionTaken_'+id}>{actionFormatting[action.actionTaken]}</Table.Cell>)
-      rows.push(<Table.Cell key={'date_'+id}>{String(new Date(action.timestamp))}</Table.Cell>)
-      rows.push(<Table.Cell key={'user_'+id}>{this.userLink(action.user)}</Table.Cell>)
-      rows.push(<Table.Cell key={'device_'+id}>{action.device ? action.device.type : ''}</Table.Cell>)
+      rows.push(<Table.Cell key={'actionTaken_'+id}>{actionFormatting[action.actionTaken]}</Table.Cell>);
+      rows.push(<Table.Cell key={'date_'+id}>{String(new Date(action.timestamp))}</Table.Cell>);
+      rows.push(<Table.Cell key={'user_'+id}>{this.userLink(action.user)}</Table.Cell>);
+      rows.push(<Table.Cell key={'device_'+id}>{action.device ? action.device.type : ''}</Table.Cell>);
     }
-    return <Table.Row key={id}>
-      {rows}
-    </Table.Row>
+    return (
+      <Table.Row key={id}>
+        {rows}
+      </Table.Row>
+    );
   }
 
   render() {
+    if (!this.props.tickets) {
+      return (
+        <div></div>
+      );
+    }
+
     var rows = []
     for(var ticket of this.props.tickets) {
       for(var index in ticket.actions) {
-        rows.push(this.ticketRow(ticket, index))
+        rows.push(this.ticketRow(ticket, index));
       }
     }
-    return (<div>
-      <Table striped celled structured>
-        <Table.Header>
-          <Table.Row>
-            <Table.HeaderCell>Ticket</Table.HeaderCell>
-            <Table.HeaderCell>Action</Table.HeaderCell>
-            <Table.HeaderCell>Time of Action</Table.HeaderCell>
-            <Table.HeaderCell>User</Table.HeaderCell>
-            <Table.HeaderCell>Device</Table.HeaderCell>
-          </Table.Row>
-        </Table.Header>
-        <Table.Body>
-        {rows}
-        </Table.Body>
-      </Table>
-      </div>)
+    return (
+      <div>
+        <Table striped celled structured>
+          <Table.Header>
+            <Table.Row>
+              <Table.HeaderCell>Ticket</Table.HeaderCell>
+              <Table.HeaderCell>Action</Table.HeaderCell>
+              <Table.HeaderCell>Time of Action</Table.HeaderCell>
+              <Table.HeaderCell>User</Table.HeaderCell>
+              <Table.HeaderCell>Device</Table.HeaderCell>
+            </Table.Row>
+          </Table.Header>
+          <Table.Body>
+          {rows}
+          </Table.Body>
+        </Table>
+      </div>
+    );
   }
 }
 
