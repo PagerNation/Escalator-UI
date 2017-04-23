@@ -55,11 +55,6 @@ class TicketView extends React.Component {
     }
 
     var rows = []
-    if (!this.props.tickets) {
-      console.log(this.props);
-      return <div></div>;
-
-    }
     for(var ticket of this.props.tickets) {
       for(var index in ticket.actions) {
         rows.push(this.ticketRow(ticket, index));

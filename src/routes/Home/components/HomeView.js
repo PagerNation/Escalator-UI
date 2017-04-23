@@ -7,7 +7,7 @@ class HomeView extends React.Component {
   render() {
     return (
       <div>
-        <GroupsInfo user={this.props.user} groups={this.props.user.groups} />
+        <GroupsInfo {...this.props} groups={this.props.user.groups} />
       </div>
     );
   }

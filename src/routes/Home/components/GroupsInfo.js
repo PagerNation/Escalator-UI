@@ -2,6 +2,15 @@ import React from "react";
 import { Header, Card, Feed } from 'semantic-ui-react';
 import { Link } from 'react-router';
 import _ from 'lodash';
+import moment from 'moment';
+
+const actionFormatting = {
+  CREATED: "Ticket created",
+  PAGE_SENT: "Page sent",
+  ACKNOWLEDGED: 'Ticket aknowledged',
+  REJECTED: 'Ticket rejected',
+  CLOSED: 'Ticket closed'
+};
 
 class GroupsInfo extends React.Component {
 
@@ -10,12 +19,15 @@ class GroupsInfo extends React.Component {
     _.bindAll(this,
       "onCall",
       "getFirstActiveSubscriber",
-      "sortGroupsByOnCall"
+      "sortGroupsByOnCall",
+      "ticketSummary",
+      "lastTicketAction"
     );
   }
 
-  componentsWillMount() {
-    this.props.fetchGroupTickets(this.props.params.groupId);
+  componentWillMount() {
+    const groupNames = this.props.user.groups.map(group => group.name);
+    this.props.fetchRecentGroupsTickets(groupNames);
   }
 
   onCall(group) {
@@ -50,28 +62,56 @@ class GroupsInfo extends React.Component {
     });
   }
 
+  ticketSummary(ticket, user) {
+    let summaryInfo = `${actionFormatting[ticket.actionTaken]}`;
+
+    if (!_.isNil(user) && !_.isNil(user[0])) {
+      summaryInfo += ` by ${user[0].name}`;
+    }
+
+    return (
+      <Feed.Summary>
+        <a href="#">{summaryInfo}</a>
+      </Feed.Summary>
+    );
+  }
+
+  lastTicketAction(groupName) {
+    const ticket = _.filter(this.props.tickets, { _id: groupName });
+
+    if (_.isNil(ticket) || _.isNil(ticket[0])) {
+      return (
+        <div></div>
+      );
+    }
+
+    const timeSinceAction = moment(ticket[0].timestamp).fromNow();
+
+    return (
+      <Feed>
+        <Feed.Event>
+          <Feed.Label image='http://semantic-ui.com/images/avatar/small/jenny.jpg' />
+          <Feed.Content>
+            <Feed.Date content={timeSinceAction} />
+            { this.ticketSummary(ticket[0], ticket[0].user) }
+          </Feed.Content>
+        </Feed.Event>
+      </Feed>
+    );
+  }
+
   render() {
     const groupCards = this.sortGroupsByOnCall(this.props.groups).map((group, index) => {
       return _.isObject(group) && (
-          <Card key={index} color="green" fluid>
-            <Card.Content>
-              <Card.Header>
-                <Link to={`/group/${group.name}`}>{group.name}</Link>
-              </Card.Header>
-              { this.onCall(group) }
-              <Feed>
-                <Feed.Event>
-                  <Feed.Label image='http://semantic-ui.com/images/avatar/small/jenny.jpg' />
-                  <Feed.Content>
-                    <Feed.Date content='2 days ago' />
-                    <Feed.Summary>
-                      <a href="#">Page acknowledged by Jarryd Lee</a>
-                    </Feed.Summary>
-                  </Feed.Content>
-                </Feed.Event>
-              </Feed>
-            </Card.Content>
-          </Card>
+        <Card key={index} color="green" fluid>
+          <Card.Content>
+            <Card.Header>
+              <Link to={`/group/${group.name}`}>{group.name}</Link>
+            </Card.Header>
+            { this.onCall(group) }
+            { this.lastTicketAction(group.name) }
+          </Card.Content>
+        </Card>
       );
     });
 

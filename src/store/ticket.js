@@ -1,11 +1,13 @@
 import 'whatwg-fetch';
 import _ from 'lodash';
 import { getJSON } from "../utils/apiRequest";
+import querystring from 'querystring';
 
 // ------------------------------------
 // Constants
 // ------------------------------------
 export const FETCH_TICKETS_SUCCESS = 'FETCH_TICKETS_SUCCESS';
+export const FETCH_RECENT_TICKETS_SUCCESS = 'FETCH_RECENT_TICKETS_SUCCESS';
 
 // ------------------------------------
 // Actions
@@ -13,19 +15,32 @@ export const FETCH_TICKETS_SUCCESS = 'FETCH_TICKETS_SUCCESS';
 export const fetchGroupTickets = (searchFields) => {
   return (dispatch, getState) => {
     return new Promise((resolve) => {
+      const params = querystring.stringify(searchFields);
 
-      const params = _.map(searchFields, (v, k) =>
-        encodeURIComponent(k) + '=' + encodeURIComponent(v)
-      ).join('&');
-
-      getJSON(`ticket/all?${params}`).then((response) =>{
+      getJSON(`ticket/all?${params}`).then((response) => {
         dispatch({
           type: FETCH_TICKETS_SUCCESS,
           payload: response
         });
         resolve();
-      })
-    })
+      });
+    });
+  }
+};
+
+export const fetchRecentGroupsTickets = (groups) => {
+  return (dispatch, getState) => {
+    return new Promise((resolve) => {
+      const params = querystring.stringify({ groups });
+
+      getJSON(`ticket/recent?${params}`).then((response) => {
+        dispatch({
+          type: FETCH_RECENT_TICKETS_SUCCESS,
+          payload: response
+        });
+        resolve();
+      });
+    });
   }
 };
 
@@ -35,6 +50,9 @@ export const fetchGroupTickets = (searchFields) => {
 // ------------------------------------
 const ACTION_HANDLERS = {
   [FETCH_TICKETS_SUCCESS]: (state, action) => {
+    return action.payload;
+  },
+  [FETCH_RECENT_TICKETS_SUCCESS]: (state, action) => {
     return action.payload;
   }
 };
