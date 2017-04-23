@@ -14,17 +14,6 @@ const actionFormatting = {
 
 class GroupsInfo extends React.Component {
 
-  constructor() {
-    super();
-    _.bindAll(this,
-      "onCall",
-      "getFirstActiveSubscriber",
-      "sortGroupsByOnCall",
-      "ticketSummary",
-      "lastTicketAction"
-    );
-  }
-
   componentWillMount() {
     const groupNames = this.props.user.groups.map(group => group.name);
     this.props.fetchRecentGroupsTickets(groupNames);
