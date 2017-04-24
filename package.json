@@ -97,6 +97,7 @@
     "json-loader": "^0.5.4",
     "jwt-decode": "^2.1.0",
     "lodash": "^4.16.6",
+    "moment": "^2.18.1",
     "node-sass": "^3.7.0",
     "normalize.css": "^4.1.1",
     "postcss-loader": "^0.13.0",

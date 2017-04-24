@@ -32,8 +32,9 @@ class RemoveSubscriberModal extends React.Component {
   }
 
   renderUsers() {
+    console.log(this.state.subsToRemove);
     return this.state.subsToRemove.map((user) => {
-      <li>{user.name}</li>
+      <li>{user.user}</li>
     });
   }
 

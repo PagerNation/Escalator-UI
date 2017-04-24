@@ -29,8 +29,11 @@ class GroupView extends React.Component {
 
   toggleRemoveModal() {
     const subs = this.props.group.escalationPolicy.subscribers;
-    const subsToRemove = this.state.selectedOnCall.forEach((i) => subsToRemove.push(subs[i]));
-    this.refs["removeSubModal"].open(subsToRemove);
+    const subsToRemove = [];
+    this.state.selectedOnCall.forEach((i) => subsToRemove.push(subs[i]));
+    this.refs["removeSubModal"].open(_.filter(this.props.group.users, (user) => {
+      _.map(subsToRemove, (sub) => sub._id).includes(user._id);
+    }));
   }
 
   toggleSelectOnCall(index) {
