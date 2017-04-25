@@ -29,12 +29,15 @@ class GroupView extends React.Component {
   }
 
   toggleRemoveModal() {
-    const subs = this.props.group.escalationPolicy.subscribers;
+    const subs = _.extend({}, this.props.group.escalationPolicy.subscribers);
     const subsToRemove = [];
-    this.state.selectedOnCall.forEach((i) => subsToRemove.push(subs[i]));
-    this.refs["removeSubModal"].open(_.filter(this.props.group.users, (user) => {
-      _.map(subsToRemove, (sub) => sub._id).includes(user._id);
-    }));
+    this.state.selectedOnCall.forEach((i) => {
+      subsToRemove.push(subs[i]);
+    });
+    _.forEach(subsToRemove, (sub) => {
+      sub.name = _.find(this.props.group.users, (user) => user._id === sub.user).name;
+    });
+    this.refs["removeSubModal"].open(subsToRemove);
   }
 
   toggleSelectOnCall(index) {
@@ -109,10 +112,11 @@ class GroupView extends React.Component {
   }
 
   active() {
-    const subIds = this.props.group.escalationPolicy.subscribers.map(u => u.user);
-    return [,...this.props.group.users].filter((user) =>
-      subIds.indexOf(user._id) > -1
-    ).map((user, i) =>
+    const subs = [...this.props.group.escalationPolicy.subscribers];
+    _.forEach(subs, (sub) => {
+      sub.name = _.find(this.props.group.users, (user) => user._id === sub.user).name;
+    });
+    return subs.map((user, i) =>
       <a
         className={classNames("box arrow_box", {"selected": this.state.selectedOnCall.includes(i)})}
         onClick={() => this.toggleSelectOnCall(i)}
