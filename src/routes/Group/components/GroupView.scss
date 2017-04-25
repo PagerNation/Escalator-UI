@@ -52,3 +52,15 @@ button.ui.button.action-button {
   font-weight: 600;
   margin-bottom: 5px;
 }
+
+.sub-list {
+   list-style: none;
+
+  li {
+    padding: 10px;
+  }
+
+  li:not(:last-child) {
+    border-bottom: 1px solid #ccc;
+  }
+}

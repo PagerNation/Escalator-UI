@@ -1,5 +1,5 @@
 import React from "react";
-import { Modal, Button } from 'semantic-ui-react';
+import { Modal, Button, Form, Radio } from 'semantic-ui-react';
 import _ from 'lodash';
 
 class RemoveSubscriberModal extends React.Component {
@@ -8,9 +8,10 @@ class RemoveSubscriberModal extends React.Component {
     super();
     this.state = {
       open: false,
-      subsToRemove: []
+      subsToRemove: [],
+      scheduled: {}
     };
-    _.bindAll(this, "open", "close", "confirm");
+    _.bindAll(this, "open", "close", "confirm", "handleScheduleChange");
   }
 
   close() {
@@ -20,9 +21,21 @@ class RemoveSubscriberModal extends React.Component {
   }
 
   open(subsToRemove) {
+    const scheduled = {};
+    _.map(subsToRemove, (sub) => {
+      scheduled[sub.user] = false;
+    });
     this.setState({
       open: true,
-      subsToRemove
+      subsToRemove,
+      scheduled
+    });
+  }
+
+  handleScheduleChange(event, value) {
+    event.preventDefault();
+    this.setState({
+      scheduled: _.extend(this.state.scheduled, {[value.value]: value.name === 'scheduled'})
     });
   }
 
@@ -33,7 +46,31 @@ class RemoveSubscriberModal extends React.Component {
 
   renderUsers() {
     return this.state.subsToRemove.map((user, index) => {
-      return <li key={index}>{user.name}</li>;
+      return (
+        <li key={index}>
+          <strong>{user.name}</strong>
+          <Form>
+            <Form.Field>
+              <Radio
+                label='Remove immediately'
+                name='immediate'
+                value={user.user}
+                checked={!this.state.scheduled[user.user]}
+                onChange={this.handleScheduleChange}
+              />
+            </Form.Field>
+            <Form.Field>
+              <Radio
+                label='Scheduled'
+                name='scheduled'
+                value={user.user}
+                checked={this.state.scheduled[user.user]}
+                onChange={this.handleScheduleChange}
+              />
+            </Form.Field>
+          </Form>
+        </li>
+      );
     });
   }
 
@@ -45,7 +82,7 @@ class RemoveSubscriberModal extends React.Component {
         </Modal.Header>
         <Modal.Content>
           <p>Are you sure you want to remove these subscribers?</p>
-          <ul>
+          <ul className="sub-list">
             {this.renderUsers()}
           </ul>
         </Modal.Content>
