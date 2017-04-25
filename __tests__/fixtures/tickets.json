@@ -1,0 +1,91 @@
+[
+  {
+    "_id": "58bb49852d18c96d11bcdaff",
+    "groupName": "AudraDickinson",
+    "__v": 0,
+    "createdAt": 1488669058372,
+    "isOpen": true,
+    "actions": [
+      {
+        "timestamp": 1488669061466,
+        "actionTaken": "CREATED",
+        "_id": "58bb49852d18c96d11bcdb02"
+      },
+      {
+        "timestamp": 1488669061504,
+        "device": {
+          "createdAt": "2017-02-12T16:51:33.764Z",
+          "__v": 0,
+          "name": "voluptas",
+          "type": "phone",
+          "contactInformation": "5855061383",
+          "_id": "58a092962361da2fac76db06"
+        },
+        "userId": "58a092962361da2fac76dae9",
+        "actionTaken": "PAGE_SENT",
+        "_id": "58bb49852d18c96d11bcdb03"
+      },
+      {
+        "timestamp": 1488669121914,
+        "device": {
+          "createdAt": "2017-02-12T16:51:33.764Z",
+          "__v": 0,
+          "name": "est",
+          "type": "email",
+          "contactInformation": "jarrydrlee@gmail.com",
+          "_id": "58a092962361da2fac76daf7"
+        },
+        "userId": "58a092962361da2fac76dae9",
+        "actionTaken": "PAGE_SENT",
+        "_id": "58bb49c12d18c96d11bcdb04"
+      },
+      {
+        "timestamp": 1488669662519,
+        "device": {
+          "createdAt": "2017-02-12T16:51:33.764Z",
+          "__v": 0,
+          "name": "voluptas",
+          "type": "phone",
+          "contactInformation": "5855061383",
+          "_id": "58a092962361da2fac76db06"
+        },
+        "userId": "58a092962361da2fac76dae9",
+        "actionTaken": "PAGE_SENT",
+        "_id": "58bb4bdecf88196d763a8e1d"
+      },
+      {
+        "timestamp": 1488669721881,
+        "device": {
+          "createdAt": "2017-02-12T16:51:33.764Z",
+          "__v": 0,
+          "name": "est",
+          "type": "email",
+          "contactInformation": "jarrydrlee@gmail.com",
+          "_id": "58a092962361da2fac76daf7"
+        },
+        "userId": "58a092962361da2fac76dae9",
+        "actionTaken": "PAGE_SENT",
+        "_id": "58bb4c19cf88196d763a8e1e"
+      }
+    ],
+    "metadata": {
+      "title": "fake title",
+      "description": "everything is breaking"
+    }
+  },
+  {
+    "_id": "58a09499b73f14c7d6d64640",
+    "groupName": "AudraDickinson",
+    "__v": 0,
+    "createdAt": 1486918809400,
+    "isOpen": true,
+    "actions": [],
+    "metadata": {
+      "metrics": {
+        "jiggawatts": 42,
+        "foo": "bar"
+      },
+      "message": "generating the panel won't do anything, we need to input the back-end PNG program!"
+    }
+  }
+]
