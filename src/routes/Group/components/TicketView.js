@@ -1,5 +1,5 @@
 import React from "react";
-import { Table, Menu, Segment, Card, Feed, Button } from 'semantic-ui-react';
+import { Table, Menu, Segment, Card, Feed, Button, Header } from 'semantic-ui-react';
 import { Link } from 'react-router';
 import moment from 'moment';
 import _ from 'lodash';
@@ -49,7 +49,14 @@ class TicketView extends React.Component {
   }
 
   renderTickets() {
-    return !_.isNil(this.props.openTickets) && this.props.openTickets.map((ticket, index) => {
+    if (_.isNil(this.props.openTickets) || !this.props.openTickets.length) {
+      return (
+        <Header as="h3">
+          No Open Tickets
+        </Header>
+      );
+    }
+    return this.props.openTickets.map((ticket, index) => {
       const timeSinceLastUpdate = moment(
         ticket.updatedAt ?
         ticket.updatedAt :
@@ -100,7 +107,11 @@ class TicketView extends React.Component {
     }
 
     if (!rows.length) {
-      return <div></div>;
+      return (
+        <Header as="h3">
+          No Ticket History
+        </Header>
+      );
     }
 
     return (
