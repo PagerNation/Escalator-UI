@@ -95,7 +95,13 @@ exports[`GroupView renders GroupView 1`] = `
     </div>
     <div
       className="ui bottom attached segment"
-    />
+    >
+      <h3
+        className="ui header"
+      >
+        No Open Tickets
+      </h3>
+    </div>
   </div>
 </div>
 `;
