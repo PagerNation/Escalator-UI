@@ -7,7 +7,7 @@ import moment from 'moment';
 const actionFormatting = {
   CREATED: "Ticket created",
   PAGE_SENT: "Page sent",
-  ACKNOWLEDGED: 'Ticket aknowledged',
+  ACKNOWLEDGED: 'Ticket acknowledged',
   REJECTED: 'Ticket rejected',
   CLOSED: 'Ticket closed'
 };

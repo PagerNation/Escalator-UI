@@ -10,7 +10,7 @@ const mapDispatchToProps = {
 
 const mapStateToProps = (state) => ({
   user: state.user,
-  tickets: state.ticket
+  tickets: state.ticket.tickets
 });
 
 export default RouteContainer(mapStateToProps, mapDispatchToProps, HomeView);

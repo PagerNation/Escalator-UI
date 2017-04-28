@@ -1,7 +1,8 @@
 import React from "react";
 import "./GroupView.scss";
-import { Divider, Label, Grid, Header, Button, Confirm, Icon, Segment } from 'semantic-ui-react';
+import { Divider, Label, Grid, Header, Button, Confirm, Icon, Segment, Card, Feed } from 'semantic-ui-react';
 import _ from 'lodash';
+import moment from 'moment';
 import InlineEditable from '../../../components/shared/InlineEditable';
 import classNames from 'classnames';
 import TicketView from './TicketView';
@@ -23,7 +24,8 @@ class GroupView extends React.Component {
       "handleRemoveSubscribers",
       "handleAddSubscribers",
       "handleProcessRequest",
-      "handleEditPagingInterval");
+      "handleEditPagingInterval",
+      "handleTicketAcknowledgement");
   }
 
   toggleSelectOnCall(index) {
@@ -93,9 +95,18 @@ class GroupView extends React.Component {
     this.props.processRequest(this.props.group.name, userId, approved);
   }
 
+  handleTicketAcknowledgement(ticketId) {
+    this.props.acknowledgeTicket(ticketId);
+  }
+
   componentWillMount() {
     this.props.fetchGroup(this.props.params.groupId);
-    this.props.fetchGroupTickets({ groupNames: this.props.params.groupId });
+    this.props.fetchGroupTickets({
+      groupNames: this.props.params.groupId
+    });
+    this.props.fetchOpenGroupTickets({
+      groupNames: this.props.params.groupId
+    });
   }
 
   active() {
@@ -160,6 +171,41 @@ class GroupView extends React.Component {
       </span>
     );
   };
+
+  renderTickets() {
+    return !_.isNil(this.props.openTickets) && this.props.openTickets.map((ticket, index) => {
+      const timeSinceLastUpdate = moment(
+        ticket.updatedAt ?
+        ticket.updatedAt :
+        ticket.createdAt).fromNow();
+
+      return _.isObject(ticket) && (
+        <Card key={index} color="green" fluid>
+          <Card.Content>
+            <Card.Header>
+              {ticket.metadata.title}
+            </Card.Header>
+            <Feed>
+              <Feed.Event>
+                <Feed.Content>
+                  <Feed.Date content={timeSinceLastUpdate} />
+                  <Feed.Summary>
+                    {ticket.metadata.description}
+                  </Feed.Summary>
+                  <Button
+                    className="action-button"
+                    onClick={() => this.handleTicketAcknowledgement(ticket._id)}
+                  >
+                    Acknowledge Ticket
+                  </Button>
+                </Feed.Content>
+              </Feed.Event>
+            </Feed>
+          </Card.Content>
+        </Card>
+      );
+    });
+  }
 
   renderAdmin() {
     return this.props.group.joinRequests
@@ -252,8 +298,9 @@ class GroupView extends React.Component {
             {this.benched()}
           </Grid.Column>
         </Grid>
+        {this.renderTickets()}
         {this.renderAdmin()}
-      <TicketView tickets={this.props.tickets}/>
+        <TicketView tickets={this.props.tickets}/>
       </div>
     );
   }
