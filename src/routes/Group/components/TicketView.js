@@ -60,6 +60,10 @@ class TicketView extends React.Component {
         rows.push(this.ticketRow(ticket, index));
       }
     }
+    if (!rows.length) {
+      return <div></div>;
+    }
+
     return (
       <div>
         <Table striped celled structured>
