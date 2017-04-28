@@ -1,6 +1,6 @@
 import React from "react";
 import "./GroupView.scss";
-import { Divider, Label, Grid, Header, Button, Confirm, Icon, Segment } from 'semantic-ui-react';
+import { Divider, Label, Grid, Header, Button, Confirm, Icon, Segment, Card, Feed } from 'semantic-ui-react';
 import _ from 'lodash';
 import InlineEditable from '../../../components/shared/InlineEditable';
 import classNames from 'classnames';
@@ -12,6 +12,7 @@ class GroupView extends React.Component {
     super();
     this.state = {
       confirmOpen: false,
+      showOpenTickets: true,
       selectedOnCall: [],
       selectedBenched: []
     };
@@ -23,7 +24,8 @@ class GroupView extends React.Component {
       "handleRemoveSubscribers",
       "handleAddSubscribers",
       "handleProcessRequest",
-      "handleEditPagingInterval");
+      "handleEditPagingInterval",
+      "handleTicketAcknowledgement");
   }
 
   toggleSelectOnCall(index) {
@@ -93,9 +95,18 @@ class GroupView extends React.Component {
     this.props.processRequest(this.props.group.name, userId, approved);
   }
 
+  handleTicketAcknowledgement(ticketId) {
+    this.props.acknowledgeTicket(ticketId);
+  }
+
   componentWillMount() {
     this.props.fetchGroup(this.props.params.groupId);
-    this.props.fetchGroupTickets({ groupNames: this.props.params.groupId });
+    this.props.fetchGroupTickets({
+      groupNames: this.props.params.groupId
+    });
+    this.props.fetchOpenGroupTickets({
+      groupNames: this.props.params.groupId
+    });
   }
 
   active() {
@@ -253,7 +264,12 @@ class GroupView extends React.Component {
           </Grid.Column>
         </Grid>
         {this.renderAdmin()}
-      <TicketView tickets={this.props.tickets}/>
+        <TicketView
+          user={this.props.user}
+          tickets={this.props.tickets}
+          openTickets={this.props.openTickets}
+          handleTicketAcknowledgement={this.handleTicketAcknowledgement}
+        />
       </div>
     );
   }
