@@ -74,7 +74,7 @@ class TicketView extends React.Component {
                   </Feed.Summary>
                   <Button
                     className="action-button"
-                    onClick={() => this.handleTicketAcknowledgement(ticket._id)}
+                    onClick={() => this.props.handleTicketAcknowledgement(ticket._id)}
                   >
                     Acknowledge Ticket
                   </Button>
