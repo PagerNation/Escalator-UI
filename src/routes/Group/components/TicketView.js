@@ -1,6 +1,8 @@
 import React from "react";
-import { Table } from 'semantic-ui-react';
+import { Table, Menu, Segment, Card, Feed, Button } from 'semantic-ui-react';
 import { Link } from 'react-router';
+import moment from 'moment';
+import _ from 'lodash';
 
 const actionFormatting = {
   CREATED: "Created",
@@ -12,32 +14,31 @@ const actionFormatting = {
 
 class TicketView extends React.Component {
 
-  actionRow(action){
-    return (
-      <tr>
-        <td>{action.actionTaken}</td>
-        <td>{action.timestamp}</td>
-        <td>{action.userId}</td>
-      </tr>
-    );
+  constructor() {
+    super();
+    this.state = {
+      showOpenTickets: true
+    };
+    _.bindAll(this,
+      'handleTabClick');
   }
 
-  userLink(user) {
-    return user ? <Link to={'/user/' + user._id}>{user.name}</Link> : <div></div>;
-  };
+  handleTabClick() {
+    this.setState({ showOpenTickets: !this.state.showOpenTickets });
+  }
 
   ticketRow(ticket, index){
-    var title = (ticket.metadata.title) ? ticket.metadata.title : 'No name';
-    var rows = [];
-    var id = 'ticket_'+ticket._id+'_'+index;
+    const title = (ticket.metadata.title) ? ticket.metadata.title : 'No name';
+    const rows = [];
+    const id = 'ticket_'+ticket._id+'_'+index;
     if (index == 0) {
       rows.push(<Table.Cell key={'title_'+id} rowSpan={ticket.actions.length}>{title}</Table.Cell>);
     }
     if (ticket.actions) {
-      var action = ticket.actions[index];
+      const action = ticket.actions[index];
       rows.push(<Table.Cell key={'actionTaken_'+id}>{actionFormatting[action.actionTaken]}</Table.Cell>);
       rows.push(<Table.Cell key={'date_'+id}>{String(new Date(action.timestamp))}</Table.Cell>);
-      rows.push(<Table.Cell key={'user_'+id}>{this.userLink(action.user)}</Table.Cell>);
+      rows.push(<Table.Cell key={'user_'+id}>{action.user ? action.user.name : ''}</Table.Cell>);
       rows.push(<Table.Cell key={'device_'+id}>{action.device ? action.device.type : ''}</Table.Cell>);
     }
     return (
@@ -47,19 +48,57 @@ class TicketView extends React.Component {
     );
   }
 
-  render() {
-    if (!this.props.tickets) {
-      return (
-        <div></div>
+  renderTickets() {
+    return !_.isNil(this.props.openTickets) && this.props.openTickets.map((ticket, index) => {
+      const timeSinceLastUpdate = moment(
+        ticket.updatedAt ?
+        ticket.updatedAt :
+        ticket.createdAt).fromNow();
+
+      const hasBeenPaged = _.some(ticket.actions, (action) =>
+        !_.isNil(action.user) && action.user._id == this.props.user._id
       );
+
+      return !_.isNil(ticket) && (
+        <Card key={index} color={hasBeenPaged ? 'red' : 'green'} fluid>
+          <Card.Content>
+            <Card.Header>
+              {ticket.metadata.title}
+            </Card.Header>
+            <Feed>
+              <Feed.Event>
+                <Feed.Content>
+                  <Feed.Date content={timeSinceLastUpdate} />
+                  <Feed.Summary>
+                    {ticket.metadata.description}
+                  </Feed.Summary>
+                  <Button
+                    className="action-button"
+                    onClick={() => this.handleTicketAcknowledgement(ticket._id)}
+                  >
+                    Acknowledge Ticket
+                  </Button>
+                </Feed.Content>
+              </Feed.Event>
+            </Feed>
+          </Card.Content>
+        </Card>
+      );
+    });
+  }
+
+  renderLogs() {
+    if (!this.props.tickets) {
+      return <div></div>;
     }
 
-    var rows = []
-    for(var ticket of this.props.tickets) {
-      for(var index in ticket.actions) {
+    const rows = []
+    for (let ticket of this.props.tickets) {
+      for (let index in ticket.actions) {
         rows.push(this.ticketRow(ticket, index));
       }
     }
+
     if (!rows.length) {
       return <div></div>;
     }
@@ -77,9 +116,26 @@ class TicketView extends React.Component {
             </Table.Row>
           </Table.Header>
           <Table.Body>
-          {rows}
+            {rows}
           </Table.Body>
         </Table>
+      </div>
+    );
+  }
+
+  render() {
+    return (
+      <div>
+        <Menu attached="top" tabular>
+          <Menu.Item name='openTickets' active={this.state.showOpenTickets} onClick={this.handleTabClick} />
+          <Menu.Item name='ticketLogs' active={!this.state.showOpenTickets} onClick={this.handleTabClick} />
+        </Menu>
+        <Segment attached='bottom'>
+          {this.state.showOpenTickets ?
+            this.renderTickets() :
+            this.renderLogs()
+          }
+        </Segment>
       </div>
     );
   }
