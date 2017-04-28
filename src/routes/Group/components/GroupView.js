@@ -162,7 +162,9 @@ class GroupView extends React.Component {
   };
 
   renderAdmin() {
-    return this.props.group.admins.includes(this.props.user._id) && (
+    return this.props.group.joinRequests
+          && this.props.group.joinRequests.length > 0
+          && this.props.group.admins.includes(this.props.user._id) && (
       <div>
         <Divider/>
         <Header as="h3">Administration</Header>
