@@ -1,6 +1,6 @@
 import React from "react";
 import "./GroupView.scss";
-import { Divider, Label, Grid, Header, Button, Confirm, Icon, Segment, Card, Feed } from 'semantic-ui-react';
+import { Divider, Label, Grid, Header, Button, Confirm, Icon, Segment, Card, Feed, Menu } from 'semantic-ui-react';
 import _ from 'lodash';
 import moment from 'moment';
 import InlineEditable from '../../../components/shared/InlineEditable';
@@ -13,6 +13,7 @@ class GroupView extends React.Component {
     super();
     this.state = {
       confirmOpen: false,
+      showOpenTickets: true,
       selectedOnCall: [],
       selectedBenched: []
     };
@@ -25,7 +26,8 @@ class GroupView extends React.Component {
       "handleAddSubscribers",
       "handleProcessRequest",
       "handleEditPagingInterval",
-      "handleTicketAcknowledgement");
+      "handleTicketAcknowledgement",
+      "handleTabClick");
   }
 
   toggleSelectOnCall(index) {
@@ -97,6 +99,10 @@ class GroupView extends React.Component {
 
   handleTicketAcknowledgement(ticketId) {
     this.props.acknowledgeTicket(ticketId);
+  }
+
+  handleTabClick() {
+    this.setState({ showOpenTickets: !this.state.showOpenTickets });
   }
 
   componentWillMount() {
@@ -179,8 +185,12 @@ class GroupView extends React.Component {
         ticket.updatedAt :
         ticket.createdAt).fromNow();
 
+      const hasBeenPaged = _.some(ticket.actions, (action) =>
+        action.user && action.user._id == this.props.user._id
+      );
+
       return _.isObject(ticket) && (
-        <Card key={index} color="green" fluid>
+        <Card key={index} color={hasBeenPaged ? 'red' : 'green'} fluid>
           <Card.Content>
             <Card.Header>
               {ticket.metadata.title}
@@ -259,6 +269,15 @@ class GroupView extends React.Component {
     );
   }
 
+  renderMenu() {
+    return (
+      <Menu attached="top" tabular>
+        <Menu.Item name='openTickets' active={this.state.showOpenTickets} onClick={this.handleTabClick} />
+        <Menu.Item name='ticketLogs' active={!this.state.showOpenTickets} onClick={this.handleTabClick} />
+      </Menu>
+    );
+  }
+
   render() {
     const leaveButton = this.props.group && _.find(this.props.group.users, (user) => user._id === this.props.user._id) && (
       <Button className="action-button" onClick={this.toggleConfirm}>Leave Group</Button>
@@ -298,9 +317,15 @@ class GroupView extends React.Component {
             {this.benched()}
           </Grid.Column>
         </Grid>
-        {this.renderTickets()}
         {this.renderAdmin()}
-        <TicketView tickets={this.props.tickets}/>
+        {this.renderMenu()}
+
+        <Segment attached='bottom'>
+          {this.state.showOpenTickets ?
+            this.renderTickets() :
+            <TicketView tickets={this.props.tickets}/>
+          }
+        </Segment>
       </div>
     );
   }

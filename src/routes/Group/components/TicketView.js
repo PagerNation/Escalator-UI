@@ -23,7 +23,7 @@ class TicketView extends React.Component {
   }
 
   userLink(user) {
-    return user ? <Link to={'/user/' + user._id}>{user.name}</Link> : <span>No one</span>;
+    return user ? <Link to={'/user/' + user._id}>{user.name}</Link> : <div></div>;
   };
 
   ticketRow(ticket, index){
