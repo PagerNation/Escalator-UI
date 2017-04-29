@@ -143,6 +143,7 @@ class TicketView extends React.Component {
   render() {
     return (
       <div>
+        <Header as="h3">Tickets</Header>
         <Menu attached="top" tabular>
           <Menu.Item name='openTickets' active={this.state.showOpenTickets} onClick={this.handleTabClick} />
           <Menu.Item name='ticketLogs' active={!this.state.showOpenTickets} onClick={this.handleTabClick} />
