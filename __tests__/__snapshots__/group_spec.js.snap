@@ -77,6 +77,11 @@ exports[`GroupView renders GroupView 1`] = `
     </div>
   </div>
   <div>
+    <h3
+      className="ui header"
+    >
+      Tickets
+    </h3>
     <div
       className="ui top attached tabular menu"
     >
