@@ -1,5 +1,6 @@
 import React from "react";
 import { Modal, Button, Form, Radio } from 'semantic-ui-react';
+import DateTime from 'react-datetime';
 import _ from 'lodash';
 
 class RemoveSubscriberModal extends React.Component {
@@ -67,6 +68,9 @@ class RemoveSubscriberModal extends React.Component {
                 checked={this.state.scheduled[user.user]}
                 onChange={this.handleScheduleChange}
               />
+            </Form.Field>
+            <Form.Field>
+              <DateTime className="date-field" disabled={!this.state.scheduled[user.user]} />
             </Form.Field>
           </Form>
         </li>
