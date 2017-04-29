@@ -14,10 +14,16 @@ const actionFormatting = {
 
 class TicketView extends React.Component {
 
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
+
+    let showOpenTickets = true;
+    if (!_.isNil(this.props.openTickets) && this.props.openTickets) {
+      showOpenTickets = false;
+    }
+
     this.state = {
-      showOpenTickets: true
+      showOpenTickets
     };
     _.bindAll(this,
       'handleTabClick');
