@@ -77,181 +77,36 @@ exports[`GroupView renders GroupView 1`] = `
     </div>
   </div>
   <div>
-    <table
-      className="ui celled striped structured table"
+    <h3
+      className="ui header"
     >
-      <thead
-        className=""
+      Tickets
+    </h3>
+    <div
+      className="ui top attached tabular menu"
+    >
+      <a
+        className="active item"
+        onClick={[Function]}
       >
-        <tr
-          className=""
-        >
-          <th
-            className=""
-          >
-            Ticket
-          </th>
-          <th
-            className=""
-          >
-            Action
-          </th>
-          <th
-            className=""
-          >
-            Time of Action
-          </th>
-          <th
-            className=""
-          >
-            User
-          </th>
-          <th
-            className=""
-          >
-            Device
-          </th>
-        </tr>
-      </thead>
-      <tbody
-        className=""
+        Open Tickets
+      </a>
+      <a
+        className="item"
+        onClick={[Function]}
       >
-        <tr
-          className=""
-        >
-          <td
-            className=""
-            rowSpan={5}
-          >
-            fake title
-          </td>
-          <td
-            className=""
-          >
-            Created
-          </td>
-          <td
-            className=""
-          >
-            Mockday 2017-03-04T23:11:01.466Z GMT-0500 (MockDate)
-          </td>
-          <td
-            className=""
-          >
-            <span>
-              No one
-            </span>
-          </td>
-          <td
-            className=""
-          />
-        </tr>
-        <tr
-          className=""
-        >
-          <td
-            className=""
-          >
-            Page Sent
-          </td>
-          <td
-            className=""
-          >
-            Mockday 2017-03-04T23:11:01.504Z GMT-0500 (MockDate)
-          </td>
-          <td
-            className=""
-          >
-            <span>
-              No one
-            </span>
-          </td>
-          <td
-            className=""
-          >
-            phone
-          </td>
-        </tr>
-        <tr
-          className=""
-        >
-          <td
-            className=""
-          >
-            Page Sent
-          </td>
-          <td
-            className=""
-          >
-            Mockday 2017-03-04T23:12:01.914Z GMT-0500 (MockDate)
-          </td>
-          <td
-            className=""
-          >
-            <span>
-              No one
-            </span>
-          </td>
-          <td
-            className=""
-          >
-            email
-          </td>
-        </tr>
-        <tr
-          className=""
-        >
-          <td
-            className=""
-          >
-            Page Sent
-          </td>
-          <td
-            className=""
-          >
-            Mockday 2017-03-04T23:21:02.519Z GMT-0500 (MockDate)
-          </td>
-          <td
-            className=""
-          >
-            <span>
-              No one
-            </span>
-          </td>
-          <td
-            className=""
-          >
-            phone
-          </td>
-        </tr>
-        <tr
-          className=""
-        >
-          <td
-            className=""
-          >
-            Page Sent
-          </td>
-          <td
-            className=""
-          >
-            Mockday 2017-03-04T23:22:01.881Z GMT-0500 (MockDate)
-          </td>
-          <td
-            className=""
-          >
-            <span>
-              No one
-            </span>
-          </td>
-          <td
-            className=""
-          >
-            email
-          </td>
-        </tr>
-      </tbody>
-    </table>
+        Ticket Logs
+      </a>
+    </div>
+    <div
+      className="ui bottom attached segment"
+    >
+      <h3
+        className="ui header"
+      >
+        No Open Tickets
+      </h3>
+    </div>
   </div>
 </div>
 `;

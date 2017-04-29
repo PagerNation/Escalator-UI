@@ -42,7 +42,7 @@ class GroupView extends React.Component {
       <div>
         <Header as="h1">Join a group</Header>
 
-        <Segment>
+        <Segment className="join-group-segment">
           <div className="ui input fluid">
             <Autocomplete
               inputProps={{className: "search-input", placeholder: "Search groups"}}

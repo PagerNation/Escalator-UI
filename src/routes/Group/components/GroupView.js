@@ -1,6 +1,6 @@
 import React from "react";
 import "./GroupView.scss";
-import { Divider, Label, Grid, Header, Button, Confirm, Icon, Segment } from 'semantic-ui-react';
+import { Divider, Label, Grid, Header, Button, Confirm, Icon, Segment, Card, Feed } from 'semantic-ui-react';
 import _ from 'lodash';
 import InlineEditable from '../../../components/shared/InlineEditable';
 import classNames from 'classnames';
@@ -13,6 +13,7 @@ class GroupView extends React.Component {
     super();
     this.state = {
       confirmOpen: false,
+      showOpenTickets: true,
       selectedOnCall: [],
       selectedBenched: []
     };
@@ -25,7 +26,8 @@ class GroupView extends React.Component {
       "handleAddSubscribers",
       "handleProcessRequest",
       "handleEditPagingInterval",
-      "toggleRemoveModal");
+      "toggleRemoveModal",
+      "handleTicketAcknowledgement");
   }
 
   toggleRemoveModal() {
@@ -38,6 +40,7 @@ class GroupView extends React.Component {
       sub.name = _.find(this.props.group.users, (user) => user._id === sub.user).name;
     });
     this.refs["removeSubModal"].open(subsToRemove);
+
   }
 
   toggleSelectOnCall(index) {
@@ -106,9 +109,18 @@ class GroupView extends React.Component {
     this.props.processRequest(this.props.group.name, userId, approved);
   }
 
+  handleTicketAcknowledgement(ticketId) {
+    this.props.acknowledgeTicket(ticketId);
+  }
+
   componentWillMount() {
     this.props.fetchGroup(this.props.params.groupId);
-    this.props.fetchGroupTickets({ groupNames: this.props.params.groupId });
+    this.props.fetchGroupTickets({
+      groupNames: this.props.params.groupId
+    });
+    this.props.fetchOpenGroupTickets({
+      groupNames: this.props.params.groupId
+    });
   }
 
   active() {
@@ -176,14 +188,15 @@ class GroupView extends React.Component {
   };
 
   renderAdmin() {
-    return this.props.group.admins.includes(this.props.user._id) && (
+    return this.props.group.joinRequests
+          && this.props.group.joinRequests.length > 0
+          && this.props.group.admins.includes(this.props.user._id) && (
       <div>
         <Divider/>
         <Header as="h3">Administration</Header>
-        <Grid>
+        <Grid className="group-requests">
           <Grid.Column mobile={16} computer={8}>
             <Header as="h4">Pending membership requests:</Header>
-            {this.props.group.joinRequests.length > 0 ?
             <div>
               {this.props.group.joinRequests.map((user, i) =>
                 <Segment key={i} raised>
@@ -194,8 +207,6 @@ class GroupView extends React.Component {
                 </Segment>
               )}
             </div>
-              : <em>No requests</em>
-            }
           </Grid.Column>
         </Grid>
       </div>
@@ -266,7 +277,12 @@ class GroupView extends React.Component {
           </Grid.Column>
         </Grid>
         {this.renderAdmin()}
-      <TicketView tickets={this.props.tickets}/>
+        <TicketView
+          user={this.props.user}
+          tickets={this.props.tickets}
+          openTickets={this.props.openTickets}
+          handleTicketAcknowledgement={this.handleTicketAcknowledgement}
+        />
       </div>
     );
   }

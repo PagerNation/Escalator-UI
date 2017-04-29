@@ -14,8 +14,6 @@ class Navigation extends React.Component {
     const userMenu = this.props.user && (
       <Menu.Item as={Dropdown} text={this.props.user.name} position="right">
         <Dropdown.Menu>
-          <Dropdown.Item onClick={() => this.props.router.push('/profile')}>Profile</Dropdown.Item>
-          <Dropdown.Item onClick={() => this.props.router.push('/joingroup')}>Join a Group</Dropdown.Item>
           <Dropdown.Item onClick={this.props.logOut}>Log Out</Dropdown.Item>
         </Dropdown.Menu>
       </Menu.Item>
@@ -34,6 +32,9 @@ class Navigation extends React.Component {
             <Image src={Logo} className="inverted" size='mini' spaced='right' />
             Escalator
           </Menu.Item>
+          <Menu.Item onClick={() => this.props.router.push('/')}>Groups</Menu.Item>
+          <Menu.Item onClick={() => this.props.router.push('/profile')}>Profile</Menu.Item>
+          <Menu.Item onClick={() => this.props.router.push('/joingroup')}>Join a Group</Menu.Item>
           {admin}
           {userMenu}
         </Menu>

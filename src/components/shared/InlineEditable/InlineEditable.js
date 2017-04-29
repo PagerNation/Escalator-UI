@@ -12,7 +12,14 @@ class InlineEditable extends React.Component {
       isEditing: false,
       editorValue: props.value
     };
-    _.bindAll(this, 'handleMouseEnter', 'handleMouseLeave', 'toggleEditor', 'handleSave', 'handleChange');
+    _.bindAll(this,
+      'handleMouseEnter',
+      'handleMouseLeave',
+      'handleKeyPress',
+      'toggleEditor',
+      'handleSave',
+      'handleChange',
+      'handleBlur');
   }
 
   componentWillReceiveProps(newProps) {
@@ -31,6 +38,12 @@ class InlineEditable extends React.Component {
     this.setState({
       isHovered: false
     });
+  }
+
+  handleKeyPress(event) {
+    if (event.key == 'Enter') {
+      this.handleSave();
+    }
   }
 
   toggleEditor() {
@@ -56,6 +69,13 @@ class InlineEditable extends React.Component {
     });
   }
 
+  handleBlur() {
+    this.setState({
+      editorValue: this.props.value,
+      isEditing: false
+    });
+  }
+
   renderText() {
     return (
       <span>
@@ -71,8 +91,11 @@ class InlineEditable extends React.Component {
     return (
       <span>
         <Input
+          autoFocus
           size="small"
           onChange={this.handleChange}
+          onBlur={this.handleBlur}
+          onKeyPress={this.handleKeyPress}
           action={{color: 'green', icon: 'check', onClick: this.handleSave}}
           defaultValue={this.props.value}
         />
