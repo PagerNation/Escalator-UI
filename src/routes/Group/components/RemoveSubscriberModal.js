@@ -45,6 +45,14 @@ class RemoveSubscriberModal extends React.Component {
     this.close();
   }
 
+  renderSchedule(user) {
+    return this.state.scheduled[user.user] && (
+      <Form.Field>
+        <DateTime className="date-field" />
+      </Form.Field>
+    );
+  }
+
   renderUsers() {
     return this.state.subsToRemove.map((user, index) => {
       return (
@@ -69,9 +77,7 @@ class RemoveSubscriberModal extends React.Component {
                 onChange={this.handleScheduleChange}
               />
             </Form.Field>
-            <Form.Field>
-              <DateTime className="date-field" disabled={!this.state.scheduled[user.user]} />
-            </Form.Field>
+            {this.renderSchedule(user)}
           </Form>
         </li>
       );
