@@ -179,10 +179,9 @@ class GroupView extends React.Component {
       <div>
         <Divider/>
         <Header as="h3">Administration</Header>
-        <Grid>
+        <Grid className="group-requests">
           <Grid.Column mobile={16} computer={8}>
             <Header as="h4">Pending membership requests:</Header>
-            {this.props.group.joinRequests.length > 0 ?
             <div>
               {this.props.group.joinRequests.map((user, i) =>
                 <Segment key={i} raised>
@@ -193,8 +192,6 @@ class GroupView extends React.Component {
                 </Segment>
               )}
             </div>
-              : <em>No requests</em>
-            }
           </Grid.Column>
         </Grid>
       </div>
