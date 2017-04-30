@@ -57,7 +57,10 @@ class RemoveSubscriberModal extends React.Component {
   }
 
   confirm() {
-    this.props.onConfirm(this.state.subsToRemove);
+    this.props.onRemove(_.filter(this.state.subsToRemove, (sub) =>
+      !this.state.scheduled[sub.user]));
+    this.props.onSchedule(_.filter(this.state.subsToRemove, (sub) =>
+      this.state.scheduled[sub.user]));
     this.close();
   }
 

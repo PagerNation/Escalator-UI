@@ -27,7 +27,9 @@ class GroupView extends React.Component {
       "handleProcessRequest",
       "handleEditPagingInterval",
       "toggleRemoveModal",
-      "handleTicketAcknowledgement");
+      "handleTicketAcknowledgement",
+      "handleScheduleSubscribers"
+    );
   }
 
   toggleRemoveModal() {
@@ -70,17 +72,34 @@ class GroupView extends React.Component {
   }
 
   handleRemoveSubscribers(subsToRemove) {
+    if (!subsToRemove.length) return;
+
     const ep = {};
-    const subs = _.differenceBy(this.props.group.escalationPolicy.subscribers, subsToRemove, (user) => user._id);
+    let subs = _.differenceBy(this.props.group.escalationPolicy.subscribers, subsToRemove, (user) => user._id);
+    subs = _.map(subs, (sub) => _.omit(sub, "_id", "name"));
     _.extend(ep, this.props.group.escalationPolicy, {subscribers: subs});
-    this.props.updateEscalationPolicy(this.props.group.name, _.omit(ep, "_id", "name"));
+    this.props.updateEscalationPolicy(this.props.group.name, _.omit(ep, "_id"));
     this.setState({
       selectedOnCall: []
     });
   }
 
+  handleScheduleSubscribers(subsToSchedule) {
+    if (!subsToSchedule.length) return;
+
+    let subs = _.extend([], this.props.group.escalationPolicy.subscribers);
+    _.forEach(subsToSchedule, (sub) => {
+      const match = _.find(subs, (s) => s.user === sub.user);
+      match.deactivateDate = sub.deactivateDate;
+      match.reactivateDate = sub.reactivateDate;
+    });
+    subs = _.map(subs, (sub) => _.omit(sub, "_id", "name"));
+    const ep = _.extend({}, this.props.group.escalationPolicy, {subscribers: subs});
+    this.props.updateEscalationPolicy(this.props.group.name, _.omit(ep, "_id"));
+  }
+
   handleAddSubscribers() {
-    const subs = this.props.group.escalationPolicy.subscribers.map((user) => _.omit(user, "_id"));
+    const subs = this.props.group.escalationPolicy.subscribers.map((user) => _.omit(user, "_id", "name"));
     const subIds = subs.map((user) => user.user);
     const benched = [,...this.props.group.users].filter((user) =>
       subIds.indexOf(user._id) === -1
@@ -254,7 +273,11 @@ class GroupView extends React.Component {
     return this.props.group && (
       <div>
         {confirm}
-        <RemoveSubscriberModal ref="removeSubModal" onConfirm={this.handleRemoveSubscribers} />
+        <RemoveSubscriberModal
+          ref="removeSubModal"
+          onRemove={this.handleRemoveSubscribers}
+          onSchedule={this.handleScheduleSubscribers}
+        />
         <Header as="h1">{this.props.group.name}</Header>
         {leaveButton}
         {this.onCall()}
