@@ -10,14 +10,17 @@ class AdminView extends React.Component {
     this.state = {
       searchValue: "",
       selectedUser: null,
+      selectedGroup: null,
       loading: false,
       sysAdminValue: null,
       valueChanged: false
     };
     _.bindAll(this,
-      "handleSearch",
+      "handleUserSearch",
+      "handleGroupSearch",
       "getOptions",
       "handleSelectUser",
+      "handleSelectGroup",
       "handleChangeSysAdmin",
       "handleUpdateUser"
     );
@@ -31,13 +34,38 @@ class AdminView extends React.Component {
     });
   }
 
-  handleSearch(value) {
+  handleSelectGroup(selection) {
+    this.setState({
+      selectedGroup: selection,
+      valueChanged: false
+    });
+  }
+
+  handleUserSearch(value) {
     this.setState({
       searchValue: value,
       loading: true
     });
     if (value !== "") {
       this.props.searchByName(value).then(() => {
+        this.setState({
+          loading: false
+        });
+      });
+    } else {
+      this.setState({
+        loading: false
+      });
+    }
+  }
+
+  handleGroupSearch(value) {
+    this.setState({
+      searchValue: value,
+      loading: true
+    });
+    if (value !== "") {
+      this.props.searchGroups(value).then(() => {
         this.setState({
           loading: false
         });
@@ -64,7 +92,7 @@ class AdminView extends React.Component {
     });
   }
 
-  getOptions() {
+  getUserOptions() {
     return this.props.searchResults.map((user) => {
       return {
         value: user,
@@ -118,8 +146,27 @@ class AdminView extends React.Component {
               isLoading={this.state.loading}
               value={this.state.selectedUser}
               options={this.getOptions()}
-              onInputChange={this.handleSearch}
+              onInputChange={this.handleUserSearch}
               onChange={this.handleSelectUser}
+            />
+          </Grid.Column>
+          <Grid.Column mobile={16} computer={8}>
+            {this.renderUserEditor()}
+          </Grid.Column>
+        </Grid>
+        <br/>
+        <Header as="h2">Find a Group</Header>
+        <Grid>
+          <Grid.Column mobile={16} computer={8}>
+            <Select
+              name="group-search"
+              multi={false}
+              placeholder="Search group..."
+              isLoading={this.state.loading}
+              value={this.state.selectedGroup}
+              options={this.getOptions()}
+              onInputChange={this.handleGroupSearch}
+              onChange={this.handleSelectGroup}
             />
           </Grid.Column>
           <Grid.Column mobile={16} computer={8}>
