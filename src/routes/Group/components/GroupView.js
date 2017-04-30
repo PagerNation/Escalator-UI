@@ -1,7 +1,8 @@
 import React from "react";
 import "./GroupView.scss";
-import { Divider, Label, Grid, Header, Button, Confirm, Icon, Segment, Card, Feed } from 'semantic-ui-react';
+import { Divider, Label, Grid, Header, Button, Confirm, Icon, Segment, Popup } from 'semantic-ui-react';
 import _ from 'lodash';
+import moment from 'moment';
 import InlineEditable from '../../../components/shared/InlineEditable';
 import classNames from 'classnames';
 import RemoveSubscriberModal from './RemoveSubscriberModal';
@@ -142,6 +143,29 @@ class GroupView extends React.Component {
     });
   }
 
+  renderSchedulePopup(subscriber) {
+    if (subscriber.deactivateDate || subscriber.reactivateDate) {
+      const remove = subscriber.deactivateDate &&
+        moment(subscriber.deactivateDate).isAfter(moment()) && (
+        <p>
+          User to be deactivated on <strong>{moment(subscriber.deactivateDate).format("dddd MMMM Do, h:mm A")}</strong>
+        </p>
+      );
+      const replace = subscriber.reactivateDate &&
+        moment(subscriber.reactivateDate).isAfter(moment()) && (
+        <p>
+          User to be reactivated on <strong>{moment(subscriber.reactivateDate).format("dddd MMMM Do, h:mm A")}</strong>
+        </p>
+      );
+      return (
+        <Popup wide="very" trigger={<Icon name='time' className="help-icon" size="large" />}>
+          {remove}
+          {replace}
+        </Popup>
+      );
+    }
+  }
+
   active() {
     const subs = [...this.props.group.escalationPolicy.subscribers];
     _.forEach(subs, (sub) => {
@@ -153,6 +177,7 @@ class GroupView extends React.Component {
         onClick={() => this.toggleSelectOnCall(i)}
         key={i}>
         {user.name}
+        {this.renderSchedulePopup(user)}
       </a>
     );
   };
