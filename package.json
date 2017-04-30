@@ -10,7 +10,7 @@
   "scripts": {
     "clean": "rimraf dist",
     "compile": "better-npm-run compile",
-    "lint": "eslint bin build config server src tests",
+    "lint": "eslint src/routes/group/components/admin/ --fix",
     "lint:fix": "npm run lint -- --fix",
     "start": "better-npm-run start",
     "dev": "better-npm-run dev",
@@ -109,6 +109,7 @@
     "node-sass": "^3.7.0",
     "normalize.css": "^4.1.1",
     "postcss-loader": "^0.13.0",
+    "prop-types": "^15.5.8",
     "react": "^15.0.0",
     "react-autocomplete": "^1.4.1",
     "react-dom": "^15.0.0",
