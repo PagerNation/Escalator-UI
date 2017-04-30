@@ -3,6 +3,7 @@ import Navigation from "../../components/Navigation";
 import "./CoreLayout.scss";
 import "../../styles/core.scss";
 import 'react-select/dist/react-select.css';
+import 'react-datetime/css/react-datetime.css';
 
 class CoreLayout extends React.Component {
 

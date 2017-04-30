@@ -53,6 +53,22 @@ button.ui.button.action-button {
   margin-bottom: 5px;
 }
 
+.sub-list {
+   list-style: none;
+
+  li {
+    padding: 10px;
+  }
+
+  .date-field input {
+    width: 300px;
+  }
+}
+
 .ui.grid.group-requests {
   padding-bottom: 25px;
+}
+
+i.help-icon {
+  margin-left: 0.5em;
 }

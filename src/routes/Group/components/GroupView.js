@@ -1,9 +1,11 @@
 import React from "react";
 import "./GroupView.scss";
-import { Divider, Label, Grid, Header, Button, Confirm, Icon, Segment, Card, Feed } from 'semantic-ui-react';
+import { Divider, Label, Grid, Header, Button, Confirm, Icon, Segment, Popup } from 'semantic-ui-react';
 import _ from 'lodash';
+import moment from 'moment';
 import InlineEditable from '../../../components/shared/InlineEditable';
 import classNames from 'classnames';
+import RemoveSubscriberModal from './RemoveSubscriberModal';
 import TicketView from './TicketView';
 
 class GroupView extends React.Component {
@@ -25,7 +27,23 @@ class GroupView extends React.Component {
       "handleAddSubscribers",
       "handleProcessRequest",
       "handleEditPagingInterval",
-      "handleTicketAcknowledgement");
+      "toggleRemoveModal",
+      "handleTicketAcknowledgement",
+      "handleScheduleSubscribers"
+    );
+  }
+
+  toggleRemoveModal() {
+    const subs = _.extend({}, this.props.group.escalationPolicy.subscribers);
+    const subsToRemove = [];
+    this.state.selectedOnCall.forEach((i) => {
+      subsToRemove.push(subs[i]);
+    });
+    _.forEach(subsToRemove, (sub) => {
+      sub.name = _.find(this.props.group.users, (user) => user._id === sub.user).name;
+    });
+    this.refs["removeSubModal"].open(subsToRemove);
+
   }
 
   toggleSelectOnCall(index) {
@@ -54,10 +72,12 @@ class GroupView extends React.Component {
     this.props.leaveGroup(this.props.group.name, this.props.user._id).then(this.toggleConfirm);
   }
 
-  handleRemoveSubscribers() {
-    const subs = this.props.group.escalationPolicy.subscribers.map((user) => _.omit(user, "_id"));
-    this.state.selectedOnCall.forEach((i) => subs.splice(i, 1));
+  handleRemoveSubscribers(subsToRemove) {
+    if (!subsToRemove.length) return;
+
     const ep = {};
+    let subs = _.differenceBy(this.props.group.escalationPolicy.subscribers, subsToRemove, (user) => user._id);
+    subs = _.map(subs, (sub) => _.omit(sub, "_id", "name"));
     _.extend(ep, this.props.group.escalationPolicy, {subscribers: subs});
     this.props.updateEscalationPolicy(this.props.group.name, _.omit(ep, "_id"));
     this.setState({
@@ -65,8 +85,22 @@ class GroupView extends React.Component {
     });
   }
 
+  handleScheduleSubscribers(subsToSchedule) {
+    if (!subsToSchedule.length) return;
+
+    let subs = _.extend([], this.props.group.escalationPolicy.subscribers);
+    _.forEach(subsToSchedule, (sub) => {
+      const match = _.find(subs, (s) => s.user === sub.user);
+      match.deactivateDate = sub.deactivateDate;
+      match.reactivateDate = sub.reactivateDate;
+    });
+    subs = _.map(subs, (sub) => _.omit(sub, "_id", "name"));
+    const ep = _.extend({}, this.props.group.escalationPolicy, {subscribers: subs});
+    this.props.updateEscalationPolicy(this.props.group.name, _.omit(ep, "_id"));
+  }
+
   handleAddSubscribers() {
-    const subs = this.props.group.escalationPolicy.subscribers.map((user) => _.omit(user, "_id"));
+    const subs = this.props.group.escalationPolicy.subscribers.map((user) => _.omit(user, "_id", "name"));
     const subIds = subs.map((user) => user.user);
     const benched = [,...this.props.group.users].filter((user) =>
       subIds.indexOf(user._id) === -1
@@ -109,16 +143,43 @@ class GroupView extends React.Component {
     });
   }
 
+  renderSchedulePopup(subscriber) {
+    if (subscriber.deactivateDate || subscriber.reactivateDate) {
+      const remove = subscriber.deactivateDate &&
+        moment(subscriber.deactivateDate).isAfter(moment()) && (
+        <p>
+          User to be deactivated on <strong>{moment(subscriber.deactivateDate).format("dddd MMMM Do, h:mm A")}</strong>
+        </p>
+      );
+      const replace = subscriber.reactivateDate &&
+        moment(subscriber.reactivateDate).isAfter(moment()) && (
+        <p>
+          User to be reactivated on <strong>{moment(subscriber.reactivateDate).format("dddd MMMM Do, h:mm A")}</strong>
+        </p>
+      );
+      return (
+        <span>
+          <Popup wide="very" trigger={<Icon name='time' className="help-icon" size="large" />}>
+            {remove}
+            {replace}
+          </Popup>
+        </span>
+      );
+    }
+  }
+
   active() {
-    const subIds = this.props.group.escalationPolicy.subscribers.map(u => u.user);
-    return [,...this.props.group.users].filter((user) =>
-      subIds.indexOf(user._id) > -1
-    ).map((user, i) =>
+    const subs = [...this.props.group.escalationPolicy.subscribers];
+    _.forEach(subs, (sub) => {
+      sub.name = _.find(this.props.group.users, (user) => user._id === sub.user).name;
+    });
+    return subs.map((user, i) =>
       <a
         className={classNames("box arrow_box", {"selected": this.state.selectedOnCall.includes(i)})}
         onClick={() => this.toggleSelectOnCall(i)}
         key={i}>
         {user.name}
+        {this.renderSchedulePopup(user)}
       </a>
     );
   };
@@ -133,6 +194,7 @@ class GroupView extends React.Component {
         onClick={() => this.toggleSelectBenched(i)}
         key={i}>
         {user.name}
+        {this.renderSchedulePopup(user)}
       </a>
     )
   };
@@ -213,7 +275,7 @@ class GroupView extends React.Component {
           className="move-btn"
           size="mini"
           disabled={this.state.selectedOnCall.length == 0}
-          onClick={this.handleRemoveSubscribers}
+          onClick={this.toggleRemoveModal}
         >
           <Icon name="chevron right" />
         </Button>
@@ -239,6 +301,11 @@ class GroupView extends React.Component {
     return this.props.group && (
       <div>
         {confirm}
+        <RemoveSubscriberModal
+          ref="removeSubModal"
+          onRemove={this.handleRemoveSubscribers}
+          onSchedule={this.handleScheduleSubscribers}
+        />
         <Header as="h1">{this.props.group.name}</Header>
         {leaveButton}
         {this.onCall()}
