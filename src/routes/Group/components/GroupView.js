@@ -5,6 +5,7 @@ import _ from 'lodash';
 import InlineEditable from '../../../components/shared/InlineEditable';
 import classNames from 'classnames';
 import TicketView from './TicketView';
+import AdminView from './admin/AdminView';
 
 class GroupView extends React.Component {
 
@@ -23,7 +24,6 @@ class GroupView extends React.Component {
       "toggleSelectBenched",
       "handleRemoveSubscribers",
       "handleAddSubscribers",
-      "handleProcessRequest",
       "handleEditPagingInterval",
       "handleTicketAcknowledgement");
   }
@@ -89,10 +89,6 @@ class GroupView extends React.Component {
     const ep = {};
     _.extend(ep, this.props.group.escalationPolicy, {pagingIntervalInMinutes: values.pagingIntervalInMinutes});
     this.props.updateEscalationPolicy(this.props.group.name, _.omit(ep, "_id"));
-  }
-
-  handleProcessRequest(userId, approved) {
-    this.props.processRequest(this.props.group.name, userId, approved);
   }
 
   handleTicketAcknowledgement(ticketId) {
@@ -172,32 +168,6 @@ class GroupView extends React.Component {
     );
   };
 
-  renderAdmin() {
-    return this.props.group.joinRequests
-          && this.props.group.joinRequests.length > 0
-          && this.props.group.admins.includes(this.props.user._id) && (
-      <div>
-        <Divider/>
-        <Header as="h3">Administration</Header>
-        <Grid className="group-requests">
-          <Grid.Column mobile={16} computer={8}>
-            <Header as="h4">Pending membership requests:</Header>
-            <div>
-              {this.props.group.joinRequests.map((user, i) =>
-                <Segment key={i} raised>
-                  <Header as="h5">{user.name}</Header>
-                  <span>{user.email}</span>
-                  <Button style={{marginTop: "-20px"}} floated="right" color="green" onClick={() => this.handleProcessRequest(user._id, true)}>Approve</Button>
-                  <Button style={{marginTop: "-20px"}} className="section-btn" floated="right" color="red" onClick={() => this.handleProcessRequest(user._id, false)}>Deny</Button>
-                </Segment>
-              )}
-            </div>
-          </Grid.Column>
-        </Grid>
-      </div>
-    );
-  }
-
   renderEPControls() {
     return this.props.group.admins.includes(this.props.user._id) && (
       <div>
@@ -260,7 +230,11 @@ class GroupView extends React.Component {
             {this.benched()}
           </Grid.Column>
         </Grid>
-        {this.renderAdmin()}
+        <AdminView
+          user={this.props.user}
+          group={this.props.group}
+          processRequest={this.props.processRequest}
+        />
         <TicketView
           user={this.props.user}
           tickets={this.props.tickets}
