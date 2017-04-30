@@ -73,7 +73,7 @@ class GroupView extends React.Component {
     const ep = {};
     const subs = _.differenceBy(this.props.group.escalationPolicy.subscribers, subsToRemove, (user) => user._id);
     _.extend(ep, this.props.group.escalationPolicy, {subscribers: subs});
-    this.props.updateEscalationPolicy(this.props.group.name, _.omit(ep, "_id"));
+    this.props.updateEscalationPolicy(this.props.group.name, _.omit(ep, "_id", "name"));
     this.setState({
       selectedOnCall: []
     });
