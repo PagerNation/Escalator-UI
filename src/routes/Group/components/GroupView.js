@@ -158,10 +158,12 @@ class GroupView extends React.Component {
         </p>
       );
       return (
-        <Popup wide="very" trigger={<Icon name='time' className="help-icon" size="large" />}>
-          {remove}
-          {replace}
-        </Popup>
+        <span>
+          <Popup wide="very" trigger={<Icon name='time' className="help-icon" size="large" />}>
+            {remove}
+            {replace}
+          </Popup>
+        </span>
       );
     }
   }
@@ -192,6 +194,7 @@ class GroupView extends React.Component {
         onClick={() => this.toggleSelectBenched(i)}
         key={i}>
         {user.name}
+        {this.renderSchedulePopup(user)}
       </a>
     )
   };
