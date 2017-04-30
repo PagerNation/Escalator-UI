@@ -10,6 +10,8 @@ export const LEAVE_GROUP_SUCCESS = 'LEAVE_GROUP_SUCCESS';
 export const UPDATE_EP_SUCCESS = 'UPDATE_EP_SUCCESS';
 export const JOIN_REQUEST_SUCCESS = 'JOIN_REQUEST_SUCCESS';
 export const JOIN_REQUEST_PROCESS_SUCCESS = 'JOIN_REQUEST_PROCESS_SUCCESS';
+export const UPGRADE_USER_SUCCESS = 'UPGRADE_USER_SUCCESS';
+export const DELETE_ADMIN_SUCCESS = 'DELETE_ADMIN_SUCCESS';
 
 // ------------------------------------
 // Actions
@@ -85,6 +87,34 @@ export const processRequest = (groupName, userId, approved) => {
   }
 };
 
+export const upgradeUser = (groupName, userId) => {
+  return (dispatch, getState) => {
+    return new Promise((resolve) => {
+      postJSON(`group/${groupName}/user/${userId}/admin`, {userId}).then((response) => {
+        dispatch({
+          type: UPGRADE_USER_SUCCESS,
+          payload: response
+        });
+        resolve();
+      });
+    })
+  }
+};
+
+export const deleteAdmin = (groupName, userId) => {
+  return (dispatch, getState) => {
+    return new Promise((resolve) => {
+      deleteObject(`group/${groupName}/user/${userId}/admin`, {userId}).then((response) => {
+        dispatch({
+          type: DELETE_ADMIN_SUCCESS,
+          payload: response
+        });
+        resolve();
+      });
+    })
+  }
+};
+
 // ------------------------------------
 // Action Handlers
 // ------------------------------------
@@ -102,6 +132,12 @@ const ACTION_HANDLERS = {
     return action.payload;
   },
   [JOIN_REQUEST_PROCESS_SUCCESS]: (state, action) => {
+    return action.payload;
+  },
+  [UPGRADE_USER_SUCCESS]: (state, action) => {
+    return action.payload;
+  },
+  [DELETE_ADMIN_SUCCESS]: (state, action) => {
     return action.payload;
   }
 };

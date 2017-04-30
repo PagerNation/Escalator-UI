@@ -6,11 +6,20 @@ class AdminView extends React.Component {
   constructor() {
     super();
     _.bindAll(this,
-      "handleProcessRequest");
+      "handleProcessRequest",
+      "handleUpgradeUser");
   }
 
   handleProcessRequest(userId, approved) {
     this.props.processRequest(this.props.group.name, userId, approved);
+  }
+
+  handleUpgradeUser(userId) {
+    this.props.upgradeUser(this.props.group.name, userId);
+  }
+
+  handleDowngradeUser(userId) {
+    this.props.deleteAdmin(this.props.group.name, userId);
   }
 
   renderJoinRequests() {
@@ -40,12 +49,14 @@ class AdminView extends React.Component {
       'upgrade': {
         icon: 'arrow up',
         color: 'green',
-        compare(user, admins){ return admins.indexOf(user._id) === -1 }
+        compare(user, admins){ return admins.indexOf(user._id) === -1; },
+        changefunc(comp, user){ return comp.handleUpgradeUser(user._id); }
       },
       'downgrade': {
         icon: 'arrow down',
         color: 'red',
-        compare(user, admins){ return admins.indexOf(user._id) !== -1 }
+        compare(user, admins){ return admins.indexOf(user._id) !== -1 },
+        changefunc(comp, user){ return comp.handleDowngradeUser(user._id); }
       }    
     }
     return [,...this.props.group.users].filter((user) => 
@@ -59,7 +70,7 @@ class AdminView extends React.Component {
           floated="right" 
           color={display[upgrade].color} 
           disabled={user._id === this.props.user._id}
-          onClick={() => this.handleProcessRequest(user._id, true)}>
+          onClick={() => display[upgrade].changefunc(this, user)}>
             <Icon name={display[upgrade].icon}/>
         </Button>
       </Segment>
