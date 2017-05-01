@@ -1,4 +1,4 @@
-import { fetchGroup, leaveGroup, updateEscalationPolicy, processRequest } from "../../../store/group";
+import { fetchGroup, leaveGroup, updateEscalationPolicy, processRequest, addAdmin, deleteAdmin } from "../../../store/group";
 import { fetchGroupTickets, fetchOpenGroupTickets, acknowledgeTicket } from "../../../store/ticket";
 import GroupView from "../components/GroupView";
 import RouteContainer from '../../../containers/RouteContainer';
@@ -10,7 +10,9 @@ const mapDispatchToProps = {
   fetchGroupTickets,
   fetchOpenGroupTickets,
   acknowledgeTicket,
-  processRequest
+  processRequest,
+  addAdmin,
+  deleteAdmin
 };
 
 const mapStateToProps = (state) => ({

@@ -1,0 +1,124 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`AdminView renders AdminView 1`] = `
+<div>
+  <div
+    className="ui divider"
+  />
+  <h3
+    className="ui header"
+  >
+    Administration
+  </h3>
+  <b>
+    No pending join requests
+  </b>
+  <div
+    className="ui hidden divider"
+  />
+  <div
+    className="ui divided two column grid user-upgrade"
+  >
+    <div
+      className="eight wide computer sixteen wide mobile column"
+    >
+      <h4
+        className="ui header"
+      >
+        Members:
+      </h4>
+      <div>
+        <div
+          className="ui segments"
+        >
+          <div
+            className="ui raised segment"
+          >
+            <span
+              as="h5"
+            >
+              Demetrius.Hahn
+            </span>
+            <button
+              className="ui green mini right floated icon button"
+              onClick={[Function]}
+              style={
+                Object {
+                  "marginTop": "-5px",
+                }
+              }
+              tabIndex={undefined}
+            >
+              <i
+                className="arrow up icon"
+              />
+            </button>
+          </div>
+          <div
+            className="ui raised segment"
+          >
+            <span
+              as="h5"
+            >
+              Seth4
+            </span>
+            <button
+              className="ui green mini right floated icon button"
+              onClick={[Function]}
+              style={
+                Object {
+                  "marginTop": "-5px",
+                }
+              }
+              tabIndex={undefined}
+            >
+              <i
+                className="arrow up icon"
+              />
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      className="eight wide computer sixteen wide mobile column"
+    >
+      <h4
+        className="ui header"
+      >
+        Admins:
+      </h4>
+      <div
+        className="ui segments"
+      >
+        <div
+          className="ui raised segment"
+        >
+          <span
+            as="h5"
+          >
+            Kelly85
+          </span>
+          <button
+            className="ui red mini disabled right floated icon button"
+            onClick={[Function]}
+            style={
+              Object {
+                "marginTop": "-5px",
+              }
+            }
+            tabIndex={undefined}
+          >
+            <i
+              className="arrow down icon"
+            />
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    className="ui divider"
+  />
+</div>
+`;
