@@ -18,7 +18,7 @@ class AdminView extends React.Component {
     _.bindAll(this,
       "handleUserSearch",
       "handleGroupSearch",
-      "getOptions",
+      "getUserOptions",
       "handleSelectUser",
       "handleSelectGroup",
       "handleChangeSysAdmin",
@@ -145,7 +145,7 @@ class AdminView extends React.Component {
               placeholder="Search users..."
               isLoading={this.state.loading}
               value={this.state.selectedUser}
-              options={this.getOptions()}
+              options={this.getUserOptions()}
               onInputChange={this.handleUserSearch}
               onChange={this.handleSelectUser}
             />
@@ -164,7 +164,7 @@ class AdminView extends React.Component {
               placeholder="Search group..."
               isLoading={this.state.loading}
               value={this.state.selectedGroup}
-              options={this.getOptions()}
+              options={this.getUserOptions()}
               onInputChange={this.handleGroupSearch}
               onChange={this.handleSelectGroup}
             />
