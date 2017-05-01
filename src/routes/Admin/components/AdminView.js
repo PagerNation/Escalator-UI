@@ -10,7 +10,6 @@ class AdminView extends React.Component {
     this.state = {
       searchValue: "",
       selectedUser: null,
-      selectedGroup: null,
       loading: false,
       sysAdminValue: null,
       valueChanged: false
@@ -35,10 +34,7 @@ class AdminView extends React.Component {
   }
 
   handleSelectGroup(selection) {
-    this.setState({
-      selectedGroup: selection,
-      valueChanged: false
-    });
+    this.props.router.push(`/group/${selection.label}`);
   }
 
   handleUserSearch(value) {
@@ -93,12 +89,21 @@ class AdminView extends React.Component {
   }
 
   getUserOptions() {
-    return this.props.searchResults.map((user) => {
+    return this.props.userSearchResults.map((user) => {
       return {
         value: user,
         label: user.name
       }
     });
+  }
+
+  getGroupOptions() {
+    return this.props.groupSearchResults.map((group) => {
+      return {
+        value: group,
+        label: group.name
+      }
+    })
   }
 
   renderUserEditor() {
@@ -163,14 +168,10 @@ class AdminView extends React.Component {
               multi={false}
               placeholder="Search group..."
               isLoading={this.state.loading}
-              value={this.state.selectedGroup}
-              options={this.getUserOptions()}
+              options={this.getGroupOptions()}
               onInputChange={this.handleGroupSearch}
               onChange={this.handleSelectGroup}
             />
-          </Grid.Column>
-          <Grid.Column mobile={16} computer={8}>
-            {this.renderUserEditor()}
           </Grid.Column>
         </Grid>
       </div>
