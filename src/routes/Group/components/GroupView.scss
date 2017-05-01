@@ -23,7 +23,7 @@ button.ui.button.action-button {
   border-color: greenyellow;
 }
 
-.arrow_box:not(:last-of-type):after, .arrow_box:not(:last-of-type):before {
+.arrow_box:not(.last):after, .arrow_box:not(.last):before {
   top: 100%;
   left: 50%;
   border: solid transparent;
@@ -34,14 +34,14 @@ button.ui.button.action-button {
   pointer-events: none;
 }
 
-.arrow_box:not(:last-of-type):after {
+.arrow_box:not(.last):after {
   border-color: rgba(136, 183, 213, 0);
   border-top-color: #88b7d5;
   border-width: 20px;
   margin-left: -20px;
 }
 
-.arrow_box:not(:last-of-type):before {
+.arrow_box:not(.last):before {
   border-color: rgba(194, 225, 245, 0);
   border-top-color: #c2e1f5;
   border-width: 24px;
@@ -71,4 +71,23 @@ button.ui.button.action-button {
 
 i.help-icon {
   margin-left: 0.5em;
+}
+
+.drag-placeholder {
+  width: 100%;
+  border: 2px #ccc dashed;
+  height: 45px;
+}
+
+.dragged {
+  opacity: 0.6;
+  width: 100%;
+
+  .device-interval {
+    display: none;
+  }
+}
+
+.draggable {
+  cursor: move;
 }

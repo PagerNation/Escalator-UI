@@ -4,6 +4,7 @@ import { Divider, Label, Grid, Header, Button, Confirm, Icon, Segment, Popup } f
 import _ from 'lodash';
 import moment from 'moment';
 import InlineEditable from '../../../components/shared/InlineEditable';
+import DragSortableList from 'react-drag-sortable';
 import classNames from 'classnames';
 import RemoveSubscriberModal from './RemoveSubscriberModal';
 import TicketView from './TicketView';
@@ -29,8 +30,19 @@ class GroupView extends React.Component {
       "handleEditPagingInterval",
       "toggleRemoveModal",
       "handleTicketAcknowledgement",
-      "handleScheduleSubscribers"
+      "handleScheduleSubscribers",
+      "handleEPSort"
     );
+  }
+
+  componentWillMount() {
+    this.props.fetchGroup(this.props.params.groupId);
+    this.props.fetchGroupTickets({
+      groupNames: this.props.params.groupId
+    });
+    this.props.fetchOpenGroupTickets({
+      groupNames: this.props.params.groupId
+    });
   }
 
   toggleRemoveModal() {
@@ -129,14 +141,10 @@ class GroupView extends React.Component {
     this.props.acknowledgeTicket(ticketId);
   }
 
-  componentWillMount() {
-    this.props.fetchGroup(this.props.params.groupId);
-    this.props.fetchGroupTickets({
-      groupNames: this.props.params.groupId
-    });
-    this.props.fetchOpenGroupTickets({
-      groupNames: this.props.params.groupId
-    });
+  handleEPSort(sorted) {
+    const subs = sorted.map((item) => _.omit(item.user, "_id", "name"));
+    const ep = _.extend({}, this.props.group.escalationPolicy, {subscribers: subs});
+    this.props.updateEscalationPolicy(this.props.group.name, _.omit(ep, "_id"));
   }
 
   renderSchedulePopup(subscriber) {
@@ -164,19 +172,41 @@ class GroupView extends React.Component {
     }
   }
 
+  getSubList(subs) {
+    return subs.map((user, i) => {
+      return {
+        user,
+        content: (
+          <a
+            className={classNames(
+              "box arrow_box",
+              {"selected": this.state.selectedOnCall.includes(i)},
+              {"last": i === subs.length - 1}
+            )}
+            onClick={() => this.toggleSelectOnCall(i)}
+            key={i}>
+            {user.name}
+            {this.renderSchedulePopup(user)}
+          </a>
+        )
+      }
+    });
+  }
+
   active() {
     const subs = [...this.props.group.escalationPolicy.subscribers];
     _.forEach(subs, (sub) => {
       sub.name = _.find(this.props.group.users, (user) => user._id === sub.user).name;
     });
-    return subs.map((user, i) =>
-      <a
-        className={classNames("box arrow_box", {"selected": this.state.selectedOnCall.includes(i)})}
-        onClick={() => this.toggleSelectOnCall(i)}
-        key={i}>
-        {user.name}
-        {this.renderSchedulePopup(user)}
-      </a>
+
+    return (
+      <DragSortableList
+        type="vertical"
+        onSort={this.handleEPSort}
+        items={this.getSubList(subs)}
+        placeholder={<div className="drag-placeholder"></div>}
+        moveTransitionDuration={0.3}
+      />
     );
   };
 
