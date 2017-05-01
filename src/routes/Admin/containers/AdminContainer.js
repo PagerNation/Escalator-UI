@@ -1,15 +1,19 @@
+import { withRouter } from 'react-router';
 import { searchByName, updateUserAdmin } from "../../../store/otherUsers";
+import { searchGroups } from "../../../store/groupSearch";
 import AdminView from "../components/AdminView";
 import RouteContainer from '../../../containers/RouteContainer';
 
 const mapDispatchToProps = {
   searchByName,
-  updateUserAdmin
+  updateUserAdmin,
+  searchGroups
 };
 
 const mapStateToProps = (state) => ({
   user: state.user,
-  searchResults: state.otherUsers.searchResults
+  userSearchResults: state.otherUsers.searchResults,
+  groupSearchResults: state.groupSearch
 });
 
-export default RouteContainer(mapStateToProps, mapDispatchToProps, AdminView);
+export default withRouter(RouteContainer(mapStateToProps, mapDispatchToProps, AdminView));
