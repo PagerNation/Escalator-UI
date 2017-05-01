@@ -46,18 +46,47 @@ exports[`GroupView renders GroupView 1`] = `
       <h3>
         Escalation Order:
       </h3>
-      <a
-        className="box arrow_box"
-        onClick={[Function]}
+      <div
+        className="List"
+        id="List1"
       >
-        Kelly85
-      </a>
-      <a
-        className="box arrow_box"
-        onClick={[Function]}
-      >
-        Demetrius.Hahn
-      </a>
+        <div
+          className="draggable"
+          data-id="2"
+          data-rank={0}
+          style={
+            Object {
+              "float": "none",
+              "position": "relative",
+            }
+          }
+        >
+          <a
+            className="box arrow_box"
+            onClick={[Function]}
+          >
+            Kelly85
+          </a>
+        </div>
+        <div
+          className="draggable"
+          data-id="3"
+          data-rank={1}
+          style={
+            Object {
+              "float": "none",
+              "position": "relative",
+            }
+          }
+        >
+          <a
+            className="box arrow_box last"
+            onClick={[Function]}
+          >
+            Demetrius.Hahn
+          </a>
+        </div>
+      </div>
     </div>
     <div
       className="middle aligned one wide computer sixteen wide mobile column"
