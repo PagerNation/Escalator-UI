@@ -8,15 +8,15 @@ class AdminView extends React.Component {
     super()
     _.bindAll(this,
       'handleProcessRequest',
-      'handleUpgradeUser')
+      'handleAddAdmin')
   }
 
   handleProcessRequest (userId, approved) {
     this.props.processRequest(this.props.group.name, userId, approved)
   }
 
-  handleUpgradeUser (userId) {
-    this.props.upgradeUser(this.props.group.name, userId)
+  handleAddAdmin (userId) {
+    this.props.addAdmin(this.props.group.name, userId)
   }
 
   handleDowngradeUser (userId) {
@@ -64,7 +64,7 @@ class AdminView extends React.Component {
         icon: 'arrow up',
         color: 'green',
         compare (user, admins) { return admins.indexOf(user._id) === -1 },
-        changefunc (comp, user) { return comp.handleUpgradeUser(user._id) }
+        changefunc (comp, user) { return comp.handleAddAdmin(user._id) }
       },
       'downgrade': {
         icon: 'arrow down',
@@ -131,7 +131,7 @@ AdminView.propTypes = {
   processRequest: PropTypes.func,
   group: PropTypes.object,
   user: PropTypes.object,
-  upgradeUser: PropTypes.func,
+  addAdmin: PropTypes.func,
   deleteAdmin: PropTypes.func
 }
 

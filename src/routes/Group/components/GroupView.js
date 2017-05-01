@@ -234,7 +234,7 @@ class GroupView extends React.Component {
           user={this.props.user}
           group={this.props.group}
           processRequest={this.props.processRequest}
-          upgradeUser={this.props.upgradeUser}
+          addAdmin={this.props.addAdmin}
           deleteAdmin={this.props.deleteAdmin}
         />
         <TicketView

@@ -1,4 +1,4 @@
-import { fetchGroup, leaveGroup, updateEscalationPolicy, processRequest, upgradeUser, deleteAdmin } from "../../../store/group";
+import { fetchGroup, leaveGroup, updateEscalationPolicy, processRequest, addAdmin, deleteAdmin } from "../../../store/group";
 import { fetchGroupTickets, fetchOpenGroupTickets, acknowledgeTicket } from "../../../store/ticket";
 import GroupView from "../components/GroupView";
 import RouteContainer from '../../../containers/RouteContainer';
@@ -11,7 +11,7 @@ const mapDispatchToProps = {
   fetchOpenGroupTickets,
   acknowledgeTicket,
   processRequest,
-  upgradeUser,
+  addAdmin,
   deleteAdmin
 };
 
