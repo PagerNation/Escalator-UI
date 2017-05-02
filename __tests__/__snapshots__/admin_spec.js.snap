@@ -30,6 +30,7 @@ exports[`AdminView renders AdminView 1`] = `
       <div>
         <div
           className="ui segments"
+          hidden={false}
         >
           <div
             className="ui raised segment"
