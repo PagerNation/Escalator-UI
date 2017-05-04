@@ -3,11 +3,14 @@
   display: inline;
   padding: 1em 0;
 
-  a {
-    color: inherit;
-    cursor: pointer;
+  >span {
+    >a {
+      color: inherit;
+      cursor: pointer;
+      border-bottom: 1px dotted;
+    }
 
-    i {
+    >i {
       padding-left: 1em;
     }
   }
