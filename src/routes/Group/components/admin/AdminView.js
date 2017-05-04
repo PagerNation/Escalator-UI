@@ -73,9 +73,10 @@ class AdminView extends React.Component {
         changefunc (comp, user) { return comp.handleDowngradeUser(user._id) }
       }
     }
-    return [...this.props.group.users].filter((user) =>
+    const adminUsers = [...this.props.group.users].filter((user) =>
         display[upgrade].compare(user, this.props.group.admins, this.props.user._id)
-    ).map((user, i) =>
+    )
+    return adminUsers.map((user, i) =>
       <Segment key={i} raised>
         <span as='h5'>{user.name}</span>
         <Button icon
@@ -83,7 +84,7 @@ class AdminView extends React.Component {
           style={{ marginTop: '-5px' }}
           floated='right'
           color={display[upgrade].color}
-          disabled={user._id === this.props.user._id}
+          disabled={(upgrade === 'downgrade' && (adminUsers.length === 1))}
           onClick={() => display[upgrade].changefunc(this, user)}>
           <Icon name={display[upgrade].icon} />
         </Button>
@@ -92,12 +93,13 @@ class AdminView extends React.Component {
   }
 
   renderUpgradeTable () {
+    const upgradeButtons = this.userUpgradeButtons('upgrade');
     return (<Grid columns={2} divided className='user-upgrade'>
       <Grid.Column mobile={16} computer={8}>
         <Header as='h4'>Members:</Header>
         <div>
-          <Segment.Group>
-            {this.userUpgradeButtons('upgrade')}
+          <Segment.Group hidden={upgradeButtons.length === 0}>
+            {upgradeButtons}
           </Segment.Group>
         </div>
       </Grid.Column>
@@ -111,7 +113,8 @@ class AdminView extends React.Component {
   }
 
   render () {
-    if (this.props.group.admins.includes(this.props.user._id)) {
+    if (this.props.group.admins.includes(this.props.user._id)
+          || this.props.user.isSysAdmin) {
       return (<div>
         <Divider />
         <Header as='h3'>Administration</Header>
