@@ -81,8 +81,8 @@ class InlineEditable extends React.Component {
       <span>
         <a onMouseEnter={this.handleMouseEnter} onMouseLeave={this.handleMouseLeave} onClick={this.toggleEditor}>
           {this.props.value}
-          <Icon name="edit" className={!this.state.isHovered ? 'hidden' : ''} />
         </a>
+        <Icon name="edit" className={!this.state.isHovered ? 'hidden' : ''} />
       </span>
     );
   }
