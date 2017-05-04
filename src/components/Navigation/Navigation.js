@@ -8,13 +8,23 @@ import Logo from  '../../static/escalator.png';
 
 class Navigation extends React.Component {
 
+  constructor() {
+    super();
+    _.bindAll(this, "handleLogOut");
+  }
+
+  handleLogOut() {
+    this.props.router.push('/');
+    this.props.logOut();
+  }
+
   render() {
     const pathname = this.props.location.pathname;
 
     const userMenu = this.props.user && (
       <Menu.Item as={Dropdown} text={this.props.user.name} position="right">
         <Dropdown.Menu>
-          <Dropdown.Item onClick={this.props.logOut}>Log Out</Dropdown.Item>
+          <Dropdown.Item onClick={this.handleLogOut}>Log Out</Dropdown.Item>
         </Dropdown.Menu>
       </Menu.Item>
     );
