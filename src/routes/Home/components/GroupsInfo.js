@@ -127,12 +127,13 @@ class GroupsInfo extends React.Component {
         <div>
           <Header as='h1'>My Groups</Header>
           <Button
-            className="join-btn"
-            primary
+            content='Join a Group'
+            icon='add circle'
+            className='green'
+            labelPosition='left'
+            floated='right'
             onClick={this.toggleJoinRequestModal}
-          >
-            Join a Group
-          </Button>
+          />
         </div>
         <Card.Group>
           {groupCards}

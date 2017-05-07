@@ -44,7 +44,6 @@ class Navigation extends React.Component {
           </Menu.Item>
           <Menu.Item onClick={() => this.props.router.push('/')}>Groups</Menu.Item>
           <Menu.Item onClick={() => this.props.router.push('/profile')}>Profile</Menu.Item>
-          <Menu.Item onClick={() => this.props.router.push('/joingroup')}>Join a Group</Menu.Item>
           {admin}
           {userMenu}
         </Menu>

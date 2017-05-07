@@ -1,9 +1,10 @@
 import React from "react";
-// import "./JoinGroupModal.scss";
-import { Header, Segment, Button, Message, Modal, Select } from 'semantic-ui-react';
+import "./JoinGroupModal.scss";
+import { Header, Segment, Button, Message, Modal } from 'semantic-ui-react';
 import _ from 'lodash';
 import Autocomplete from 'react-autocomplete';
 import classNames from 'classnames';
+import Select from 'react-select';
 
 class JoinGroupModal extends React.Component {
 
@@ -42,7 +43,7 @@ class JoinGroupModal extends React.Component {
   }
 
   handleSend() {
-    this.props.joinRequest(this.state.selectedGroup.name).then(() => {
+    this.props.joinRequest(this.state.selectedGroup.label).then(() => {
       this.setState({
         searchValue: "",
         sent: true,
@@ -51,9 +52,9 @@ class JoinGroupModal extends React.Component {
     });
   }
 
-  handleSelectGroup(group) {
+  handleSelectGroup(groupItem) {
     this.setState({
-      selectedGroup: group
+      selectedGroup: groupItem
     });
   }
 
@@ -97,18 +98,16 @@ class JoinGroupModal extends React.Component {
             multi={false}
             placeholder="Search groups..."
             isLoading={this.state.loading}
-            value={this.state.searchValue}
+            value={this.state.selectedGroup}
             options={this.getOptions()}
             onInputChange={this.handleSearch}
             onChange={this.handleSelectGroup}
           />
-          <Button className="send-btn" primary onClick={this.handleSend}>Send request</Button>
           {message}
         </Modal.Content>
         <Modal.Actions>
-          <Button onClick={this.close}>
-            Cancel
-          </Button>
+          <Button onClick={this.close}>Cancel</Button>
+          <Button className="send-btn green" onClick={this.handleSend}>Send request</Button>
         </Modal.Actions>
       </Modal>
     );
