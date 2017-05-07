@@ -1,6 +1,6 @@
 import React from "react";
-import "./JoinGroupModal.scss";
-import { Header, Segment, Button, Message, Modal } from 'semantic-ui-react';
+// import "./JoinGroupModal.scss";
+import { Header, Segment, Button, Message, Modal, Select } from 'semantic-ui-react';
 import _ from 'lodash';
 import Autocomplete from 'react-autocomplete';
 import classNames from 'classnames';
@@ -11,27 +11,58 @@ class JoinGroupModal extends React.Component {
     super();
     this.state = {
       searchValue: "",
+      selectedGroup: null,
       open: false,
-      sent: false
+      sent: false,
+      loading: false
     };
     _.bindAll(this,
       "handleSearch",
       "handleSend",
+      "handleSelectGroup",
       "close");
   }
 
   handleSearch(event, value) {
     this.setState({
-      searchValue: value
+      searchValue: value,
+      loading: true
     });
     if (value !== "") {
-      this.props.searchGroups(value);
+      this.props.searchGroups(value).then(() => {
+        this.setState({
+          loading: false
+        });
+      });
+    } else {
+      this.setState({
+        loading: false
+      });
     }
   }
 
   handleSend() {
-    this.props.joinRequest(this.state.searchValue).then(() => {
-      this.setState({searchValue: "", sent: true});
+    this.props.joinRequest(this.state.selectedGroup.name).then(() => {
+      this.setState({
+        searchValue: "",
+        sent: true,
+        selectedGroup: null
+      });
+    });
+  }
+
+  handleSelectGroup(group) {
+    this.setState({
+      selectedGroup: group
+    });
+  }
+
+  getOptions() {
+    return this.props.groupSearchResults.map((group) => {
+      return {
+        value: group,
+        label: group.name
+      }
     });
   }
 
@@ -42,7 +73,9 @@ class JoinGroupModal extends React.Component {
   close() {
     this.setState({
       open: false,
-      searchValue: ""
+      searchValue: "",
+      loading: false,
+      selectedGroup: null
     });
   }
 
@@ -59,26 +92,16 @@ class JoinGroupModal extends React.Component {
           Make a Join Request
         </Modal.Header>
         <Modal.Content>
-          <div className="ui input fluid">
-            <Autocomplete
-              inputProps={{className: "search-input", placeholder: "Search groups"}}
-              items={this.props.groupSearchResults}
-              getItemValue={(group) => group.name}
-              renderItem={(item, isHighlighted) => {
-                return <div
-                  key={item.abbr}
-                  className={classNames("menuItem", {"highlighted": isHighlighted})}
-                  id={item.abbr}>
-                  {item.name}
-                </div>
-              }}
-              onSelect={(value, item) => {
-                this.setState({ searchValue: value });
-              }}
-              value={this.state.searchValue}
-              onChange={this.handleSearch}
-            />
-          </div>
+          <Select
+            name="group-search"
+            multi={false}
+            placeholder="Search groups..."
+            isLoading={this.state.loading}
+            value={this.state.searchValue}
+            options={this.getOptions()}
+            onInputChange={this.handleSearch}
+            onChange={this.handleSelectGroup}
+          />
           <Button className="send-btn" primary onClick={this.handleSend}>Send request</Button>
           {message}
         </Modal.Content>
