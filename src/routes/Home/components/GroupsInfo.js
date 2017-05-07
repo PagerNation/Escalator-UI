@@ -125,7 +125,6 @@ class GroupsInfo extends React.Component {
           joinRequest={this.props.joinRequest}
         />
         <div>
-          <Header as='h1'>My Groups</Header>
           <Button
             content='Join a Group'
             icon='add circle'
@@ -134,6 +133,7 @@ class GroupsInfo extends React.Component {
             floated='right'
             onClick={this.toggleJoinRequestModal}
           />
+          <Header as='h1'>My Groups</Header>
         </div>
         <Card.Group>
           {groupCards}

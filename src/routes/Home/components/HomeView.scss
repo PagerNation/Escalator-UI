@@ -3,3 +3,7 @@
   color: green !important;
   font-weight: 800;
 }
+
+.ui.header:last-child {
+  margin: calc(2rem - .14285em) 0 1rem;
+}
