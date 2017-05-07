@@ -1,8 +1,9 @@
 import React from "react";
-import { Header, Card, Feed } from 'semantic-ui-react';
+import { Header, Card, Feed, Button } from 'semantic-ui-react';
 import { Link } from 'react-router';
 import _ from 'lodash';
 import moment from 'moment';
+import JoinGroupModal from './JoinGroupModal';
 
 const actionFormatting = {
   CREATED: "Ticket created",
@@ -13,6 +14,12 @@ const actionFormatting = {
 };
 
 class GroupsInfo extends React.Component {
+
+  constructor() {
+    super();
+    _.bindAll(this,
+      'toggleJoinRequestModal');
+  }
 
   componentWillMount() {
     const groupNames = this.props.user.groups.map(group => group.name);
@@ -65,6 +72,10 @@ class GroupsInfo extends React.Component {
     );
   }
 
+  toggleJoinRequestModal() {
+    this.refs["joinGroupModal"].open();
+  }
+
   lastTicketAction(groupName) {
     const ticket = _.filter(this.props.tickets, { _id: groupName });
 
@@ -105,12 +116,29 @@ class GroupsInfo extends React.Component {
     });
 
     return (
+      <div>
+        <JoinGroupModal
+          ref="joinGroupModal"
+          user={this.props.user}
+          groupSearchResults={this.props.groupSearchResults}
+          searchGroups={this.props.searchGroups}
+          joinRequest={this.props.joinRequest}
+        />
         <div>
+          <Button
+            content='Join a Group'
+            icon='add circle'
+            className='green'
+            labelPosition='left'
+            floated='right'
+            onClick={this.toggleJoinRequestModal}
+          />
           <Header as='h1'>My Groups</Header>
-          <Card.Group>
-            {groupCards}
-          </Card.Group>
         </div>
+        <Card.Group>
+          {groupCards}
+        </Card.Group>
+      </div>
     );
   }
 }
