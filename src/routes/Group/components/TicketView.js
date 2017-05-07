@@ -1,9 +1,8 @@
 import React from "react";
-import { Table, Menu, Segment, Card, Feed, Button, Header } from 'semantic-ui-react';
+import { Table, Menu, Segment, Card, Feed, Button, Header, Accordion } from 'semantic-ui-react';
 import { Link } from 'react-router';
 import moment from 'moment';
 import _ from 'lodash';
-import dateFormat from 'dateFormat';
 
 const actionFormatting = {
   CREATED: "Created",
@@ -24,27 +23,31 @@ class TicketView extends React.Component {
     }
 
     this.state = {
-      showOpenTickets
+      showOpenTickets,
+      activeIndex: 0
     };
     _.bindAll(this,
-      'handleTabClick');
+      'handleTabClick',
+      'handleAccordionTitleClick');
   }
 
   handleTabClick() {
     this.setState({ showOpenTickets: !this.state.showOpenTickets });
   }
 
-  formatDate(date) {
-    return dateFormat(new Date(date), 'mmmm dS, yyyy, h:MM:ss TT');
+  handleAccordionTitleClick(e, i) {
+    this.setState({ activeIndex: this.state.activeIndex === i ? -1 : i })
   }
 
-
+  formatDate(date) {
+    return moment(date).format('MMMM D YYYY, h:mm:ss a');
+  }
 
   eventHelper(index, timestamp, summary) {
     return (
       <Feed.Event key={index}>
         <Feed.Content>
-          <Feed.Date content={String(this.formatDate(timestamp))} />
+          <Feed.Date content={this.formatDate(timestamp)} />
           <Feed.Extra>
             {summary}
           </Feed.Extra>
@@ -56,23 +59,23 @@ class TicketView extends React.Component {
   ticketRow(ticket, index){
     const events = []
     const id = 'ticket_'+ticket._id+'_'+index;
-    if (ticket.actions) {
-      const action = ticket.actions[index];
-      let summary;
-      switch(action.actionTaken) {
-        case 'CREATED':
-          summary = `${this.capitalize(ticket.metadata.title)} created.`;
-          events.push(this.eventHelper(index, action.timestamp, summary));
-          break;
-        case 'PAGE_SENT':
-          summary = `${actionFormatting[action.actionTaken]} to ${action.user.name} via ${this.capitalize(action.device.type)}`;
-          events.push(this.eventHelper(index, action.timestamp, summary));
-          break;
-        default:
-          summary = `${actionFormatting[action.actionTaken]} by ${action.user.name}`;
-          events.push(this.eventHelper(index, action.timestamp, summary));
-      }
+    if (!ticket.actions) {
+      return (<p>No ticket actions</p>);
     }
+
+    const action = ticket.actions[index];
+    let summary;
+    switch(action.actionTaken) {
+      case 'CREATED':
+        summary = `${_.capitalize(ticket.metadata.title)} created.`;
+        break;
+      case 'PAGE_SENT':
+        summary = `${actionFormatting[action.actionTaken]} to ${action.user.name} via ${_.capitalize(action.device.type)}`;
+        break;
+      default:
+        summary = `${actionFormatting[action.actionTaken]} by ${action.user.name}`;
+    }
+    events.push(this.eventHelper(index, action.timestamp, summary));
     return (
       <Feed key={index}>
         {events}
@@ -82,30 +85,33 @@ class TicketView extends React.Component {
 
   renderLogs() {
     if (!this.props.tickets) {
-      return <div><Header as="h3">No Ticket History</Header></div>;
+      return <Header as="h3">No Ticket History</Header>;
     }
 
-    return this.props.tickets.map((ticket, index) => {
-      const rows = [];
+    const panels = this.props.tickets.map((ticket, index) => {
+      let rows = [];
       for (let i in ticket.actions) {
         rows.push(this.ticketRow(ticket, i));
       }
-
-      return (
-        <Card key={index} fluid>
-          <Card.Content>
-            <Card.Header>
-              {this.capitalize(ticket.metadata.title)}
-            </Card.Header>
-            {rows}
-          </Card.Content>
-        </Card>
-      );
+      if (rows.length === 0) {
+        rows = 'No ticket actions';
+      }
+      return {
+        key: `ticket_${index}`,
+        title: !_.isNil(ticket.metadata) ? _.capitalize(ticket.metadata.title): '',
+        content: rows
+      };
     });
-  }
 
-  capitalize(str) {
-    return str.charAt(0).toUpperCase() + str.slice(1)
+    return (
+      <Accordion
+        activeIndex={this.state.activeIndex}
+        panels={panels}
+        onTitleClick={this.handleAccordionTitleClick}
+        fluid
+        styled
+      />
+    )
   }
 
   renderTickets() {
