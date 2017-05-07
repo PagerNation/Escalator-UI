@@ -18,7 +18,7 @@ class TicketView extends React.Component {
     super(props);
 
     let showOpenTickets = true;
-    if (!_.isNil(this.props.openTickets) && this.props.openTickets) {
+    if (!_.isNil(this.props.openTickets) && this.props.openTickets.length) {
       showOpenTickets = false;
     }
 
