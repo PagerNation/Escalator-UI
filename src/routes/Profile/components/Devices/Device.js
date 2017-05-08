@@ -5,12 +5,18 @@ import InlineEditable from '../../../../components/shared/InlineEditable';
 
 class Device extends Component {
 
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
-      confirmOpen: false
+      confirmOpen: false,
+      delay: props.delay
     };
-    _.bindAll(this, "toggleConfirm", "handleChange", "handleIntervalChange");
+    _.bindAll(this,
+      "toggleConfirm",
+      "handleChange",
+      "handleIntervalChange");
+
+    this.debounceSend = _.debounce(this.updateInterval, 800);
   }
 
   toggleConfirm() {
@@ -24,7 +30,15 @@ class Device extends Component {
   }
 
   handleIntervalChange(event) {
-    this.props.onUpdateInterval(this.props.index, parseInt(event.target.value));
+    this.setState({ delay: parseInt(event.target.value) });
+    this.debounceSend();
+  }
+
+  updateInterval(event) {
+    if (!this.state.delay || this.state.delay === '') {
+      return;
+    }
+    this.props.onUpdateInterval(this.props.index, this.state.delay);
   }
 
   getIcon(type) {
@@ -46,7 +60,7 @@ class Device extends Component {
           label={{ basic: true, content: 'minutes' }}
           labelPosition='right'
           placeholder=''
-          value={this.props.delay}
+          value={this.state.delay}
           onChange={this.handleIntervalChange}
        />
       </div>
