@@ -230,7 +230,7 @@ class GroupView extends React.Component {
     if (group.escalationPolicy.subscribers.length) {
       const uid = group.escalationPolicy.subscribers[0].user;
       const user = group.users.filter(u => u._id === uid)[0];
-      return <Header as="h4">User on call:{this.userLink(user)}</Header>;
+      return <Header as="h4">User on call: {this.userLink(user)}</Header>;
     }
   };
 
@@ -249,7 +249,7 @@ class GroupView extends React.Component {
   escalationIntervalAdmin() {
     return (
       <span>
-        Escalation Interval:<Label color='teal' horizontal>
+        Escalation Interval: <Label color='teal' horizontal>
           <InlineEditable
             name="pagingIntervalInMinutes"
             value={this.props.group.escalationPolicy.pagingIntervalInMinutes}
