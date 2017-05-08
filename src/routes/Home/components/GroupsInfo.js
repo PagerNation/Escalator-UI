@@ -101,7 +101,7 @@ class GroupsInfo extends React.Component {
   }
 
   render() {
-    var groupCards = this.sortGroupsByOnCall(this.props.groups).map((group, index) => {
+    let groupCards = this.sortGroupsByOnCall(this.props.groups).map((group, index) => {
       return _.isObject(group) && (
         <Card key={index} color="green" fluid>
           <Card.Content>
@@ -116,7 +116,7 @@ class GroupsInfo extends React.Component {
     });
 
     if (groupCards.length === 0) { 
-      groupCards = <Card fluid><Card.Content>It appears you aren't apart of any groups. To join a group, click 'Join a Group'.</Card.Content></Card> 
+      groupCards = <Card fluid><Card.Content>It appears you aren't a part of any groups. To join a group, click 'Join a Group'.</Card.Content></Card> 
     }
 
     return (
