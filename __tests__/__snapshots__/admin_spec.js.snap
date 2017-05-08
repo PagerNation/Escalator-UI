@@ -41,7 +41,7 @@ exports[`AdminView renders AdminView 1`] = `
               Demetrius.Hahn
             </span>
             <button
-              className="ui green mini right floated icon button"
+              className="ui green mini icon right floated button"
               onClick={[Function]}
               style={
                 Object {
@@ -51,6 +51,7 @@ exports[`AdminView renders AdminView 1`] = `
               tabIndex={undefined}
             >
               <i
+                aria-hidden="true"
                 className="arrow up icon"
               />
             </button>
@@ -64,7 +65,7 @@ exports[`AdminView renders AdminView 1`] = `
               Seth4
             </span>
             <button
-              className="ui green mini right floated icon button"
+              className="ui green mini icon right floated button"
               onClick={[Function]}
               style={
                 Object {
@@ -74,6 +75,7 @@ exports[`AdminView renders AdminView 1`] = `
               tabIndex={undefined}
             >
               <i
+                aria-hidden="true"
                 className="arrow up icon"
               />
             </button>
@@ -101,16 +103,17 @@ exports[`AdminView renders AdminView 1`] = `
             Kelly85
           </span>
           <button
-            className="ui red mini disabled right floated icon button"
+            className="ui red mini icon disabled right floated button"
             onClick={[Function]}
             style={
               Object {
                 "marginTop": "-5px",
               }
             }
-            tabIndex={undefined}
+            tabIndex={-1}
           >
             <i
+              aria-hidden="true"
               className="arrow down icon"
             />
           </button>
