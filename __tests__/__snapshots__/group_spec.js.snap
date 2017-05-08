@@ -17,7 +17,7 @@ exports[`GroupView renders GroupView 1`] = `
   <h4
     className="ui header"
   >
-    User on call:
+    User on call: 
     <a
       href="/user/58a09497b73f14c7d6d64437/"
     >
